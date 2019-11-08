@@ -1,0 +1,25 @@
+{
+  "name": "itcommunity-front",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Easy-Lab/ITCommunity-Front.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Easy-Lab/ITCommunity-Front/issues"
+  },
+  "homepage": "https://github.com/Easy-Lab/ITCommunity-Front#readme",
+  "devDependencies": {
+    "webpack": "^4.41.2"
+  }
+}
