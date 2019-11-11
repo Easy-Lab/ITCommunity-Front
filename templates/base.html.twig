@@ -2,11 +2,17 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        <title>{% block title %}Homepage{% endblock %}</title>
+        {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset(assets_url ~ 'css/bootstrap.min.css') }}">
+            <link rel="stylesheet" href="{{ asset(assets_url ~ 'build/css/app.css') }}">
+        {% endblock %}
     </head>
     <body>
         {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+        {% block javascripts %}
+            <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+            <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+        {% endblock %}
     </body>
 </html>

@@ -27,6 +27,7 @@
 !bin/symfony_requirements
 /vendor/
 /nodes_modules/
+/public/build/
 
 # Assets and user uploads
 /web/bundles/
@@ -49,3 +50,16 @@
 /.web-server-pid
 
 /.env
+
+###> symfony/webpack-encore-bundle ###
+/node_modules/
+/public/build/
+npm-debug.log
+yarn-error.log
+###< symfony/webpack-encore-bundle ###
+
+.idea
+.DS_Store
+/var/
+/var/log/*
+/var/log/dev.log/
