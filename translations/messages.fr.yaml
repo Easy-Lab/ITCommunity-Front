@@ -1,5 +1,36 @@
+global:
+  site_name: "ITCommunity"
+  fb_app_id: ""
+  images_url: 'http://localhost:8001/assets'
+
 page:
+  _common:
+    button:
+      confirmation: "Confirmation"
+      data: "Etes vous sur d'effectuer cette action ?"
+      annuler: "Annuler"
+      confirmer: "Confirmer"
+    global:
+      body_class: "ITCommunity"
+  name_page:
+    cgv: "Conditions de participation"
+    cgu: "Mentions légales"
+    personal_data: "Données personnelles"
+    cookie: "Cookies"
+    sitemap: "Plan du site"
+    contact: "Contact"
   home:
+    promo:
+      jumb1: "Vous cherchez un renseignement sur un produit ?"
+      jumb2: "Ils sont la pour vous aider !"
+    jumbotron:
+      button: "Décrouvrir la carte"
+    benefits:
+      picto1: "Trouvez les Utilisateurs près de chez vous"
+      picto2: "Consultez leurs profil ainsi que leurs avis"
+      picto3: "Et posez leurs toutes vos questions …"
     meta:
       title: "ITCommunity"
+      description: "Bienvenu sur la plateforme regroupant les plus grands fans de l'informatique !"
+      image: ""
     h1: "Titre de la Homepage"
