@@ -3,18 +3,30 @@
 
 namespace App\Controller\home;
 
+use App\Utils\Features;
 use App\Utils\Validator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpClient\HttpClient;
 
 class HomeController extends AbstractController
 {
     /**
      * @Route("/", name="home")
      */
-    public function index(){
-        return $this->render('home/index.html.twig');
+    public function index(Features $features){
+//        $client = HttpClient::create();
+//        $response = $client->request('GET','http://gpu-cpu-api.atcreative.fr/api/cpu');
+//        $statusCode = $response->getStatusCode();
+//        $content = $response->getContent();
+//        dd($content);
+        $map = $features->get('map.search');
+        $zipcode_maxlength = $features->get('home.zipcode.maxlength');
+        return $this->render('home/index.html.twig', [
+            'map'=>$map,
+            'zipcode_maxlength'=>$zipcode_maxlength
+        ]);
     }
 
     /**

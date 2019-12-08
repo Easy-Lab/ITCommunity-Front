@@ -37,9 +37,9 @@
     <div class="container">
         <h3 class="title-wrap" id="searchHome">{{ 'page.home.map.search.title'|trans }}</h3>
         <div class="home-map-search-form">
-{#            {% for element in map %}#}
-{#                {% include ['mapping/_common/_properties/' ~ element.slug ~ '.html.twig', 'mapping/_common/_properties/_' ~ element.type ~ '.html.twig'] %}#}
-{#            {% endfor %}#}
+            {% for element in map %}
+                {% include ['mapping/_common/_properties/' ~ element ~ '.html.twig', 'mapping/_common/_properties/_' ~ element ~ '.html.twig'] %}
+            {% endfor %}
         </div>
     </div>
 </section>

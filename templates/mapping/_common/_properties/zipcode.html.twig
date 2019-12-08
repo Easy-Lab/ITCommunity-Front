@@ -1,0 +1,8 @@
+<div class="map-search-element map-search-{{ element }}" data-element="{{ element }}">
+    <input autocomplete="off" name="{{ element }}" type="text"
+           class="form-control js-map-search-{{ element }}" {{ zipcode_maxlength > 0 ? 'maxlength="'~zipcode_maxlength~'"' }}
+           placeholder="{{ "page.home.map.search._properties.zipcode.label"|trans }}"
+
+    >
+    <button class="btn btn-primary js-map-search-submit" style="background-color:#273a60 !important">OK</button>
+</div>

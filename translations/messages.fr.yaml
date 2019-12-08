@@ -20,6 +20,8 @@ page:
     sitemap: "Plan du site"
     contact: "Contact"
   home:
+    evaluation:
+      title: 'Qualité des échanges'
     promo:
       jumb1: "Vous cherchez un renseignement sur un produit ?"
       jumb2: "Ils sont la pour vous aider !"

@@ -1,0 +1,43 @@
+parameters:
+
+  # Translations
+  features.translations.files.format: ".yml"
+  features.translations.custom.folder: "custom/translations/"
+  features.translations.default.folder: "translations/"
+  
+  # Map + search
+  features.home.zipcode.maxlength: 5
+  features.map.clusters.max_zoom: 7
+  features.map.clusters.grid_size: 10
+  features.map.load_on_scroll: true
+  features.map.event_pin: false
+  features.map.search.multiple_levels: false
+  features.map.search.max_result_per_page: 6
+  features.map.search.filter_zip_code: true
+  features.map.geoloc: false
+  # servira à la détection du zip code / département ou nom de la localisation : features.map.search.regex: 
+  # servira à la détection du zip code / département ou nom de la localisation :  - zipcode: ([0-9]{2})
+  features.map.search.order:
+  - picture: desc
+  - distance: asc
+  - u.environment_rating: desc
+  - rand: asc
+  features.map.search:
+    - zipcode
+#    - product
+  features.map.search.zipcode.pattern: null
+
+  # Algo de complétion du profil
+  features.profile.completion:
+    - firstname
+    - lastname
+    - username
+    - address
+    - zipcode
+    - city
+    - phone
+    - pseudo
+    - text/welcome
+    - products
+    - pictures
+    - profile_picture
