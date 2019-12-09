@@ -15,17 +15,29 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function index(Features $features){
-//        $client = HttpClient::create();
-//        $response = $client->request('GET','http://gpu-cpu-api.atcreative.fr/api/cpu');
-//        $statusCode = $response->getStatusCode();
-//        $content = $response->getContent();
-//        dd($content);
+    public function index(Features $features, Request $request){
+        $client = HttpClient::create();
+        $responseCpu = $client->request('GET','http://gpu-cpu-api.atcreative.fr/api/cpu');
+        $statusCodeCpu = $responseCpu->getStatusCode();
+        if ($statusCodeCpu == 200){
+            $content = $responseCpu->toArray();
+        }else{
+            $content = null;
+        }
+        $responseGpu = $client->request('GET','http://gpu-cpu-api.atcreative.fr/api/gpu');
+        $statusCodeGpu = $responseGpu->getStatusCode();
+        if ($statusCodeGpu == 200){
+            $contentGpu = $responseGpu->toArray();
+        }else{
+            $contentGpu = null;
+        }
         $map = $features->get('map.search');
         $zipcode_maxlength = $features->get('home.zipcode.maxlength');
         return $this->render('home/index.html.twig', [
             'map'=>$map,
-            'zipcode_maxlength'=>$zipcode_maxlength
+            'zipcode_maxlength'=>$zipcode_maxlength,
+            'products_cpu'=>array_reverse($content),
+            'products_gpu'=>array_reverse($contentGpu)
         ]);
     }
 

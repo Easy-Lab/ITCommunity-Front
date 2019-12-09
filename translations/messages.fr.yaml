@@ -22,6 +22,10 @@ page:
   home:
     evaluation:
       title: 'Qualité des échanges'
+    cpu:
+      title: 'Liste des CPU'
+    gpu:
+      title: 'Liste des GPU'
     promo:
       jumb1: "Vous cherchez un renseignement sur un produit ?"
       jumb2: "Ils sont la pour vous aider !"
