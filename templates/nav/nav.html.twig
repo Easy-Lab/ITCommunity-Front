@@ -8,8 +8,11 @@
                     </li>
                 {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" href="">
+                        <a class="nav-link" href="{{ path('login') }}">
                             Se connecter
+                        </a>
+                        <a class="nav-link" href="">
+                            S'inscrire
                         </a>
                     </li>
                 {% endif %}
@@ -168,9 +171,9 @@
                     <li class="nav-item no-border">
                         <a class="nav-link" href="{{ path('home') }}">Trouver un Utilisateur</a>
                     </li>
-{#                    <li class="nav-item">#}
-{#                        <a class="nav-link {{ actual_route == 'discover' ? 'active' }}" href="{{ path('discover') }}">Devenir Ambassadeur</a>#}
-{#                    </li>#}
+                    <li class="nav-item">
+                        <a class="nav-link {{ actual_route == 'discover' ? 'active' }}" href="{{ path('discover') }}">Devenir un Utilisateur</a>
+                    </li>
                 {% endif %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('static_page', {'slug': 'faq'}) }}">FAQ</a>

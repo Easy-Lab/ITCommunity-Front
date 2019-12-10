@@ -1,5 +1,5 @@
 .app-navbar {
-  background-color: $main-color;
+  background-color: black;
   height: $navbar-height;
 
   .navbar-links {
@@ -13,8 +13,8 @@
         text-transform: uppercase;
 
         &:hover {
-          color: $main-color;
-          background-color: #fff;
+          color: #1E90FF;
+          //background-color: #fff;
         }
       }
 

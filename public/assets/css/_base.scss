@@ -113,3 +113,28 @@
 //    color: inherit !important;
 //  }
 //}
+
+#monpoulet{
+  .navbar-nav{
+    .nav-item{
+      .nav-link{
+        color: #1E90FF !important;
+        display: inline-block;
+      }
+      .nav-link:hover{
+        color: black !important;
+      }
+    }
+  }
+}
+
+#buttonInscri2{
+  color: #ffffff !important;
+  text-decoration: underline !important;
+}
+
+.btn{
+  background-color: #1E90FF !important;
+  border: #1E90FF !important;
+  color: #ffffff !important;
+}

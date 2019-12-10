@@ -33,11 +33,13 @@ class HomeController extends AbstractController
         }
         $map = $features->get('map.search');
         $zipcode_maxlength = $features->get('home.zipcode.maxlength');
+        $actual_route = $request->get('actual_route', 'home');
         return $this->render('home/index.html.twig', [
             'map'=>$map,
             'zipcode_maxlength'=>$zipcode_maxlength,
             'products_cpu'=>array_reverse($content),
-            'products_gpu'=>array_reverse($contentGpu)
+            'products_gpu'=>array_reverse($contentGpu),
+            'actual_route'=>$actual_route
         ]);
     }
 

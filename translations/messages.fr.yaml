@@ -5,6 +5,8 @@ global:
 
 page:
   _common:
+    meta:
+      title: "Devenir un Utilisateur"
     button:
       confirmation: "Confirmation"
       data: "Etes vous sur d'effectuer cette action ?"
@@ -20,6 +22,12 @@ page:
     sitemap: "Plan du site"
     contact: "Contact"
   home:
+    map:
+      search:
+        title: "Trouver un Utilisateur qui vous correspond"
+        _properties:
+          zipcode:
+            label: "CP"
     evaluation:
       title: 'Qualité des échanges'
     cpu:
@@ -40,3 +48,58 @@ page:
       description: "Bienvenu sur la plateforme regroupant les plus grands fans de l'informatique !"
       image: ""
     h1: "Titre de la Homepage"
+  ambassador:
+    discover:
+      jumbotron:
+        text1: "Vous êtes un fan de l'informatique ?"
+        text2: "Alors venez partager vos conseils !"
+        button: "Je m'inscris"
+      benefits:
+        picto1: "Echangez avec les personnes vous contactant"
+        picto2: "Faites leur bénéficier de vos conseils et astuces"
+        picto3: "Recevez des points grâce à vos échanges"
+        picto4: "Afin de progresser dans le classement du meilleur utilisateur !"
+      point:
+        title: "Recevez des points"
+        contact:
+          title: "Des points contact"
+          nb1: "25"
+          pt: "points"
+          description: "Recevez 25 points lorsque vous échangez avec un contact"
+        evaluation:
+          title: "Des points évaluation"
+          nb: "25 à 45"
+          pt: "points"
+          description: "Recevez entre 25 et 45 points selon la note de l'évaluation laissé par le contact à la fin de votre échange"
+      sliderbecome:
+        title: "Comment ça marche ?"
+        picto1: "Inscrivez-vous en créant votre espace personnel"
+        picto2: "Répondez aux questions des internautes"
+        picto3: "Invitez vos amis à découvrir la plateforme"
+        picto4: "Recevez des points contacts (25 points) et des points évaluations (de 25 à 45)"
+        picto5: "Augmentez votre rang dans le classement général"
+        picto6: "Quittez la plateforme à tout moment"
+      section_register:
+        title1: "Inscrivez vous maintenant !"
+        faq: "Voir les FAQ"
+        button: "Je m'inscris"
+    login:
+      title: "Bienvenue sur votre espace personnel"
+      section:
+        login:
+          title: "Déjà inscrit ?"
+          description: "Connectez-vous ci-dessous pour échanger avec vos contacts, voir votre profil ainsi que votre classement"
+          form:
+            username:
+              label: "Email"
+              placeholder: "Email"
+            password:
+              label: "Mot de passe"
+              placeholder: "Mot de passe"
+            login_button: "Se connecter"
+            forgot_password_link: "Mot de passe oublié ?"
+        register:
+          title: "Pas encore inscrit ?"
+          description: "Inscrivez-vous dès maintenant pour partager votre expérience, vos conseils"
+          register_button: "S'inscrire"
+
