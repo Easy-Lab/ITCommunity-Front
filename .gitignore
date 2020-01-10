@@ -24,6 +24,9 @@
 /var/bootstrap.php.cache
 /bin/*
 !bin/console
+!bin/phpunit
+!bin/run
+!bin/watch
 !bin/symfony_requirements
 /vendor/
 /nodes_modules/
