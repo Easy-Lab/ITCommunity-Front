@@ -41,3 +41,13 @@ parameters:
     - products
     - pictures
     - profile_picture
+
+  features.forms.register.step_0:
+    - full_name
+    - username
+    - password
+    - full_address
+    - phone
+    - terms_of_service
+    - informations_enabled
+    - newsletter_enabled

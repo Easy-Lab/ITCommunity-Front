@@ -1,7 +1,7 @@
 global:
   site_name: "ITCommunity"
   fb_app_id: ""
-  images_url: 'http://localhost:8001/assets'
+  images_url: 'http://localhost:8000/assets'
 
 page:
   _common:
@@ -12,6 +12,7 @@ page:
       data: "Etes vous sur d'effectuer cette action ?"
       annuler: "Annuler"
       confirmer: "Confirmer"
+      send_button: "Envoyer"
     global:
       body_class: "ITCommunity"
   name_page:
@@ -49,6 +50,51 @@ page:
       image: ""
     h1: "Titre de la Homepage"
   ambassador:
+    register:
+      step_0:
+        submit_button: "Suivant"
+        introduction: "Les informations de cette page sont indispensables à votre inscription.<br />Elles ne seront pas visibles sur le site."
+    _forms:
+        username:
+          label: E-mail
+        password:
+          label: Mot de passe
+          helper: (au moins 6 caractères)
+          show: Voir le mot de passe
+        password_confirm:
+          label: Confirmez votre mot de passe
+        terms_of_service:
+          label: "J’ai lu et j’accepte les <a href='%url%' target='_blank'>conditions de participation</a>"
+          et: " et la "
+          politique: "<a href='%url%' target='_blank'>Politique de données personnelles</a>"
+        informations_enabled:
+          label: "J'accepte de recevoir les notifications et informations du programme Ambassadeurs"
+        newsletter_enabled:
+          label: "Je souhaite recevoir les informations et les nouveautés"
+        birthdate:
+          popup: "Votre date de naissance ne sera pas affichée, elle permet de garantir que vous avez 18 ans ou plus au moment de l'inscription"
+          label: Date de naissance
+        firstname:
+          label: Prénom
+        lastname:
+          label: Nom de famille
+        full_address:
+          zipcodes_list:
+            label: Ce programme est exclusivement réservé aux habitants des départements
+        address:
+          label: Adresse postale
+          placeholder: Ligne 1
+        address_2:
+          placeholder: Ligne 2 (facultatif)
+        zipcode:
+          label: Code postal
+        city:
+          label: Ville
+        phone:
+          label: Numéro de téléphone portable
+        pseudo:
+          label: Votre pseudo
+          helper: Choisissez votre pseudo
     discover:
       jumbotron:
         text1: "Vous êtes un fan de l'informatique ?"
@@ -102,4 +148,31 @@ page:
           title: "Pas encore inscrit ?"
           description: "Inscrivez-vous dès maintenant pour partager votre expérience, vos conseils"
           register_button: "S'inscrire"
+  contact_us:
+    meta:
+      title: "Contactez nous"
+    title: "Formulaire de contact"
+    description: "Pour nous contacter, merci de remplir le formulaire ci-dessous."
+    form:
+      firstname:
+        label: "Votre prénom *"
+        placeholder: "Votre prénom"
+      lastname:
+        label: "Votre nom *"
+        placeholder: "Votre nom"
+      phone:
+        label: "Votre numéro de téléphone"
+        placeholder: "Votre numéro de téléphone (optionnel)"
+      email:
+        label: "Votre adresse e-mail *"
+        placeholder: "Votre email"
+      reason:
+        label: "L'objet du message *"
+        placeholder: "L'objet du message *"
+      message:
+        label: "Votre message *"
+      infos: "Les informations précédées d'une astérisque sont obligatoires car nécessaires pour répondre à votre demande. Elles ne seront pas utilisées ni stockées à d'autres fins de traitement."
+  report_bug:
+    title: "Formulaire de signalement"
+    description: "Pour nous signaler un bug sur la plateforme, merci de remplir le formulaire ci-dessous."
 

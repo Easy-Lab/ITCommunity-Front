@@ -119,6 +119,58 @@
 
         {% block body %}{% endblock %}
 
+        <div class="reportBug">
+            <div class="reportContent">
+        <button id="myBtn" class="btn btn-theme"><i class="fas fa-bug"></i>
+            Signaler un bug ?</button>
+            </div>
+        </div>
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h1>{{ 'page.report_bug.title'|trans }}</h1>
+
+                <p>{{ 'page.report_bug.description'|trans }}</p>
+
+
+                <form action="" method="post">
+                    <div class="form-group">
+                        <label for="firstname">{{ 'page.contact_us.form.firstname.label'|trans }}</label>
+                        <input placeholder="{{ 'page.contact_us.form.firstname.placeholder'|trans }}" required class="form-control" type="text" name="firstname"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lastname">{{ 'page.contact_us.form.lastname.label'|trans }}</label>
+                        <input placeholder="{{ 'page.contact_us.form.lastname.placeholder'|trans }}" required class="form-control" type="text" name="lastname" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">{{ 'page.contact_us.form.email.label'|trans }}</label>
+                        <input placeholder="{{ 'page.contact_us.form.email.placeholder'|trans }}" required class="form-control" type="text" name="email" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reason">{{ 'page.contact_us.form.reason.label'|trans }}</label>
+                        <input placeholder="{{ 'page.contact_us.form.reason.placeholder'|trans }}" required class="form-control" type="text" name="reason" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">{{ 'page.contact_us.form.message.label'|trans }}</label>
+                        <textarea required class="form-control text-field" name="message" type="text"></textarea>
+                    </div>
+
+                    {#                    <div class="g-recaptcha" data-sitekey="{{ google_recaptcha_key }}"></div><br>#}
+
+                    <button type="submit" class="btn btn-theme" style="position: relative;
+    left: 87%;">{{ 'page._common.button.send_button'|trans }}</button>
+                </form>
+            </div>
+
+        </div>
+
     </main>
 
 
@@ -216,6 +268,34 @@
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ google_tag_id }}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
 {% endif %}#}
+
+<script type="text/javascript">
+    // Get the modal
+    var modal = document.getElementById("myModal");
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("myBtn");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on the button, open the modal
+    btn.onclick = function() {
+        modal.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
 
 {% block javascripts %}
     <script type="text/javascript">

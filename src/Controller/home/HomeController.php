@@ -173,8 +173,11 @@ class HomeController extends AbstractController
 //            $validator->fail();
 //        }
 
+        $actual_route = $request->get('actual_route', 'contact_us');
+
         return $this->render('main/contact_us.html.twig', [
-//            'validator' => $validator,
+            'validator' => $validator,
+            'actual_route'=>$actual_route
 //            "reasons" => $reasons,
 //            'openGarden'=>$features->get('environment.events.enabled'),
 //
