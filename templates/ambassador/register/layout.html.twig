@@ -41,10 +41,10 @@
         <div class="row mt-4 mb-3 register-ambassador-left-column">
             <div class="col-xs-12 col-4 d-none d-md-block">
                 <div class="nav flex-column nav-pills" id="navRegister">
-{#                    <a class="nav-link nav-link-uniform-padding {{ actual_route == 'ambassador_register' or actual_route == 'ambassador_register_step_1' ? 'active' }}" href="{{ step > 0 ? path('ambassador_register_step_1') : '#' }}"> #}{#  {{ step > 0 ? 'link-disabled' }} #}
-{#                        {{ 'page.ambassador.register.layout.steps.step_1'|trans }}#}
+                    <a class="nav-link nav-link-uniform-padding {{ actual_route == 'ambassador_register' ? 'active' }}" href="{{ path('ambassador_register') }}">
+                        {{ 'page.ambassador.register.layout.steps.step_1'|trans }}
 {#                        {% if step > 0 %}<i class="fas fa-check-circle step_confirm"></i>{% endif %}#}
-{#                    </a>#}
+                    </a>
 {#                    {% for i in [2, 3, 4] %}#}
 {#                    <a class="nav-link nav-link-uniform-padding {{ actual_route == ('ambassador_register_step_' ~ i) ? 'active' }} {{ step < i ? 'link-disabled' }}" href="{{ path('ambassador_register_step_' ~ i) }}">#}
 {#                        {{ ("page.ambassador.register.layout.steps.step_" ~ i)|trans }}#}

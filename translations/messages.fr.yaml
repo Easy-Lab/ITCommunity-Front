@@ -1,3 +1,10 @@
+validator:
+  message:
+    custom:
+      error_password: "Les mots de passes ne sont pas identiques"
+  error:
+    generic:
+      required: "Ce champ est obligatoire"
 global:
   site_name: "ITCommunity"
   fb_app_id: ""
@@ -51,7 +58,12 @@ page:
     h1: "Titre de la Homepage"
   ambassador:
     register:
+      layout:
+        steps:
+          step_1: "Votre profil"
       step_0:
+        cgv: "cgv"
+        lienPersonalData: "personal_data"
         submit_button: "Suivant"
         introduction: "Les informations de cette page sont indispensables à votre inscription.<br />Elles ne seront pas visibles sur le site."
     _forms:

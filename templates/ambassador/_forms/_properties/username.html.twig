@@ -1,4 +1,15 @@
-<div class="form-group">
-    <label for="username">{{ 'page.ambassador._forms.username.label'|trans }}</label>
-    <input type="text" class="form-control" name="username" id="username" value="{{ validator.value('username') }}" data-error="{{ validator.error('username') }}">
+
+<div class="row">
+    <div class="col-xs-12 col">
+        <div class="form-group">
+            <label for="username">{{ 'page.ambassador._forms.username.label'|trans }}</label>
+            <input type="text" class="form-control" name="username" id="username" value="{{ validator.value('username') }}" data-error="{{ validator.error('username') }}">
+        </div>
+    </div>
+    <div class="col-xs-12 col">
+        <div class="form-group">
+            <label for="pseudo">{{ 'page.ambassador._forms.pseudo.label'|trans }}</label>
+            <input type="text" class="form-control" name="pseudo" id="pseudo" value="{{ validator.value('pseudo') }}" data-error="{{ validator.error('pseudo') }}" maxlength="17">
+        </div>
+    </div>
 </div>

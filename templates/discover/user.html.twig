@@ -16,7 +16,7 @@
                     {% endfor %}
                 </strong> AMBASSADEURS</span>#}
             </h1>
-            <a href="" class="btn btn-theme" style="display: block;     color: #fff !important;
+            <a href="{{ path('ambassador_register') }}" class="btn btn-theme" style="display: block;     color: #fff !important;
     background-color: #1E90FF !important;
     border-color: #1E90FF !important; border-radius: inherit !important;min-height: 35px !important;height: 40px !important;     padding: 8px 13px !important;
     width: 14%;    margin-top: 5px;" id="buttonInscri">{{ 'page.ambassador.discover.jumbotron.button'|trans }}<i class="fa fa-angle-right ml-2"></i></a>
@@ -181,7 +181,7 @@
             <h2>{{ 'page.ambassador.discover.section_register.title1'|trans }}</h2>
             <div class="button-row">
                 <a href="{{ path('static_page', {'slug': 'faq-ambassador'}) }}" class="link">{{ 'page.ambassador.discover.section_register.faq'|trans }}</a>
-                <a href="" class="btn btn-theme" id="buttonInscri2">{{ 'page.ambassador.discover.section_register.button'|trans }}</a>
+                <a href="{{ path('ambassador_register') }}" class="btn btn-theme" id="buttonInscri2">{{ 'page.ambassador.discover.section_register.button'|trans }}</a>
             </div>
         </div>
     </section>

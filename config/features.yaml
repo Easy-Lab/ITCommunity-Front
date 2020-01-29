@@ -51,3 +51,6 @@ parameters:
     - terms_of_service
     - informations_enabled
     - newsletter_enabled
+
+  features.forms.register.step_1:
+    - full_name

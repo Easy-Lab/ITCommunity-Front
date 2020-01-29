@@ -11,7 +11,7 @@
         <p class="font-weight-bold">
             Les informations de cette page<br>
             sont indispensables à votre inscription.<br>
-            Elles ne seront pas visibles sur le site.
+            Elles ne seront pas visibles sur le site (sauf le Pseudo).
         </p>
     </div>
 {% endblock %}
@@ -29,65 +29,8 @@
             {% set firstname_value = ((contact is defined and contact != null) ? contact.firstname : validator.value('firstname') ) %}
             {% set lastname_value = ((contact is defined and contact != null) ? contact.lastname : validator.value('lastname') ) %}
             {% set username_value = ((contact is defined and contact != null) ? contact.email : validator.value('username') ) %}
-            {#
-
-            <div    data-facebook-app-id="{{ facebook_app_id }}"
-                    data-endpoint="{{ path('ambassador_login_fb') }}"
-                    id="register-via-fb-button"
-                    class="fb-login-button js-facebook-login"
-                    scope="email"
-                    data-max-rows="1"
-                    data-size="large"
-                    data-button-type="continue_with"
-                    onlogin="checkFacebookLoginState()"
-                    data-show-faces="false"
-                    data-use-continue-as="false"></div>
-
-            #}
 
             <form action="{{ form_url }}" method="post">
-
-                {#
-                                <p class="alert alert-warning text-center" id="not-eligible-message">Désolé, vous n'êtes pas éligible au programme ambassadeur</p>
-                #}
-
-                {#<div class="form-group">
-                    <div class="row">
-                        <div class="col-xs-12 col">
-                            <label for="firstname">{{ 'page.ambassador_register.firstname'|trans }}</label>
-                            <input required type="text" class="form-control" id="firstname" name="firstname" value="{{ firstname_value }}" data-error="{{ validator.error('firstname') }}">
-                        </div>
-                        <div class="col-xs-12 col">
-                            <label for="lastname">{{ 'page.ambassador_register.lastname'|trans }}</label>
-                            <input required type="text" class="form-control" id="lastname" name="lastname" value="{{ lastname_value }}" data-error="{{ validator.error('lastname') }}">
-                        </div>
-                    </div>
-                </div>
-                {% if birthdate_enabled %}
-                <div class="form-group">
-                    <label for="birthdate">Date de naissance</label>
-                    <input type="date" class="form-control" id="birthdate" name="birthdate" value="{{ validator.value('birthdate') }}" data-error="{{ validator.error('birthdate') }}">
-                </div>
-                {% endif %}
-                <div class="form-group">
-                    <label for="username">{{ 'page.ambassador_register.email'|trans }}</label>
-                    <input required type="text" class="form-control" id="username" name="username" value="{{ username_value }}" data-error="{{ validator.error('username') }}">
-                </div>
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-xs-12 col">
-                            <label for="password">{{ 'page.ambassador_register.password'|trans }} <span class="text-muted">(au moins 6 caractères)</span></label>
-                            <input required type="password" class="form-control" id="password" name="password" value="{{ validator.value('password') }}" data-error="{{ validator.error('password') }}">
-                        </div>
-                        <div class="col-xs-12 col">
-                            <label for="password_confirm">{{ 'page.ambassador_register.password_confirm'|trans }}</label>
-                            <input required type="password" class="form-control" id="password_confirm" name="password_confirm" value="{{ validator.value('password_confirm') }}" data-error="{{ validator.error('password_confirm') }}">
-                        </div>
-                    </div>
-                </div>
-
-                {% include 'ambassador/_forms/basic_informations.html.twig' %}#}
-
                 {% for element in form_properties %}
                     {% include ['ambassador/_forms/_properties/' ~ element ~ '.html.twig'] %}
                 {% endfor %}
