@@ -17,96 +17,94 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 /**
- * @Route("/ambassador/register")
+ * @Route("/user/register")
  */
 class RegisterController extends AbstractController
 {
     protected $features;
+    protected $session;
 
-    public function __construct(Features $features)
+    public function __construct(Features $features, SessionInterface $session)
     {
         $this->features = $features;
+        $this->session = $session;
     }
 
     /**
-     * @Route("/{hash}", name="ambassador_register")
+     * @Route("/step-1/{hash}", name="ambassador_register")
      */
     public function index($hash = null, Validator $validator, Features $features, Request $request, LoginService $loginService)
     {
-        if ($this->getUser())
-        {
-            return $this->redirectToRoute('home');
-        }
+//        if ($this->session)
+//        {
+//            return $this->redirectToRoute('home');
+//        }
 
         $form = [];
 
         $properties = $features->get("forms.register.step_0");
 
-        if (is_array($properties))
-        {
-            foreach ($properties as $property)
-            {
+        if (is_array($properties)) {
+            foreach ($properties as $property) {
                 $form[] = $property;
             }
         }
 
-        $actual_route = $request->get('actual_route', 'step_0');
+        $actual_route = $request->get('actual_route', 'ambassador_register');
 
         if ($validator->post()) {
             $validator->required('firstname', 'lastname', 'username', 'pseudo', 'password', 'password_confirm', 'address', 'zipcode', 'city', 'terms_of_service');
             $informations = false;
 
             if ($validator->check()) {
-                if ($validator->get('password') !== $validator->get('password_confirm'))
-                {
-                    $validator->error('password','false');
+                if ($validator->get('password') !== $validator->get('password_confirm')) {
+                    $validator->error('password', 'false');
                     $validator->fail('error_password');
                     return $this->redirectToRoute('ambassador_register');
                 }
 
 
-                if ($validator->get('informations_enabled'))
-                {
-                    if ($validator->get('informations_enabled') == 'on')
-                    {
+                if ($validator->get('informations_enabled')) {
+                    if ($validator->get('informations_enabled') == 'on') {
                         $informations = true;
                     }
                 }
                 $data =
                     [
-                    'firstname' => $validator->get('firstname'),
-                    'lastname' => $validator->get('lastname'),
-                    'email' => $validator->get('username'),
-                    'username' => $validator->get('pseudo'),
-                    'plainPassword' => $validator->get('password'),
-                    'address' => $validator->get('address'),
-                    'address2' => $validator->get('address2'),
-                    'zipcode' => $validator->get('zipcode'),
-                    'city' => $validator->get('city'),
-                    'phone' => $validator->get('phone'),
-                    'informationsEnabled' => $informations,
-                ];
-//                $client = HttpClient::create();
-//                $response = $client->request('POST', getenv('API_URL') . '/users', [
-//                    'headers' => ['content_type' => 'application/json'],
-//                    'body' => json_encode($data)
-//                ]);
+                        'firstname' => $validator->get('firstname'),
+                        'lastname' => $validator->get('lastname'),
+                        'email' => $validator->get('username'),
+                        'username' => $validator->get('pseudo'),
+                        'plainPassword' => $validator->get('password'),
+                        'address' => $validator->get('address'),
+                        'address2' => $validator->get('address2'),
+                        'zipcode' => $validator->get('zipcode'),
+                        'city' => $validator->get('city'),
+                        'phone' => $validator->get('phone'),
+                        'informationsEnabled' => $informations,
+                        'step' => 1,
+                    ];
+                $client = HttpClient::create();
+                $response = $client->request('POST', getenv('API_URL') . '/users', [
+                    'headers' => ['content_type' => 'application/json'],
+                    'body' => json_encode($data)
+                ]);
 
                 $dataLogin =
                     [
-                        'username'=>$validator->get('pseudo'),
-                        'password'=>$validator->get('password')
+                        'username' => $validator->get('pseudo'),
+                        'password' => $validator->get('password')
                     ];
-
-                $token = $loginService->getToken($dataLogin);
-                if ($token){
-                    $cookie = new Cookie("token",$token['token'],time()+604800);
-                    $res = new Response();
-                    $res->headers->setCookie($cookie);
-                    $res->sendHeaders();
+                if ($response->getStatusCode() == 201) {
+                    $token = $loginService->getToken($dataLogin);
+                    if ($token) {
+                        $loginService->createSession($data, $token['token'], $request);
+                    }
+                    return $this->redirectToRoute('register_step_2');
                 }
+                $validator->keep()->fail();
+                return $this->redirectToRoute('ambassador_register');
 
-                return $this->redirectToRoute('home');
 
             }
         }
@@ -120,11 +118,174 @@ class RegisterController extends AbstractController
     }
 
     /**
-     * @Route("/step-2", name="ambassador_register_step_2")
+     * @Route("/step-2", name="register_step_2")
      */
-    public function step2()
+    public function step2(Request $request, Features $features, Validator $validator)
     {
+        if ($request->hasSession() && $this->session) {
+
+            $form = [];
+
+            $properties = $features->get("forms.register.step_2");
+            if (is_array($properties)) {
+                foreach ($properties as $property) {
+                    $form[] = $property;
+                }
+            }
+
+            $actual_route = $request->get('actual_route', 'register_step_2');
+
+            $client = HttpClient::create();
+            $responseGpu = $client->request('GET', 'http://gpu-cpu-api.atcreative.fr/api/gpu');
+            $statusCodeGpu = $responseGpu->getStatusCode();
+            if ($statusCodeGpu == 200) {
+                $contentGpu = $responseGpu->toArray();
+            } else {
+                $contentGpu = null;
+            }
+
+            $responseCpu = $client->request('GET', 'http://gpu-cpu-api.atcreative.fr/api/cpu');
+            $statusCodeCpu = $responseCpu->getStatusCode();
+            if ($statusCodeCpu == 200) {
+                $contentCpu = $responseCpu->toArray();
+            } else {
+                $contentCpu = null;
+            }
+
+            if ($validator->post()) {
+
+                $validator->required('gpu', 'gpu_rating', 'gpu_feedback', 'cpu', 'cpu_rating', 'cpu_feedback');
+
+                if ($validator->get('gpu') == null) {
+                    $validator->error('gpu', 'required');
+                    $validator->keep()->fail('error_gpu');
+                    return $this->redirectToRoute('register_step_2');
+                }
+
+                if ($validator->get('cpu') == null) {
+                    $validator->error('cpu', 'required');
+                    $validator->keep()->fail('error_cpu');
+                    return $this->redirectToRoute('register_step_2');
+                }
+
+                if ($validator->get('gpu_rating') == null) {
+                    $validator->error('gpu_rating', 'required');
+                    $validator->keep()->fail('error_gpu_rating');
+                    return $this->redirectToRoute('register_step_2');
+                }
+
+                if ($validator->get('cpu_rating') == null) {
+                    $validator->error('cpu_rating', 'required');
+                    $validator->keep()->fail('error_cpu_rating');
+                    return $this->redirectToRoute('register_step_2');
+                }
+
+                if ($validator->check()) {
+                    $urlGpu = 'http://gpu-cpu-api.atcreative.fr/api/gpu/' . $validator->get('gpu');
+                    $infoGpu = $client->request('GET', $urlGpu);
+                    $httpCodeGpu = $infoGpu->getStatusCode();
+                    if ($httpCodeGpu == 200) {
+                        $contentInfoGpu = $infoGpu->toArray();
+                    } else {
+                        $validator->keep()->fail();
+                        return $this->redirectToRoute('register_step_2');
+                    }
+                    $dataGpu =
+                        [
+                            'body' => $validator->get('gpu_feedback'),
+                            'rating' => (int)$validator->get('gpu_rating'),
+                            'type' => 'gpu',
+                            'name_component' => $contentInfoGpu['product_name'],
+                            'company_component' => $contentInfoGpu['company'],
+                            'other_information_component' => $contentInfoGpu['gpu_clock']
+                        ];
+
+                    $urlCpu = 'http://gpu-cpu-api.atcreative.fr/api/cpu/' . $validator->get('cpu');
+                    $infoCpu = $client->request('GET', $urlCpu);
+                    $httpCodeCpu = $infoCpu->getStatusCode();
+                    if ($httpCodeCpu == 200) {
+                        $contentInfoCpu = $infoCpu->toArray();
+                    } else {
+                        $validator->keep()->fail();
+                        return $this->redirectToRoute('register_step_2');
+                    }
+
+                    $dataCpu =
+                        [
+                            'body' => $validator->get('cpu_feedback'),
+                            'rating' => (int)$validator->get('cpu_rating'),
+                            'type' => 'cpu',
+                            'name_component' => $contentInfoCpu['product_name'],
+                            'company_component' => $contentInfoCpu['company'],
+                            'other_information_component' => $contentInfoCpu['cores'] . ' cores, ' . $contentInfoCpu['clock'] . ', ' . $contentInfoCpu['socket']
+                        ];
+                    $clientPostGpu = HttpClient::create(['headers' => [
+                        'Content-Type' => 'application/json',
+                        'Authorization' => 'Bearer ' . $this->session->get('token')
+                    ]]);
+
+                    $clientPostCpu = HttpClient::create(['headers' => [
+                        'Content-Type' => 'application/json',
+                        'Authorization' => 'Bearer ' . $this->session->get('token')
+                    ]]);
+
+                    $responseGpu = $clientPostGpu->request('POST', getenv('API_URL') . '/reviews', [
+                        'body' => json_encode($dataGpu)
+                    ]);
+
+                    $responseCpu = $clientPostCpu->request('POST', getenv('API_URL') . '/reviews', [
+                        'body' => json_encode($dataCpu)
+                    ]);
+
+                    return $this->redirectToRoute('register_step_3');
+
+                }
+
+            }
+            return $this->render('ambassador/register/step_2.html.twig', [
+                'validator' => $validator,
+                'features' => $features,
+                'actual_route' => $actual_route,
+                'form_properties' => $form,
+                'elementGpu' => array_reverse($contentGpu),
+                'elementCpu' => array_reverse($contentCpu)
+
+            ]);
+        }
+        $validator->fail('no_session');
+        return $this->redirectToRoute('login');
 
     }
 
+    /**
+     * @Route("/step-3", name="register_step_3")
+     */
+    public function step3(Features $features, Request $request, Validator $validator)
+    {
+        if ($request->hasSession() && $this->session) {
+
+            $form = [];
+
+            $properties = $features->get("forms.register.step_3");
+            if (is_array($properties)) {
+                foreach ($properties as $property) {
+                    $form[] = $property;
+                }
+            }
+
+            $actual_route = $request->get('actual_route', 'register_step_3');
+
+            return $this->render('ambassador/register/step_3.html.twig', [
+                'validator' => $validator,
+                'features' => $features,
+                'actual_route' => $actual_route,
+                'form_properties' => $form,
+                'pictures_count' => $features->get('environment.pictures.count'),
+                'token' => $this->session->get('token')
+
+            ]);
+        }
+        $validator->fail('no_session');
+        return $this->redirectToRoute('login');
+    }
 }

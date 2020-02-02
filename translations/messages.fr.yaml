@@ -2,9 +2,16 @@ validator:
   message:
     custom:
       error_password: "Les mots de passes ne sont pas identiques"
+      no_session: "Vous n'êtes pas ou plus connecté"
   error:
     generic:
       required: "Ce champ est obligatoire"
+      error_gpu: "Vous n'avez pas choisi de carte graphique"
+      error_cpu: "Vous n'avez pas choisi de processeur"
+      error_gpu_rating: "Vous n'avez pas donné de note à propos de votre carte graphique"
+      error_cpu_rating: "Vous n'avez pas donné de note à propos de votre processeur"
+      no_session: "Vous n'êtes pas ou plus connecté"
+
 global:
   site_name: "ITCommunity"
   fb_app_id: ""
@@ -57,16 +64,204 @@ page:
       image: ""
     h1: "Titre de la Homepage"
   ambassador:
+    dashboard:
+      voucher:
+        hardbounce: "Email invalide"
+        show_1: "Veuillez sélectionner un Espace conseil en "
+        link: "cliquant ici"
+        show_visi: "Cet ambassadeur n'a pas choisis d'Espace Conseil"
+        nb_voucher: "chèques cadeaux Automower® disponibles en France en 2018."
+        contact_amount: "5 pts"
+        contact_text: "= Un contact de votre réseau qui vous a évalué"
+        voucher_amount: "100 pts"
+        voucher_text: "= 1 chèque cadeau automower® transformé en achat"
+        meta:
+          title: "Envoyer un Bon Plan"
+        section:
+          kpis:
+            usable_voucher_description: "Bon plans envoyés et en cours de validité"
+            burned_voucher_description: "Bon plans utilisés par vos contacts"
+            burned_voucher: "Ventes enregistrées présentent dans votre fichier"
+            burned: "Ventes viennent d'être enregistrées"
+          benefits:
+            nb_voucher_available: "Bons Plans disponibles en France en 2018."
+            5_pts:
+              label: "5 %span_start%pts%span_end%"
+              description: "à chaque fois qu'un de vos contacts vous a évalué"
+            50_200_pts:
+              label: "De 50 à 200 %span_start%pts%span_end%"
+              description: "à chaque commande de l'un de vos contacts supérieure à 1 000 € TTC"
+            50_pts:
+              label: "50 %span_start%pts%span_end%"
+              description: "à chaque commande de l'un de vos contacts entre 1 000 et 2 000 € TTC"
+            100_pts:
+              label: "100 %span_start%pts%span_end%"
+              description: "à chaque commande de l'un de vos contacts entre 2 001 et 6 000 € TTC"
+            150_pts:
+              label: "150 %span_start%pts%span_end%"
+              description: "à chaque commande de l'un de vos contacts entre 6 001 et 10 000 € TTC"
+            200_pts:
+              label: "200 %span_start%pts%span_end%"
+              description: "à chaque commande de l'un de vos contacts supérieur à 10 000 € TTC"
+          voucher:
+            rules: "Une fois l'invitation acceptée et l'inscription terminée, vous recevrez des points de classement."
+            send: "Confirmez l'envoi du Bon Plan ?"
+            resend: 'Envoyer de nouveau le Bon Plan ?'
+            title: "Invitez vos amis afin de rejoindre la communauté !"
+            no_serial_number: "Vous devez d'abord enregistrer l'identifiant d'un produit. %link_start%'Cliquez ici'%link_end% pour en enregistrer un."
+            form:
+              object:
+                label: "Objet"
+              message:
+                label: "Message"
+              voucher:
+                label: "Joindre un Bon Plan ?"
+                yes: "Oui"
+                no: "Non"
+              firstname:
+                label: "Prénom"
+              lastname:
+                label: "Nom"
+              email:
+                label: "Adresse E-mail"
+              get_copy:
+                label: "Recevoir une copie par E-mail"
+              send_button: "Envoyer"
+          information:
+            voucher: "Voir le Bon Plan"
+            description: ""
+            description2: ""
+          table_voucher:
+            title: "Suivez le statut de vos contacts"
+            empty_table: "Aucun bon plan envoyé pour l'instant."
+            header:
+              contact: "Contact"
+              email: "Adresse E-mail"
+              phone: "Numéro de téléphone"
+              status: "Statut de l'invitation"
+              send: "Envoyer un Bon Plan"
+              date: "Date d'envoi"
+              action: "Gestion"
+            content:
+              status:
+                email_empty: "Envoi par email impossible"
+                not_sent: "Non envoyé"
+                used: "Utilisé"
+                expired: "Expiré"
+                usable: "Utilisable"
+              send_button: "Envoyer"
+              resend_button: "Renvoyer"
+              delete_button_confirm: "Êtes-vous sûr de vouloir supprimer ce contact ?"
+          table_contact:
+            title: "Vos contacts"
+            empty_table: "Aucun contact"
+            header:
+              contact: "Contact"
+              email: "Adresse E-mail"
+              phone: "Numéro de téléphone"
+              context: "Contexte"
+      layout:
+        section:
+          profile:
+            buttonTab: "Mon tableau de bord"
+            title: "Bonjour %pseudo%,<br>Bienvenue sur votre Tableau de Bord."
+            views_description: "Votre profil a été affiché <span>%views%</span> fois"
+            questions_description: "Vous avez <span>%nb_questions%</span> question(s) en attente"
+            no_profile_picture: "Vous n'avez pas chargé de photo de profil"
+            no_active: "Voici votre profil. Il est nécessaire d'activer votre compte pour que votre profil soit public. Veuillez consulter vos mails."
+            edit_mode: "Vous êtes actuellement en mode édition. Pour modifier une information, cliquez sur le petit crayon situé à proximité"
+            public_mode: "Voir votre profil public"
+            information_missing: "Certaines informations sont manquantes :"
+            profile_complete: "Votre profil est complet à"
+            bar_amazon: "Où en êtes-vous de vos gains cette année ?"
+            signal: "Signalez cet ambassadeur"
+            gender: "Titre"
+            gender_male: "Monsieur"
+            gender_female: "Madame"
+            eval: "Évaluation de mon robot :"
+            model: "Modèle possédé :"
+            view_profil: "Voir le profil"
+            info: "Ces informations seront visibles sur le site"
+            7more: "7 personnes ou plus"
+            person: "personnes"
+            3more: "depuis plus de 3 ans"
+            2more: "depuis plus de 2 ans"
+            1more: "depuis plus de 1 an"
+            0more: "depuis moins d'un an"
+            owner: "Possesseur"
+            tel: "Téléphone"
+            sms: "SMS"
+            email: "Email"
+            messenger: "Messenger"
+            complete: "Votre profil n’est pas complet"
+            nodealer: 'Veuillez sélectionner votre point de vente'
+            confirm: "cliquer ici pour le finaliser"
+            select_img: "Sélectionner une image"
+            enr_img: "Enregistrer l'image"
+            update_img: "Mettre à jour"
+            delete_img: "Supprimer"
+            chargement: "Chargement..."
+            patient: "Veuillez patienter..."
+            invalid_activated: "Pour recevoir à nouveau le mail d'activation,"
+            relance_mail: "cliquez ici"
+            event_description: "Vous avez <span>%nb_participations%</span> participation(s) en attente"
+            answer_at: 'Répondu le '
+            le: 'le'
+          navigation:
+            voucher: "Échangez avec vos contacts"
+            share: "Partagez votre contenu"
+            event: "Organisez une Journée Découverte"
+            message: "Gérez vos questions publiques"
+            evaluation: "Consultez vos évaluations"
+            points: "Transformez vos points"
+            ranking: "Votre classement Ambassador"
+            profile: "Gérez votre profil"
+            photos: "Gérez vos photos"
+
     register:
       layout:
         steps:
           step_1: "Votre profil"
+          step_2: "Vos composants"
+          step_3: "Vos photos"
       step_0:
         cgv: "cgv"
         lienPersonalData: "personal_data"
         submit_button: "Suivant"
         introduction: "Les informations de cette page sont indispensables à votre inscription.<br />Elles ne seront pas visibles sur le site."
+      step_2:
+        submit_button: "Suivant"
+      step_3:
+        submit_button: "Finir l'inscription"
     _forms:
+        pictures:
+          label: "Vos photos"
+          accept: ''
+          btn_more: "Ajouter des photos complémentaires"
+        environment_pictures:
+          label: "Vos photos (ordinateur, composants, ...)"
+          helper: "Téléchargez les photos de votre ordinateur et de vos composants. Si elles ne sont pas disponibles, vous pourrez les télécharger plus tard."
+        profile_picture:
+          label: Votre photo de profil
+          helper: "Dernière étape pour finaliser votre inscription : téléchargez votre photo de profil. Si vous ne l’avez pas, vous pourrez la télécharger plus tard."
+
+        gpu:
+          rating:
+            label: "Votre note :"
+          feedback:
+            label: "Votre avis :"
+        cpu:
+          rating:
+            label: "Votre note :"
+          feedback:
+            label: "Votre avis :"
+        select:
+          gpu:
+            label: "Votre carte graphique"
+          cpu:
+            label: "Votre processeur"
+        step2:
+          title: "Vos composants"
         username:
           label: E-mail
         password:

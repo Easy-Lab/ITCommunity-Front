@@ -45,12 +45,15 @@
                         {{ 'page.ambassador.register.layout.steps.step_1'|trans }}
 {#                        {% if step > 0 %}<i class="fas fa-check-circle step_confirm"></i>{% endif %}#}
                     </a>
-{#                    {% for i in [2, 3, 4] %}#}
-{#                    <a class="nav-link nav-link-uniform-padding {{ actual_route == ('ambassador_register_step_' ~ i) ? 'active' }} {{ step < i ? 'link-disabled' }}" href="{{ path('ambassador_register_step_' ~ i) }}">#}
-{#                        {{ ("page.ambassador.register.layout.steps.step_" ~ i)|trans }}#}
-{#                        {% if step > i %}<i class="fas fa-check-circle step_confirm"></i>{% endif %}#}
-{#                    </a>#}
-{#                    {% endfor %}#}
+                    <a class="nav-link nav-link-uniform-padding {{ actual_route == 'register_step_2' ? 'active' }}" href="{{ path('register_step_2') }}">
+                        {{ 'page.ambassador.register.layout.steps.step_2'|trans }}
+                        {#                        {% if step > 0 %}<i class="fas fa-check-circle step_confirm"></i>{% endif %}#}
+                    </a>
+                    <a class="nav-link nav-link-uniform-padding {{ actual_route == 'register_step_3' ? 'active' }}" href="{{ path('register_step_3') }}">
+                        {{ 'page.ambassador.register.layout.steps.step_3'|trans }}
+                        {#                        {% if step > 0 %}<i class="fas fa-check-circle step_confirm"></i>{% endif %}#}
+                    </a>
+
                 </div>
                 <div class="register-notice">
                     {% block register_notice %}{% endblock %}
