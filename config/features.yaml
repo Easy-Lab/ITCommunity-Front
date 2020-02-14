@@ -60,3 +60,37 @@ parameters:
     - pictures
 
   features.environment.pictures.count: 5
+
+  features.profile.header.columns.count: 3
+  features.profile.header.columns.1:
+    - pseudo
+    - location
+  features.profile.header.columns.2.title: true
+  features.profile.header.columns.2:
+    - gpu
+  features.profile.header.columns.3.title: true
+  features.profile.header.columns.3:
+    - cpu
+  features.profile.content:
+    - text/gpu
+    - text/cpu
+
+    # Flag
+  features.flag.reasons:
+    - fake_profile
+    - bad_behaviour_online
+    - bad_behaviour_real_life
+    - other
+
+    # Account
+  features.account.deletion.reasons:
+    - moved
+    - no_more_products
+    - no_more_satisfaction
+    - do_not_want_visitors_anymore
+    - too_much_requests
+    - too_complicated
+    - bad_rewarding
+    - no_visitors
+    - goal_achieved
+    - other

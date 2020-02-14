@@ -1,0 +1,25 @@
+<div class="welcome">
+    <div class="title">
+        <p>
+            {{ 'page.ambassador.dashboard.share.section.event.form.description.cpu'|trans }}
+            {% if editable %}
+                <a href=""><i class="icon-pencil"></i></a>
+            {% endif %}
+        </p>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-3">
+            {% set picturePath = (environment2 is defined) ? asset(assets_url ~ 'uploads/' ~ environment2['path']) : asset(assets_url ~ 'images/img-10.jpg') %}
+            <div class="background-picture" style="background-image: url('{{ picturePath }}')">
+                {% if environment2 is null %}
+                    <div class="missing-background-picture">
+                        <div class="missing-background-picture-message"> {{ ('page._common.global.missing_image_placeholder'|trans) |raw}} </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-xs-12 col-9">
+            <p>{{ cpu['body'] }}</p>
+        </div>
+    </div>
+</div>

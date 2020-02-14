@@ -214,3 +214,22 @@
 .nav-pills .nav-link.active, .nav-pills .show>.nav-link{
   color: #fff !important;
 }
+
+.profile .subsection .title {
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin: 0 0 10px;
+  border-top: 1px solid #ced4da;
+  padding-top: 8px;
+}
+
+.profile .subsection .background-picture {
+  width: 100%;
+  min-width: 100%;
+  height: 100px;
+  min-height: 100px;
+  max-height: 100px;
+  background-size: cover;
+  position: relative;
+}

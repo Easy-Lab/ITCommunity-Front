@@ -64,7 +64,50 @@ page:
       image: ""
     h1: "Titre de la Homepage"
   ambassador:
+    unsubscribe:
+      form:
+        reason_type:
+          options:
+            moved: Déménagement
+            no_more_products: 'Pas assez de produits'
+            no_more_satisfaction: 'Pas assez de satisfaction'
+            do_not_want_visitors_anymore: 'Je ne veux plus de visiteurs'
+            too_much_requests: 'Trop de requetes'
+            too_complicated: 'Trop compliqué'
+            bad_rewarding: 'Pas assez de récompenses'
+            no_visitors: 'Pas assez de visiteur'
+            goal_achieved: 'Objectif atteint'
+            other: Autres
+        cancel_button: Annuler
+        submit_button: Se désinscrire
+        feedback: "Commentaire :"
+      title: 'Merci de nous faire part des raisons de votre départ'
+    profile:
+      header:
+        column:
+          2:
+            title: "Ma note de mon GPU"
+          3:
+            title: "Ma note de mon CPU"
     dashboard:
+      share:
+        section:
+          event:
+            form:
+              description:
+                gpu: "Mon avis sur mon GPU"
+                cpu: "Mon avis sur mon CPU"
+      edit:
+        profile:
+          title_edit_mdp: "Modification du mot de passe"
+          edit_mdp: "Cliquez ci-dessous si vous souhaitez modifier le mot de passe qui vous permet d'accéder à votre compte."
+          button_edit_mdp: "Modifier mon mot de passe"
+          title_edit_subscription: "MODIFICATION DES ABONNEMENTS"
+          edit_subscription: "Pour gérer les e-mails qui vous sont envoyés, cliquez ci-dessous."
+          button_edit_subscription: "Modifier mes abonnements"
+          title_edit_unsubscribe: "DÉSINSCRIPTION"
+          edit_unsubscribe: "Vous pouvez quitter la plateforme quand vous le souhaitez."
+          button_edit_unsubscribe: "Désinscription"
       voucher:
         hardbounce: "Email invalide"
         show_1: "Veuillez sélectionner un Espace conseil en "
@@ -163,6 +206,10 @@ page:
       layout:
         section:
           profile:
+            contact:
+              options: "MES OPTIONS DE CONTACT"
+              conseil: "Me demander un conseil"
+              demo: "Me demander une démonstration"
             buttonTab: "Mon tableau de bord"
             title: "Bonjour %pseudo%,<br>Bienvenue sur votre Tableau de Bord."
             views_description: "Votre profil a été affiché <span>%views%</span> fois"
@@ -208,15 +255,12 @@ page:
             answer_at: 'Répondu le '
             le: 'le'
           navigation:
-            voucher: "Échangez avec vos contacts"
+            voucher: "Invitez vos contacts"
             share: "Partagez votre contenu"
-            event: "Organisez une Journée Découverte"
-            message: "Gérez vos questions publiques"
+            question: "Vos questions/réponses"
             evaluation: "Consultez vos évaluations"
-            points: "Transformez vos points"
-            ranking: "Votre classement Ambassador"
+            point: "Classement général"
             profile: "Gérez votre profil"
-            photos: "Gérez vos photos"
 
     register:
       layout:
@@ -263,7 +307,7 @@ page:
         step2:
           title: "Vos composants"
         username:
-          label: E-mail
+          label: Email
         password:
           label: Mot de passe
           helper: (au moins 6 caractères)
@@ -344,8 +388,8 @@ page:
           description: "Connectez-vous ci-dessous pour échanger avec vos contacts, voir votre profil ainsi que votre classement"
           form:
             username:
-              label: "Email"
-              placeholder: "Email"
+              label: "Pseudo"
+              placeholder: "Pseudo"
             password:
               label: "Mot de passe"
               placeholder: "Mot de passe"

@@ -263,6 +263,9 @@ class RegisterController extends AbstractController
     public function step3(Features $features, Request $request, Validator $validator)
     {
         if ($request->hasSession() && $this->session) {
+            if ($validator->post()){
+                return $this->redirectToRoute('user_dashboard_invitation');
+            }
 
             $form = [];
 
