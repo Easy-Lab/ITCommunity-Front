@@ -24,14 +24,20 @@ class UserService
         $this->features = $features;
     }
 
-    public function getUser()
+    public function getUser($token = null, $username = null)
     {
         if ($this->session) {
+            if (!$token){
+                $token = $this->session->get('token');
+            }
+            if (!$username){
+                $username = $this->session->get('username');
+            }
             $client = HttpClient::create(['headers' => [
                 'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . $this->session->get('token')
+                'Authorization' => 'Bearer ' . $token
             ]]);
-            $response = $client->request('GET', getenv('API_URL') . '/users/' . $this->session->get('username')
+            $response = $client->request('GET', getenv('API_URL') . '/users/' . $username
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode == 200) {

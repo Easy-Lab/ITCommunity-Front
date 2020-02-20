@@ -1,6 +1,8 @@
 validator:
   message:
     custom:
+      login_failed: "Echec de la connexion, veuillez vérifier votre email ou votre mot de passe"
+      login_success: "Bienvenue sur votre Tableau de Bord"
       error_password: "Les mots de passes ne sont pas identiques"
       no_session: "Vous n'êtes pas ou plus connecté"
   error:
@@ -18,6 +20,8 @@ global:
   images_url: 'http://localhost:8000/assets'
 
 page:
+  menu:
+    tab: "Tableau de Bord"
   _common:
     meta:
       title: "Devenir un Utilisateur"

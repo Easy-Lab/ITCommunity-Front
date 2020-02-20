@@ -3,6 +3,7 @@
 namespace App\Controller\ambassador;
 
 use App\Service\LoginService;
+use App\Service\UserService;
 use App\Utils\Features;
 use App\Utils\Validator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -33,7 +34,7 @@ class RegisterController extends AbstractController
     /**
      * @Route("/step-1/{hash}", name="ambassador_register")
      */
-    public function index($hash = null, Validator $validator, Features $features, Request $request, LoginService $loginService)
+    public function index($hash = null, Validator $validator, Features $features, Request $request, LoginService $loginService, UserService $userService)
     {
 //        if ($this->session)
 //        {
@@ -112,7 +113,8 @@ class RegisterController extends AbstractController
             'validator' => $validator,
             'features' => $features,
             'actual_route' => $actual_route,
-            'form_properties' => $form
+            'form_properties' => $form,
+            'user'=>$userService->getUser(),
 
         ]);
     }
@@ -120,7 +122,7 @@ class RegisterController extends AbstractController
     /**
      * @Route("/step-2", name="register_step_2")
      */
-    public function step2(Request $request, Features $features, Validator $validator)
+    public function step2(Request $request, Features $features, Validator $validator, UserService $userService)
     {
         if ($request->hasSession() && $this->session) {
 
@@ -248,7 +250,8 @@ class RegisterController extends AbstractController
                 'actual_route' => $actual_route,
                 'form_properties' => $form,
                 'elementGpu' => array_reverse($contentGpu),
-                'elementCpu' => array_reverse($contentCpu)
+                'elementCpu' => array_reverse($contentCpu),
+                'user'=>$userService->getUser(),
 
             ]);
         }
@@ -260,7 +263,7 @@ class RegisterController extends AbstractController
     /**
      * @Route("/step-3", name="register_step_3")
      */
-    public function step3(Features $features, Request $request, Validator $validator)
+    public function step3(Features $features, Request $request, Validator $validator,UserService $userService)
     {
         if ($request->hasSession() && $this->session) {
             if ($validator->post()){
@@ -284,7 +287,8 @@ class RegisterController extends AbstractController
                 'actual_route' => $actual_route,
                 'form_properties' => $form,
                 'pictures_count' => $features->get('environment.pictures.count'),
-                'token' => $this->session->get('token')
+                'token' => $this->session->get('token'),
+                'user'=>$userService->getUser(),
 
             ]);
         }
