@@ -1,0 +1,36 @@
+<section class="promo-section" style="background-image: url({{ 'global.images_url'|trans ~ asset('images/jumbotron.jpeg') }}">
+    <div class="container-fluid">
+        <h1 class="padding-bot"><span>{{ 'page.home.promo.jumb1'|trans }}</span></h1>
+        <h1 class="padding-top"><span>{{ 'page.home.promo.jumb2'|trans }}</span></h1>
+        <a href="#searchHome" class="btn btn-theme" style="display: block;     color: #fff !important;
+    background-color: #1E90FF !important;
+    border-color: #1E90FF !important; border-radius: inherit !important;min-height: 35px !important;height: 40px !important;     padding: 8px 13px !important;
+    width: 25%;    margin-top: 5px;" id="buttonHome">{{ 'page.home.jumbotron.button'|trans }}<i class="fa fa-angle-right ml-2"></i></a>
+    </div>
+{#    <div class="sub-title-promo">#}
+{#        <div class="container-fluid">#}
+{#            <div class="col-sm-12">#}
+{#                <div class="text-holder" id="counterHome">#}
+{#                    <div class="counter-holder text-right">#}
+{#                        <strong class="counter md">#}
+{#                            {% set minSize = 0 %}#}
+{#                            {% if ambassadors_count|length < minSize %}#}
+{#                                {% set dec = minSize - ambassadors_count|length %}#}
+{#                                {% for idx in 1..dec %}#}
+{#                                    {% set ambassadors_count = ['0']|merge(ambassadors_count) %}#}
+{#                                {% endfor %}#}
+{#                            {% endif %}#}
+
+{#                            {% for count in ambassadors_count %}#}
+{#                                <em><i>{{ count }}</i></em>#}
+{#                            {% endfor %}#}
+
+{#                        </strong>#}
+{#                    </div>#}
+{#                    <h3 class="text-left" style="font-size: 24px;">{{ 'page.home.promo.text'|trans|raw }}</h3>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+    <a href="#benefits-section" class="bottom-link anchor white-color"><i class="icon-down-open-big"></i></a>
+</section>

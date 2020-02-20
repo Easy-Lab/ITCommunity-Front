@@ -1,0 +1,11 @@
+<p>
+    {% if showStarter %}
+        {{ 'page.home.level.title'|trans }} <strong>{{ level.level.name }}</strong>
+    {% else %}
+    {% if level.level.level == 0 %}
+
+    {% else %}
+        {{ 'page.home.level.title'|trans }} <strong>{{ level.level.name }}</strong>
+    {% endif %}
+    {% endif %}
+</p>

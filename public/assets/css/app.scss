@@ -1,1 +1,18 @@
+$dark-blue: black;
+$blue-green: blue;
+$orange-logout: orange;
+$orange: orange;
+$light-grey-border: gray;
+$main-color: red;
+
+@import "variables";
 @import "base";
+@import "footer";
+@import "global";
+@import "header";
+@import 'home';
+@import "v2";
+@import "icons";
+@import "pages";
+@import "pictures";
+@import "profile";

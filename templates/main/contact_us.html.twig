@@ -1,0 +1,67 @@
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container mt-3 mb-5 contact-page">
+
+        <div class="row">
+            <div class="col-xs-12 col-md-5 text-right contact-right-picture" id="displayResp">
+                <img style="width: 90%" src="{{ asset(assets_url ~ 'images/contact-us.png') }}">
+            </div>
+            <div class="col-xs-12 col-md-7" id="contactPage">
+                <h1>{{ 'page.contact_us.title'|trans }}</h1>
+
+                <p>{{ 'page.contact_us.description'|trans }}</p>
+
+
+                <form action="{{ path('contact_us') }}" method="post">
+                    <div class="form-group">
+                        <label for="firstname">{{ 'page.contact_us.form.firstname.label'|trans }}</label>
+                        <input placeholder="{{ 'page.contact_us.form.firstname.placeholder'|trans }}" required class="form-control" type="text" name="firstname" value="{{ validator.value('firstname') }}" data-error="{{ validator.error('firstname') }}"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lastname">{{ 'page.contact_us.form.lastname.label'|trans }}</label>
+                        <input placeholder="{{ 'page.contact_us.form.lastname.placeholder'|trans }}" required class="form-control" type="text" name="lastname" value="{{ validator.value('lastname') }}" data-error="{{ validator.error('lastname') }}"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">{{ 'page.contact_us.form.phone.label'|trans }}</label>
+                        <input placeholder="{{ 'page.contact_us.form.phone.placeholder'|trans }}" class="form-control" type="text" name="phone" value="{{ validator.value('phone') }}" data-error="{{ validator.error('phone') }}"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">{{ 'page.contact_us.form.email.label'|trans }}</label>
+                        <input placeholder="{{ 'page.contact_us.form.email.placeholder'|trans }}" required class="form-control" type="text" name="email" value="{{ validator.value('email') }}" data-error="{{ validator.error('email') }}"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reason">{{ 'page.contact_us.form.reason.label'|trans }}</label>
+                        <input placeholder="{{ 'page.contact_us.form.reason.placeholder'|trans }}" required class="form-control" type="text" name="reason" value="{{ validator.value('reason') }}" data-error="{{ validator.error('reason') }}"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">{{ 'page.contact_us.form.message.label'|trans }}</label>
+                        <textarea required class="form-control text-field" name="message" type="text" data-error="{{ validator.error('message') }}">{{ validator.value('message') }}</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <input class="texte" name="texte"
+                               placeholder="nom@domaine.com">
+                    </div>
+
+{#                    <div class="g-recaptcha" data-sitekey="{{ google_recaptcha_key }}"></div><br>#}
+
+                    <p style="font-size: 15px">{{ 'page.contact_us.form.infos'|trans }}</p>
+
+                    <button type="submit" class="btn btn-theme" style="position: relative;
+    left: 87%;">{{ 'page._common.button.send_button'|trans }}</button>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}

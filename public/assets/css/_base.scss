@@ -1,4 +1,235 @@
-h1{
+#container_eva {
+  max-width: 1280px;
+}
+
+#div_eva {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around
+}
+#div_point {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+#card_eva {
+  width: 32%;
+  background-color: white;
+  margin-top: 50px;
+  box-shadow: 0 0 15px rgba(0,0,0,.12);
+}
+#card_inscri {
+  width: 32%;
+  background-color: white;
+
+  box-shadow: 0 0 15px rgba(0,0,0,.12);
+}
+
+.bloc-left {
+  padding: 60px 40px;
+  margin-right: -70px;
+  margin-top: -40px;
+  margin-bottom: 0;
+  max-height: 300px;
+  float: left;
+  width: 33.33333%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+
+  background: linear-gradient(129.71deg,#b7a795,#998273 46.39%);
+}
+
+.bloc-right {
+  min-height: 400px;
+  height: 400px;
+  float: left;
+  width: 75%;
+  padding-left: 0;
+  padding-right: 0;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+  background-color: #fff;
+}
+
+.bloc-right .inner {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: auto;
+  width: 100%;
+  //background: url(https://tryba-static.ambassadorslab.com/assets/images/img_tryba_benefits.png);
+  background-size: cover;
+  flex-direction: row !important;
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding: 30px;
+  box-shadow: 10px 10px 15px rgba(0,0,0,.12);
+  background-color: #fff;
+  padding-bottom: 0 !important;
+}
+
+#card_eva{
+  .inner{
+    padding: 15px !important;
+  }
+}
+
+.carousel-item.active {
+  display: flex !important;
+}
+
+#card_eva {
+  margin-right: auto !important;
+  margin-left: auto !important;
+}
+
+.carousel-control-prev-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='#F1491F' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E") !important;
+  height: 30px !important;
+  width: 50px !important;
+}
+.carousel-control-next-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='#F1491F' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E") !important;
+  height: 30px !important;
+  width: 50px !important;
+
+}
+
+#p_eva {
+  margin-top: 5px !important;
+}
+
+//#card_eva{
+//  a:hover{
+//    color: inherit !important;
+//  }
+//}
+
+#monpoulet{
+  .navbar-nav{
+    .nav-item{
+      .nav-link{
+        color: #1E90FF !important;
+        display: inline-block;
+      }
+      .nav-link:hover{
+        color: black !important;
+      }
+    }
+  }
+}
+
+#buttonInscri2{
+  color: #ffffff !important;
+  text-decoration: underline !important;
+}
+
+.btn{
+  background-color: #1E90FF !important;
+  border: #1E90FF !important;
+  color: #ffffff !important;
+}
+
+.texte{
+  display: none;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: left;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.reportBug{
+  background-color: white;
+  z-index: 10;
+  width: 200px;
+  height: 50px;
+  bottom: 0;
+  right: 0;
+  position: fixed;
+}
+
+.reportContent{
+  background-color: white;
+  padding: 5px 5px 5px;
+  width: 185px;
+  margin-left: auto;
+  margin-right: auto;
   text-align: center;
-  font-size: 25px;
+  margin-top: 2px;
+  i{
+    font-size: 20px;
+  }
+}
+
+.modal-content{
+  width: 50% !important;
+  margin-top: 1% !important;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link{
+  color: #fff !important;
+}
+
+.profile .subsection .title {
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin: 0 0 10px;
+  border-top: 1px solid #ced4da;
+  padding-top: 8px;
+}
+
+.profile .subsection .background-picture {
+  width: 100%;
+  min-width: 100%;
+  height: 100px;
+  min-height: 100px;
+  max-height: 100px;
+  background-size: cover;
+  position: relative;
 }

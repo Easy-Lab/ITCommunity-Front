@@ -1,18 +1,340 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Homepage{% endblock %}</title>
-        {% block stylesheets %}
-            <link rel="stylesheet" href="{{ asset(assets_url ~ 'css/bootstrap.min.css') }}">
-            <link rel="stylesheet" href="{{ asset(assets_url ~ 'build/css/app.css') }}">
-        {% endblock %}
-    </head>
-    <body>
+<html lang="fr">
+<head>
+
+    <script type="text/javascript" src="{{ asset(assets_url ~ 'assets/tarteaucitron/tarteaucitron.js') }}"></script>
+
+    <script type="text/javascript">
+        tarteaucitron.init({
+            "hashtag": "#tarteaucitron", /* Ouverture automatique du panel avec le hashtag */
+            "highPrivacy": false, /* désactiver le consentement implicite (en naviguant) ? */
+            "orientation": "top", /* le bandeau doit être en haut (top) ou en bas (bottom) ? */
+            "adblocker": false, /* Afficher un message si un adblocker est détecté */
+            "showAlertSmall": false, /* afficher le petit bandeau en bas à droite ? */
+            "cookieslist": true, /* Afficher la liste des cookies installés ? */
+            "removeCredit": false, /* supprimer le lien vers la source ? */
+            "handleBrowserDNTRequest": false, /* Deny everything if DNT is on */
+            //"cookieDomain": ".example.com" /* Nom de domaine sur lequel sera posé le cookie pour les sous-domaines */
+        });
+    </script>
+
+    {#{% if google_tag_id is not null and google_tag_id|length > 0 %}
+        <!-- Google Tag Manager -->
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','{{ google_tag_id }}');</script>
+        <!-- End Google Tag Manager -->
+    {% endif %}#}
+
+{#    {% if google_analytics_id is not null and google_analytics_id|length > 0 %}#}
+{#            <script async src="https://www.googletagmanager.com/gtag/js?id={{ google_analytics_id }}"></script>#}
+{#            <script>#}
+{#                window.dataLayer = window.dataLayer || [];#}
+{#                function gtag(){dataLayer.push(arguments);}#}
+{#                gtag('js', new Date());#}
+{#                gtag('config', '{{ google_analytics_id }}');#}
+{#            </script>#}
+{#    {% endif %}#}
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="{{ asset(assets_url ~ 'images/favicon.ico') }}">
+
+    {% if meta_key is defined %}
+        {% set meta_title = (meta_key~'.meta.title')|trans != (meta_key~'.meta.title') ? (meta_key~'.meta.title')|trans : 'page._common.meta.title'|trans %}
+        {% set meta_description = ((meta_key~'.meta.description')|trans) != (meta_key~'.meta.description') ? (meta_key~'.meta.description')|trans : 'page._common.meta.description'|trans %}
+    {% else %}
+        {% set meta_title = ('page.' ~ app.request.get('_route') ~ '.meta.title')|trans != 'page.' ~ app.request.get('_route') ~ '.meta.title' ? ('page.' ~ app.request.get('_route') ~ '.meta.title')|trans : 'page._common.meta.title'|trans %}
+        {% set meta_description = (('page.' ~ app.request.get('_route') ~ '.meta.description')|trans) != 'page.' ~ app.request.get('_route') ~ '.meta.description' ? ('page.' ~ app.request.get('_route') ~ '.meta.description')|trans : 'page._common.meta.description'|trans %}
+    {% endif %}
+
+    {% if meta_image is not defined %}
+        {% set meta_image = (('page.' ~ app.request.get('_route') ~ '.meta.image')|trans) != 'page.' ~ app.request.get('_route') ~ '.meta.image' ? ('page.' ~ app.request.get('_route') ~ '.meta.image')|trans : 'page._common.meta.image'|trans %}
+    {% endif %}
+
+    <title>{{ title is defined ? title : meta_title }}</title>
+    <meta name="description" content="{{ description is defined ? description : meta_description }}">
+
+    <meta property="og:type" content="website"/>
+    <meta property="og:app_id" content="{{ 'globals.fb_app_id'|trans }}"/>
+    <meta property="og:site_name" content="{{ 'globals.site_name'|trans }}"/>
+    <meta property="og:title" content="{{ title is defined ? title : meta_title }}"/>
+    <meta property="og:description" content="{{ description is defined ? description : meta_description }}"/>
+    <meta property="og:image" content="{{ image is defined ? image : meta_image }}"/>
+
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+          integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ asset(assets_url ~ 'build/css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset(assets_url ~ 'assets/css/bootstrap.min.css') }}">
+
+    {% block stylesheets %}{% endblock %}
+</head>
+
+<body class="{{ "page._common.global.body_class"|trans }}">
+<div id="wrapper">
+
+    {% include 'nav/nav.html.twig' %}
+
+
+    <main class="main">
+        {% if banner is defined %}
+
+            <div id="bandeau_interface_dealer" class="bandeau"
+                 data-background-url="{{ asset(assets_url ~ 'images/' ~ banner) }}"></div>
+        {% endif %}
+
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success app-flashes">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        {% for message in app.flashes('warning') %}
+            <div class="alert alert-warning app-flashes">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+
+        {% for message in app.flashes('danger') %}
+            <div class="alert alert-danger app-flashes">
+                {{ message|raw }}
+            </div>
+        {% endfor %}
+
+        {% for message in app.flashes('error') %}
+            <div class="alert alert-danger app-flashes">
+                {{ message|raw }}
+            </div>
+        {% endfor %}
+
+        {% for message in app.flashes('info') %}
+            <div class="alert alert-info app-flashes">
+                {{ message }}
+            </div>
+        {% endfor %}
+
         {% block body %}{% endblock %}
-        {% block javascripts %}
-            <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
-            <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
-        {% endblock %}
-    </body>
+
+        <div class="reportBug">
+            <div class="reportContent">
+        <button id="myBtn" class="btn btn-theme"><i class="fas fa-bug"></i>
+            Signaler un bug ?</button>
+            </div>
+        </div>
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h1>{{ 'page.report_bug.title'|trans }}</h1>
+
+                <p>{{ 'page.report_bug.description'|trans }}</p>
+
+
+                <form action="" method="post">
+                    <div class="form-group">
+                        <label for="firstname">{{ 'page.contact_us.form.firstname.label'|trans }}</label>
+                        <input placeholder="{{ 'page.contact_us.form.firstname.placeholder'|trans }}" required class="form-control" type="text" name="firstname"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lastname">{{ 'page.contact_us.form.lastname.label'|trans }}</label>
+                        <input placeholder="{{ 'page.contact_us.form.lastname.placeholder'|trans }}" required class="form-control" type="text" name="lastname" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">{{ 'page.contact_us.form.email.label'|trans }}</label>
+                        <input placeholder="{{ 'page.contact_us.form.email.placeholder'|trans }}" required class="form-control" type="text" name="email" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reason">{{ 'page.contact_us.form.reason.label'|trans }}</label>
+                        <input placeholder="{{ 'page.contact_us.form.reason.placeholder'|trans }}" required class="form-control" type="text" name="reason" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">{{ 'page.contact_us.form.message.label'|trans }}</label>
+                        <textarea required class="form-control text-field" name="message" type="text"></textarea>
+                    </div>
+
+                    {#                    <div class="g-recaptcha" data-sitekey="{{ google_recaptcha_key }}"></div><br>#}
+
+                    <button type="submit" class="btn btn-theme" style="position: relative;
+    left: 87%;">{{ 'page._common.button.send_button'|trans }}</button>
+                </form>
+            </div>
+
+        </div>
+
+    </main>
+
+
+    {% block footer %}
+        <footer class="footer app-footer">
+            <div class="container-fluid">
+                <ul class="footer-links">
+
+                        <li><a href="{{ path('static_page', {'slug': 'cgv'}) }}">{{ ('page.name_page.cgv')|trans }}</a>
+                        </li>
+
+                    <li><a href="{{ path('static_page', {'slug': 'cgu'}) }}">{{ ('page.name_page.cgu')|trans }}</a></li>
+
+                    <li class="li_cacher_secret"><a
+                                href="{{ path('static_page', {'slug': 'personal_data'}) }}">{{ ('page.name_page.personal_data')|trans }}</a>
+                    </li>
+
+                    <li class="li_cacher_secret"><a
+                                href="{{ path('static_page', {'slug': 'cookie'}) }}">{{ ('page.name_page.cookie')|trans }}</a>
+                    </li>
+
+                    <li><a href="{{ path('sitemap') }}">{{ ('page.name_page.sitemap')|trans }}</a></li>
+
+                    <li><a href="{{ path('contact_us') }}">{{ ('page.name_page.contact')|trans }}</a></li>
+
+                    {% if app.session.get('role') %}
+                    <li><a href="https://discord.gg/tnXZATu" target="_blank"><i style="font-size: 22px;" class="fab fa-discord"></i></a></li>
+                    {% endif %}
+
+                </ul>
+            </div>
+        </footer>
+    {% endblock %}
+</div>
+
+<div class="boxes">
+    <div class="confirm">
+        <header data-default="{{ ('page._common.button.confirmation')|trans }}"></header>
+        <p data-default="{{ ('page.name_page.button.data')|trans }}"></p>
+        <footer>
+            <button class="btn btn-cancel">{{ ('page._common.button.annuler')|trans }}</button>
+            <button class="btn btn-primary btn-confirm">{{ ('page._common.button.confirmer')|trans }}</button>
+        </footer>
+    </div>
+</div>
+
+<script type="text/javascript">
+    window.amblab = {
+        features: {
+            'map.clusters.max_zoom': 10,
+            'map.clusters.grid_size': 10,
+            'map.load_on_scroll': true,
+            'map.geoloc':false
+        }
+    };
+</script>
+
+<script src="{{ asset(assets_url ~ 'assets/js/jquery.min.js') }}"></script>
+<script src="{{ asset(assets_url ~ 'assets/js/jquery.cropit.js') }}"></script>
+<script src="{{ asset(assets_url ~ 'assets/js/jquery.slick.js') }}"></script>
+<script src="{{ asset(assets_url ~ 'assets/js/bootstrap.min.js') }}"></script>
+
+<script src="{{ asset(assets_url ~ 'build/js/app.js') }}"></script>
+<script src="{{ asset(assets_url ~ 'assets/js/amblab.js') }}"></script>
+<script src="{{ asset(assets_url ~ 'assets/js/validator.js') }}"></script>
+<script src="{{ asset(assets_url ~ 'assets/js/pictures.js') }}?1"></script>
+<script src="{{ asset(assets_url ~ 'assets/js/rating.js') }}"></script>
+<script src="{{ asset(assets_url ~ 'assets/js/maps.js') }}?2"></script>
+
+<script>
+    $('#recipeCarousel').carousel({
+        interval: 200500
+    })
+
+    $('.carousel .carousel-item').each(function () {
+        var next = $(this).next();
+        if (!next.length) {
+            next = $(this).siblings(':first');
+        }
+        next.children(':first-child').clone().appendTo($(this));
+
+        if (next.next().length > 0) {
+            next.next().children(':first-child').clone().appendTo($(this));
+        } else {
+            $(this).siblings(':first').children(':first-child').clone().appendTo($(this));
+        }
+    });
+
+</script>
+
+<script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_frontend_api_key }}&callback=googleMapLoaded&libraries=geometry"
+        async defer></script>
+
+{#<script src="http://www.google.com/recaptcha/api.js" async defer></script>#}
+
+{#
+{% if google_tag_id is not null and google_tag_id|length > 0 %}
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ google_tag_id }}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+{% endif %}#}
+
+<script type="text/javascript">
+    // Get the modal
+    var modal = document.getElementById("myModal");
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("myBtn");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on the button, open the modal
+    btn.onclick = function() {
+        modal.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
+
+{% block javascripts %}
+    <script type="text/javascript">
+        {#tarteaucitron.user.googlemapsKey = '{{ google_maps_frontend_api_key }}';#}
+        {# (tarteaucitron.job = tarteaucitron.job || []).push('googlemaps');#}
+
+        {#//(tarteaucitron.job = tarteaucitron.job || []).push('jsapi');#}
+
+        {#//tarteaucitron.job = tarteaucitron.job || []).push('googlemapssearch');#}
+
+        {#tarteaucitron.user.googletagmanagerId = '{{ google_tag_id }}';#}
+        {#(tarteaucitron.job = tarteaucitron.job || []).push('googletagmanager');#}
+
+        {#(tarteaucitron.job = tarteaucitron.job || []).push('recaptcha');#}
+
+        {#tarteaucitron.user.analyticsUa = '{{ google_analytics_id }}';#}
+        {#// tarteaucitron.user.analyticsMore = function () { /* add here your optionnal ga.push() */#}
+        {#// };#}
+        {#(tarteaucitron.job = tarteaucitron.job || []).push('analytics');#}
+
+        {# tarteaucitron.user.gajsUa = '{{ google_analytics_id }}';#}
+        {# tarteaucitron.user.gajsMore = function () { /* add here your optionnal _ga.push() */ };#}
+        {# (tarteaucitron.job = tarteaucitron.job || []).push('gajs');#}
+
+        {# tarteaucitron.user.gtagUa = '{{ google_analytics_id }}';#}
+        {# tarteaucitron.user.gtagMore = function () { /* add here your optionnal gtag() */ };#}
+        {# (tarteaucitron.job = tarteaucitron.job || []).push('gtag');#}
+
+        {#tarteaucitron.user.multiplegtagUa = ['{{ google_tag_id }}'];#}
+        {#(tarteaucitron.job = tarteaucitron.job || []).push('multiplegtag');#}
+    </script>
+
+{% endblock %}
+
+</body>
+
 </html>

@@ -1,0 +1,8 @@
+<div class="checkbox mt-3">
+    <label for="newsletter_enabled" data-error="{{ validator.error('newsletter_enabled') }}" class=" d-flex">
+        <input type="checkbox" name="newsletter_enabled" id="newsletter_enabled" data-checked="{{ validator.checked('newsletter_enabled') }}">
+        <div class="pl-1 fl-1">
+            {{ 'page.ambassador._forms.newsletter_enabled.label'|trans }}
+        </div>
+    </label>
+</div>

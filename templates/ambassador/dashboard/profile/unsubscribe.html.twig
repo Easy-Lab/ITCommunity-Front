@@ -1,0 +1,46 @@
+{% set banner = 'bg-promo-05.jpg' %}
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container mt-5 mb-5">
+
+        <h3>{{ 'page.ambassador.unsubscribe.title'|trans }}</h3>
+
+
+        <div class="row">
+            <div class="col-md-6">
+                <form action="{{ path('user_dashboard_unsubscribe') }}" method="post">
+                    <div class="form-group">
+                        <label for="reason_type"></label>
+                        <select name="reason_type" id="reason_type" class="form-control custom-control" data-selected="{{ validator.value('reason_type') }}" data-error="{{ validator.error('reason_type') }}">
+                            <option disabled>{{ ('page._common.button.choisir') |trans}}</option>
+                            {% for reason in reasons %}
+                                <option value="{{ reason }}">{{ ('page.ambassador.unsubscribe.form.reason_type.options.' ~ reason)|trans }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                   {# <div class="form-group">
+                        <textarea placeholder="{{ 'page._common.text.placeholder200'|trans }}" id="reason" class="form-control text-field" name="reason" type="text" data-error="{{ validator.error('reason') }}" maxlength="599">{{ validator.value('reason') }}</textarea>
+                    </div>#}
+
+                    <div class="form-group mt-5">
+                        <label for="feedback">{{ 'page.ambassador.unsubscribe.form.feedback'|trans }}</label>
+                        <textarea placeholder="{{ 'page._common.text.placeholder600'|trans }}" id="feedback" class="form-control text-field" name="feedback" type="text" data-error="{{ validator.error('feedback') }}" maxlength="599">{{ validator.value('feedback') }}</textarea>
+                    </div>
+
+
+                    <a class="btn btn-theme" href="{{ path('user_dashboard_profile') }}">{{ 'page.ambassador.unsubscribe.form.cancel_button'|trans }}</a>
+                    <button class="btn btn-theme float-right" data-confirm="{{ 'page._common.text.delete_button_confirm'|trans }}" type=submit>{{ 'page.ambassador.unsubscribe.form.submit_button'|trans }}</button>
+
+                </form>
+            </div>
+            <div class="col-md-6">
+                <img id="img_unsubscribe" src="{{ asset(assets_url ~ 'images/product-06.jpg') }}" />
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

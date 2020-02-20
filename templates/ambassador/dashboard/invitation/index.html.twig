@@ -1,0 +1,80 @@
+
+{% extends 'ambassador/dashboard/layout.html.twig' %}
+
+{% block content %}
+    <header class="title">{{ 'page.ambassador.dashboard.voucher.section.voucher.title'|trans }}</header>
+
+    <div class="row">
+        <p style="margin-left: 2%; margin-right: 2%;">{{ 'page.ambassador.dashboard.voucher.section.voucher.rules'|trans }}</p>
+        <div class="col-md-6">
+            <form action="{{ path('user_dashboard_invitation') }}" method="post" id="ambassador_voucher_send_form">
+                <div class="form-group">
+                    <label for="firstname">{{ 'page.ambassador.dashboard.voucher.section.voucher.form.firstname.label'|trans }}</label>
+                    <input required type="text" class="form-control" id="firstname" name="firstname"
+                           value="{{ validator.value('firstname') }}" data-error="{{ validator.error('firstname') }}">
+                </div>
+                <div class="form-group">
+                    <label for="lastname">{{ 'page.ambassador.dashboard.voucher.section.voucher.form.lastname.label'|trans }}</label>
+                    <input required type="text" class="form-control" id="lastname" name="lastname"
+                           value="{{ validator.value('lastname') }}" data-error="{{ validator.error('lastname') }}">
+                </div>
+                <div class="form-group">
+                    <label for="email">{{ 'page.ambassador.dashboard.voucher.section.voucher.form.email.label'|trans }}</label>
+                    <input required type="email" class="form-control" id="email" name="email"
+                           value="{{ validator.value('email') }}" data-error="{{ validator.error('email') }}">
+                    <input required type="hidden" name="voucher_send" value="1">
+
+                </div>
+                    <div class="form-group">
+                        <label for="Object">{{ 'page.ambassador.dashboard.voucher.section.voucher.form.object.label'|trans }}</label>
+                        <input type="text" class="form-control" id="object" name="object"
+                               value="{{ validator.value('object') }}" data-error="{{ validator.error('object') }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="message"> {{ 'page.ambassador.dashboard.voucher.section.voucher.form.message.label'|trans }}</label>
+                        <textarea class="form-control text-field" name="message" id="message" maxlength="1000"
+                                  data-error="{{ validator.error('message') }}">{{ validator.value('message') }}</textarea>
+                    </div>
+                <div class="col text-right">
+                    <button class="btn btn-theme">{{ 'page.ambassador.dashboard.voucher.section.voucher.form.send_button'|trans }}</button>
+                </div>
+
+            </form>
+        </div>
+        <div class="col-md-4 offset-md-1">
+
+{#            <img class="d-block mt-4" id="img_coupon" src="{{ asset(assets_url ~ 'images/coupon-01.jpg') }}"/>#}
+
+            <p class="mt-2"
+               id="p_img_coupon">{{ 'page.ambassador.dashboard.voucher.section.information.description'|trans|raw }}</p>
+
+        </div>
+    </div>
+
+    <header class="title mt-4">{{ 'page.ambassador.dashboard.voucher.section.table_voucher.title'|trans }}</header>
+
+        <div class="scrollable-table">
+            <table class="table table-theme mt-4">
+                <thead>
+                <tr>
+                    <th>{{ 'page.ambassador.dashboard.voucher.section.table_voucher.header.contact'|trans }}</th>
+                        <th>{{ 'page.ambassador.dashboard.voucher.section.table_voucher.header.email'|trans }}</th>
+                    <th>{{ 'page.ambassador.dashboard.voucher.section.table_voucher.header.status'|trans }}</th>
+                    <th>{{ 'page.ambassador.dashboard.voucher.section.table_voucher.header.date'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+
+
+            </table>
+        </div>
+{#    {% else %}#}
+{#        <p class="alert alert-warning">{{ 'page.ambassador.dashboard.voucher.section.table_voucher.empty_table'|trans }}</p>#}
+{#    {% endif %}#}
+
+
+
+{% endblock %}
+
+

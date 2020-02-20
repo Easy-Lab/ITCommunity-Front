@@ -1,0 +1,80 @@
+<section class="evaluations" style="    background-color: #eee;    margin-bottom: -20px;">
+    <div class="container text-center my-3">
+        <h3 class="titleproduct"
+            style="padding-bottom: 0px;    margin-bottom: -15px;">{{ 'page.home.evaluation.title'|trans }}</h3>
+        <div class="row mx-auto my-auto">
+            <div id="recipeCarousel" class="carousel slide w-100" data-ride="carousel">
+                <div class="carousel-inner" role="listbox">
+{#                    {% for i,row in evaluations %}#}
+{#                        <div class="carousel-item {{ i == 0 ? 'active' }}">#}
+
+{#                            <div id="card_eva" style="font: 400 11px 'Nunito Sans', Arial, sans-serif;">#}
+
+{#                                <a href="{{ path('ambassador_view', {'id': row.evaluation.user.id}) }}"#}
+{#                                   style="text-decoration: none !important;">#}
+
+{#                                    <div class="inner" style="margin-top: 0 !important;padding-top: 0;height: 250px;">#}
+{#                                        <p id="p_avis_eva" style=" font-weight: bold">Commentaire laissé#}
+{#                                            par {{ row.contact.firstname }} {{ row.contact.lastname|first|upper }}#}
+{#                                            le {{ row.evaluation.evaluatedAt|date('d-m-Y') }}</p>#}
+
+{#                                        <p id="p_eva" class="user_rating_resp"#}
+{#                                           style="       font-weight:100 !important; line-height: 17px;;height: 70px !important; overflow: auto; text-align: left;">#}
+{#                                                            <span class="block-ellipsis"#}
+{#                                                                  style="height: 50px;    -webkit-line-clamp: 3;">#}
+{#                                                                {{ row.evaluation.feedback |length > 150 ? row.evaluation.feedback|slice(0, 150) ~ '...' : row.evaluation.feedback }}</span>#}
+{#                                        </p>#}
+
+
+{#                                        <div id="div_bottom_eva">#}
+{#                                            <div class="wrapper-rate" style="float: left; width: 100%">#}
+{#                                                {% set profilePicture = (row.evaluation.user.profilePicture is not empty) ? asset('uploads/' ~ row.evaluation.user.profilePicture) : asset(assets_url ~ 'images/img-11.jpg') %}#}
+{#                                                <div style="display: inline-block;    float: left;#}
+{#    width: 30%;">#}
+{#                                                    <img src="{{ profilePicture }}" alt="" id="img_eva">#}
+{#                                                </div>#}
+{#                                                <div style="display: inline-block; float: right">#}
+{#                                                    <div class="h5_name word-break-all"#}
+{#                                                         style="text-transform: uppercase;font-size: 18px;font-weight: bold;width: 160px; text-align: right;">{{ row.evaluation.user.pseudo|slice(0, 15) }}</div>#}
+{#                                                    <span class="city float-left" style="text-transform: uppercase; font-size: 18px; font-weight: bold;width: 170px;text-align: right;display: -webkit-box;#}
+{#    height: 20px;#}
+{#    overflow: hidden;#}
+{#    text-overflow: ellipsis;#}
+{#    -webkit-line-clamp: 1;-webkit-box-orient: vertical;"><i class="fas fa-map-marker-alt "></i> {{ row.evaluation.user.city|slice(0, 16) }}</span><br>#}
+{#                                                    <span class="city float-left"#}
+{#                                                          style="text-transform: uppercase; font-size: 18px; font-weight: bold;width: 160px;text-align: right;">{{ row.evaluation.user.zipcode }}</span><br>#}
+{#                                                    <span style="position: relative; right: -20%"> <span class="rating">#}
+{#                                                    {% for i in 1..5 %}#}
+{#                                                        <span class="icon-star{{ row.evaluation.rating < i ? '-empty' : '' }}"></span>#}
+{#                                                    {% endfor %}#}
+{#                                                    </span>#}
+{#                                                    </span>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+
+
+{#                                    </div>#}
+{#                                </a>#}
+
+{#                            </div>#}
+
+
+{#                        </div>#}
+{#                    {% endfor %}#}
+
+                </div>
+                <a class="carousel-control-prev" href="#recipeCarousel" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#recipeCarousel" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
+        <!-- <h4>Advances one slide at a time</h4> -->
+    </div>
+
+</section>

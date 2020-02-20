@@ -1,0 +1,108 @@
+{% extends 'base.html.twig' %}
+{% set banner = 'bg-promo-04.jpg' %}
+{% block body %}
+
+    <div class="container mt-3 report">
+
+
+        <div class="row">
+            <div class="col-md-7">
+                <h4 class="title-wrap">{{ 'page.ambassador.report.form.title'|trans }}</h4>
+                <hr>
+                <p>{{ 'page.ambassador.report.form.hello'|trans }},<br>
+                    <br>
+                    {{ 'page.ambassador.report.form.text1'|trans }}<br>
+                    {{ 'page.ambassador.report.form.text2'|trans }}<br>
+                    {{ 'page.ambassador.report.form.text3'|trans }}<br>
+                    {{ 'page.ambassador.report.form.text4'|trans }}.<br><br>
+                    {{ 'page.ambassador.report.form.text5'|trans }}</p>
+
+                <form class="mt-5" action="{{ path('ambassador_report', {'id': ambassadorId}) }}" method="post">
+                    <div class="row">
+                        <div class="col-xs-12 col-6">
+                            <div class="form-group">
+                                <label for="firstname">{{ 'page.ambassador.report.form.firstname'|trans }}</label>
+                                <input class="form-control" type="text" name="firstname" value="{{ validator.value('firstname') }}" data-error="{{ validator.error('firstname') }}"/>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-6">
+                            <div class="form-group">
+                                <label for="lastname">{{ 'page.ambassador.report.form.lastname'|trans }}</label>
+                                <input class="form-control" type="text" name="lastname" value="{{ validator.value('lastname') }}" data-error="{{ validator.error('lastname') }}"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12 col-6">
+                            <div class="form-group">
+                                <label for="email">{{ 'page.ambassador.report.form.email'|trans }}</label>
+                                <input class="form-control" type="text" name="email" value="{{ validator.value('email') }}" data-error="{{ validator.error('email') }}"/>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-6">
+                            <div class="form-group">
+                                <label for="phone">{{ 'page.ambassador.report.form.phone'|trans }}</label>
+                                <input class="form-control" type="text" name="phone" value="{{ validator.value('phone') }}" data-error="{{ validator.error('phone') }}"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12 col-12">
+                            <div class="form-group">
+                                <label for="reason_type">{{ 'page.ambassador.report.form.reason_type.label'|trans }}</label>
+                                <select class="form-control custom-control" name="reason_type" data-selected="{{ validator.value('reason_type') }}" data-error="{{ validator.error('reason_type') }}">
+                                    <option selected disabled>{{ 'page.ambassador.report.form.reason_type.choose'|trans }}</option>
+                                    {% for reason in reasons %}
+                                        <option value="{{ reason }}">{{ ('page.ambassador.report.form.reason_type.options.' ~ reason)|trans }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12 col-12">
+                            <div class="form-group">
+                                <label for="reason">{{ 'page.ambassador.report.form.reason'|trans }}</label>
+                                <textarea class="form-control text-field" name="reason" type="text" data-error="{{ validator.error('reason') }}">{{ validator.value('reason') }}</textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12 col-12">
+                            <div class="form-group">
+                                <div data-error="{{ validator.error('optin') }}">
+                                    <label>
+                                        <input name="optin" type="checkbox" data-checked="{{ validator.checked('optin') }}"/>
+                                        {{ 'page.ambassador.report.form.optin'|trans }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a class="btn btn-secondary" href="{{ path('ambassador_view', {'id': ambassadorId}) }}">{{ 'page.ambassador.report.form.cancel_button'|trans }}</a>
+                    <button class="btn btn-primary" type=submit>{{ 'page.ambassador.report.form.submit_button'|trans }}</button>
+
+                </form>
+            </div>
+            <div class="col-md-1"></div>
+            <div class="col-md-4 d-none d-md-block right-column">
+                <img id="imgReport" src="{{ assets_url ~ asset(base_path ~ 'images/alerte-pht1.jpg') }}">
+
+                {#<!-- <img src="{{ assets_url ~ asset(base_path ~ 'images/alerte-pht2.jpg') }}">
+
+                <img src="{{ assets_url ~ asset(base_path ~ 'images/alerte-pht3.jpg') }}"> -->#}
+
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}
