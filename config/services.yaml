@@ -25,6 +25,14 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
+    session:
+        public: true
+        class: Symfony\Component\HttpFoundation\Session\Session
+        arguments: ['@session.storage', '@session.namespacedattributebag', '@session.flash_bag']
+
+    session.namespacedattributebag:
+        class: Symfony\Component\HttpFoundation\Session\Attribute\NamespacedAttributeBag
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 

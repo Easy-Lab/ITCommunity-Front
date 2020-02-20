@@ -40,13 +40,44 @@ $(".environment-rating-stars").mouseover(function() {
     setRatingStars("#environment-rating-stars-", score);
 });
 
+$(".environmentGpu-rating-stars").mouseover(function() {
+    var score = this.getAttribute('data-value');
+    setRatingStars("#environmentGpu-rating-stars-", score);
+});
+
+$(".environmentCpu-rating-stars").mouseover(function() {
+    var score = this.getAttribute('data-value');
+    setRatingStars("#environmentCpu-rating-stars-", score);
+});
+
 $("#environment-work-rating").mouseleave(function() {
     var score = $("#environment_rating").val();
     setRatingStars("#environment-rating-stars-", score);
+})
+
+$("#gpu-work-rating").mouseleave(function() {
+    var score = $("#gpu_rating").val();
+    setRatingStars("#environmentCgu-rating-stars-", score);
+})
+
+$("#cpu-work-rating").mouseleave(function() {
+    var score = $("#cpu_rating").val();
+    setRatingStars("#environmentCpu-rating-stars-", score);
 })
 
 
 $(".environment-rating-stars").click(function() {
     var new_score = this.getAttribute("data-value");
     $("#environment_rating").val(new_score);
+});
+
+$(".environmentGpu-rating-stars").click(function() {
+    var new_score = this.getAttribute("data-value");
+    $("#gpu_rating").val(new_score);
+});
+
+
+$(".environmentCpu-rating-stars").click(function() {
+    var new_score = this.getAttribute("data-value");
+    $("#cpu_rating").val(new_score);
 });

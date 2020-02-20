@@ -35,13 +35,14 @@ function disableOtherInputImage(_input_image)
     }
 }
 
+
 if($('.image-editor').length) {
     $('.image-editor').each(function() {
         var $imageEditor = $(this)
 
         var props = {
             imageState: {
-                src: $imageEditor.attr('data-src')
+                src: $imageEditor.attr("data-src")
             },
             smallImage: 'stretch',
             onImageLoaded: function() {
@@ -111,7 +112,7 @@ if($('.image-editor').length) {
             var name = $imageEditor.attr('data-name');
             var imageData = $imageEditor.cropit('export');
             // console.log(endpoint)
-            // console.log(type)
+            console.log(type)
             // console.log(name)
             // console.log(user)
 
@@ -153,12 +154,8 @@ if($('.image-editor').length) {
                         $imageEditor.find('.cropit-control').show()
                         $imageEditor.find('.cropit-image-input').val(null)
                         $imageEditor.find('.cropit-image-input-button').hide()
-                        // console.log('euuuh');
-                        // console.log(name);
-                        // console.log(data);
-                        if ($('#share_fb')){
-                            $('meta[property=og\\:image]').attr('content', data['path']);
-                        }
+
+                        console.log(data);
 
                         disableOtherInputImage();
                     }

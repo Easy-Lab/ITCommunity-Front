@@ -210,3 +210,7 @@
   margin-left: auto;
   margin-right: auto;
 }
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link{
+  color: #fff !important;
+}
