@@ -49,17 +49,17 @@
                         <ul class="navbar-nav navbar-links">
                             <li class="nav-item no-border nav-l">
                                 <a class="nav-link text-left {{ actual_route in ['ambassador_voucher', 'ambassador_voucher_edit'] ? 'active' }}"
-                                   href="">
+                                   href="{{ path('user_dashboard_invitation') }}">
                                     {{ 'page.ambassador.dashboard.layout.section.navigation.voucher'|trans }}
                                 </a>
                             </li>
 
-                            <li class="nav-item no-border nav-l">
-                                <a class="nav-link text-left {{ actual_route == 'ambassador_dashboard_share' ? 'active' }}"
-                                   href="">
-                                    {{ 'page.ambassador.dashboard.layout.section.navigation.share'|trans }}
-                                </a>
-                            </li>
+{#                            <li class="nav-item no-border nav-l">#}
+{#                                <a class="nav-link text-left {{ actual_route == 'ambassador_dashboard_share' ? 'active' }}"#}
+{#                                   href="">#}
+{#                                    {{ 'page.ambassador.dashboard.layout.section.navigation.share'|trans }}#}
+{#                                </a>#}
+{#                            </li>#}
                             <li class="nav-item no-border nav-l">
                                 <a class="nav-link text-left {{ actual_route == 'ambassador_message' ? 'active' }}"
                                    href="">
@@ -79,7 +79,7 @@
                                 </a>
                             </li>
                             <li class="nav-item no-border nav-l">
-                                <a class="nav-link text-left" target="_blank" href="">
+                                <a class="nav-link text-left" target="_blank" href="{{ path('user_dashboard_profile') }}">
                                     {{ 'page.ambassador.dashboard.layout.section.navigation.profile'|trans }}
                                 </a>
                             </li>
@@ -172,10 +172,10 @@
                             <a class="nav-link {{ actual_route == 'home' ? 'active' }}" href="{{ path('home') }}">Accueil</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="">{{ 'page.menu.tab'|trans }}</a>
+                            <a class="nav-link" href="{{ path('user_dashboard_invitation') }}">{{ 'page.menu.tab'|trans }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="">Mon profil</a>
+                            <a class="nav-link" href="{{ path('user_dashboard_profile') }}">Mon profil</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ path('contact_us') }}">Contact</a>
