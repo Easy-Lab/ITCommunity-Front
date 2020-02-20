@@ -32,6 +32,7 @@ page:
       confirmer: "Confirmer"
       send_button: "Envoyer"
     global:
+      missing_image_placeholder: "L'Utilisateur va bientôt charger une photo"
       body_class: "ITCommunity"
   name_page:
     cgv: "Conditions de participation"

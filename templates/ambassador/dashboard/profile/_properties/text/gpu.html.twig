@@ -9,7 +9,7 @@
     </div>
     <div class="row">
         <div class="col-xs-12 col-3">
-            {% set picturePath = (environment1 is defined) ? asset(assets_url ~ 'uploads/' ~ environment1['path']) : asset(assets_url ~ 'images/img-10.jpg') %}
+            {% set picturePath = (environment1 is not null) ? asset(assets_url ~ 'uploads/' ~ environment1['path']) : asset(assets_url ~ 'images/img-10.jpg') %}
             <div class="background-picture" style="background-image: url('{{ picturePath }}')">
                 {% if environment1 is null %}
                     <div class="missing-background-picture">
