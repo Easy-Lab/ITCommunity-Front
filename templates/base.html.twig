@@ -196,6 +196,10 @@
 
                     <li><a href="{{ path('contact_us') }}">{{ ('page.name_page.contact')|trans }}</a></li>
 
+                    {% if app.session.get('role') %}
+                    <li><a href="https://discord.gg/tnXZATu" target="_blank"><i style="font-size: 22px;" class="fab fa-discord"></i></a></li>
+                    {% endif %}
+
                 </ul>
             </div>
         </footer>
