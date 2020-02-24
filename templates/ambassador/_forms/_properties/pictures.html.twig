@@ -75,7 +75,7 @@
                  data-type="environment_{{ n }}"
                  data-name="horizontal"
                  data-endpoint="{{ path('ambassador_picture_upload') }}"
-                 data-user="{% if user is defined%}{{ user.id }}{% endif %}"
+                 data-user="{% if user is defined%}{{ user['username'] }}{% endif %}"
                  id="image-editor-{{ n }}" style="margin-bottom: 100px">
 
                 <div class="cropit-editor clearfix">
@@ -136,7 +136,7 @@
                  data-type="environment_{{ n }}"
                  data-name="horizontal"
                  data-endpoint="{{ path('ambassador_picture_upload') }}"
-                 data-user="{% if user is defined%}{{ user.id }}{% endif %}"
+                 data-user="{% if user is defined%}{{ user['username'] }}{% endif %}"
                  id="image-editor-{{ n }}" style="margin-bottom: 100px">
 
                 <div class="cropit-editor clearfix">
