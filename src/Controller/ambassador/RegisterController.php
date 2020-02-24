@@ -265,11 +265,18 @@ class RegisterController extends AbstractController
      */
     public function step3(Features $features, Request $request, Validator $validator,UserService $userService)
     {
+        $profilePicture = null;
+        $environmentPictures= null;
         if ($request->hasSession() && $this->session) {
             if ($validator->post()){
                 return $this->redirectToRoute('user_dashboard_invitation');
             }
 
+            $user = $userService->getUser();
+            if ($user) {
+                $profilePicture = $userService->getProfilePicture();
+                $environmentPictures = $userService->getEnvironmentPictures();
+            }
             $form = [];
 
             $properties = $features->get("forms.register.step_3");
@@ -289,6 +296,8 @@ class RegisterController extends AbstractController
                 'pictures_count' => $features->get('environment.pictures.count'),
                 'token' => $this->session->get('token'),
                 'user'=>$userService->getUser(),
+                'profilePicture'=>$profilePicture,
+                'environmentPictures'=>$environmentPictures
 
             ]);
         }
