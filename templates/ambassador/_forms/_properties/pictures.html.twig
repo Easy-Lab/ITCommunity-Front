@@ -6,8 +6,8 @@
 <p>{{ 'page.ambassador._forms.profile_picture.helper'|trans }}</p>
 
 <div class="image-editor"
-     data-src="{% if user is defined %}{{ app.user.profilePicture is not null ? asset(base_path ~ 'uploads/' ~ app.user.profilePicture) : user is defined and user.profilePicture is not null ? asset(base_path ~ 'uploads/' ~ user.profilePicture) : '' }}{% endif %}"
-     data-id="{% if user is defined %}{{ app.user.profilePicture is not null ? app.user.id : user is defined and user.profilePicture is not null ? user.id : '' }}{% endif %}"
+     data-src="{% if user is defined %}{{ profilePicture is not null ? asset(base_path ~ 'uploads/' ~ profilePicture['path']) : user is defined and profilePicture is not null ? asset(base_path ~ 'uploads/' ~ profilePicture['path']) : '' }}{% endif %}"
+     data-id="{% if user is defined %}{{ profilePicture is not null ? user['username'] : user is defined and profilePicture is not null ? user['username'] : '' }}{% endif %}"
      data-type="profile_picture"
      data-endpoint="{{ path('ambassador_picture_upload') }}"
 {#     data-user="{% if user is defined%}{{ user.id }}{% endif %}"#}
