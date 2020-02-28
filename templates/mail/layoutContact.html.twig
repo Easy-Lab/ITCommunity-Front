@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ titlePage is defined and titlePage ? titlePage }}</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</head>
+
+<body>
+<style>
+    html, body {
+        font-family: sans-serif;
+        word-wrap: break-word;
+    }
+
+    .secondary-box {
+        background: rgb(246, 246, 246);
+        padding: 12px 20px;
+
+        color: rgb(69, 69, 69);
+        font-size: 13px;
+    }
+
+
+    .container {
+        margin: 0 auto;
+        width: 100%;
+        max-width: 600px;
+    }
+
+    .text-center {text-align: center;}
+    .w-100 {width: 100%;
+        max-width: 100%; max-height: 250px;}
+    .mt-5 {margin-top: 48px;}
+    .mt-4 {margin-top: 24px;}
+    /* .mb-5 {margin-bottom: 20px;}*/
+    .my-5 {margin: 48px 0;
+        width: 100%; height: auto !important; max-width: 167px !important;}
+
+    p {
+        font-family: arial, helvetica, sans-serif;
+        text-align: left;
+        line-height: 25px;
+        color: #454545;
+        font-size: 14px;
+    }
+    li {
+        font-family: arial, helvetica, sans-serif;
+        text-align: left;
+        line-height: 25px;
+        color: #454545;
+        font-size: 14px;
+    }
+    .btn_mail{
+        color : #00558c; text-decoration:none;
+    }
+    .img_banniere{
+        height: 80px;  max-width: 100%; max-height: 80px; width: 100%;
+    }
+
+    li a{
+        color: #00558c !important;
+        text-decoration: none !important;
+    }
+
+    @media screen and (max-width: 415px) {
+        #pMailResp p{
+            font-size: 25px !important;
+            line-height: 40px;
+        }
+
+        #pMailResp ol{
+            font-size: 25px !important;
+            line-height: 40px;
+
+        }
+
+        #pMailResp ul{
+            font-size: 25px !important;
+            line-height: 40px;
+
+        }
+
+        #pMailResp a{
+            font-size: 25px !important;
+        }
+
+        p{
+            font-size: 25px !important;
+            line-height: 40px;
+
+        }
+
+        .respButtonMail{
+            width: 400px !important;
+            height: 70px !important;
+        }
+        #pMailResp li {
+            font-size: 25px !important;
+            line-height: 40px;
+
+        }
+
+        .logoMail{
+            height: 60px;
+            max-height: 60px;
+            width: 150px;
+            max-width: 150px;
+        }
+    }
+</style>
+
+<table border="0" cellpadding="0" style="margin: 0; padding: 0; width: 100%;">
+    <tbody>
+    <tr>
+        <td align="center" valign="top">
+            <table width="640" border="0" cellpadding="0" cellspacing="0">
+                <tbody>
+                <tr>
+                    <td valign="top">
+                        <table height="60" border="0" cellpadding="0" cellspacing="0">
+                            <tbody>
+                            <tr>
+                                <td align="left" height="60" bgcolor="black">
+                                    <img height="60" width="150" class="my-5 logoMail" src="{{ asset(assets_url ~ 'assets/images/logo.png') }}" style="margin: 0 0 !important; height: 60px !important; max-width: 150px !important; width: 150px !important;" alt="" />
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <table width="640" border="0" cellpadding="0" cellspacing="0">
+                            <tbody>
+                            <tr>
+                                <td align="left" height="5" bgcolor="#1E90FF">
+                                </td>
+                            </tr>
+                            </tbody>
+
+                        </table>
+                        <table width="640" border="0" cellpadding="0" cellspacing="0">
+                            <tbody>
+
+                            <tr>
+                                <td height="20">
+
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td>
+
+                                    <div class="content mb-5" id="pMailResp">
+                                        {% block body %}{% endblock %}
+                                    </div>
+
+                                </td>
+                            <tr>
+                                <td height="20">
+
+                                </td>
+
+                            </tr>
+                            </tr>
+                            </tbody>
+
+                        </table>
+                        <table width="640" border="0" cellpadding="0" cellspacing="0">
+                            <tbody>
+                            <tr>
+                                <td align="center">
+                                    <div class="secondary-box text-center" style="background: rgb(246, 246, 246);
+                padding: 12px 20px;
+
+                color: rgb(69, 69, 69);
+                font-size: 13px; text-align: center">
+                                        <b>{{ ('mail.common.auto')|trans }}</b>
+
+
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+
+
+
+
+
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+
+</html>

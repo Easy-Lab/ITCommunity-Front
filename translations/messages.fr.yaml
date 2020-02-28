@@ -432,3 +432,50 @@ page:
     title: "Formulaire de signalement"
     description: "Pour nous signaler un bug sur la plateforme, merci de remplir le formulaire ci-dessous."
 
+mail:
+  common:
+    hello: Bonjour
+    sign: 'L''Equipe ITCommunity.'
+    receive: 'Vous recevez cet E-mail parce que vous êtes membre de ITCommunity.'
+    auto: 'Ceci est un mail automatique, merci de ne pas y répondre'
+    dont_receive: 'Si vous ne souhaitez plus recevoir d''E-mail,'
+    connect: connectez-vous
+    tb: 'sur votre Tableau de bord, onglet'
+    profil: 'Mon profil'
+    modif: 'Modifier vos abonnements'
+  contact:
+    evaluate:
+      subject: 'Laissez un avis à votre Utilisateur'
+      content: 'Vous avez discuté avec'
+      propos: ', laissez-lui un avis !'
+      important: 'Votre avis est très important pour la communauté. Les prochains contacts qui échangeront avec'
+      profiter: 'pourront profiter de votre expérience.'
+      thanks: 'Merci de nous accorder quelques secondes pour nous laisser votre avis.'
+      button: 'Laisser un avis'
+      merci: 'Merci à vous,'
+      bye: 'A bientôt,'
+      pts: "PS : Votre Utilisateur gagnera entre 25 et 45 points de classement si vous l'évaluez."
+    discover:
+      title: 'viens de vous envoyez une invitation afin de rejoindre la plateforme ITCommunity.'
+      content: 'Vous pourrez ainsi :'
+      step1: 'Partagez votre expérience avec votre entourage et les internautes'
+      step3: 'Faites leur bénéficier de vos conseils et astuces'
+      step4: 'Recevez des points grâce à vos échanges'
+      step5: 'Progresser dans le classement du meilleur utilisateur !'
+      button: 'Inscrivez-vous maintenant'
+      question: 'Vous avez des questions sur le programme ? N’hésitez pas à nous contacter par e-mail en utilisant le bouton "Contact" sur le site.'
+  user:
+    message_private:
+      subject: 'Vous avez reçu un nouveau message depuis la plateforme ITCommunity'
+      content: 'Ce message vous a été envoyé par l’un de vos contacts'
+      rep: 'Répondez directement à votre contact en utilisant le bouton répondre de votre messagerie.'
+      thanks: 'A très bientôt,'
+  account:
+    activation:
+      title: 'Bienvenue dans la Communauté.'
+      verif: 'Validez votre compte en cliquant sur le bouton ci-dessous'
+      verification: 'Je valide mon compte'
+      subject: 'Vérification du compte'
+
+
+
