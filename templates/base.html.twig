@@ -40,7 +40,7 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="shortcut icon" href="{{ asset(assets_url ~ 'images/favicon.ico') }}">
+    <link rel="shortcut icon" href="{{ asset(assets_url ~ 'assets/images/favicon.png') }}">
 
     {% if meta_key is defined %}
         {% set meta_title = (meta_key~'.meta.title')|trans != (meta_key~'.meta.title') ? (meta_key~'.meta.title')|trans : 'page._common.meta.title'|trans %}
@@ -195,6 +195,10 @@
                     <li><a href="{{ path('sitemap') }}">{{ ('page.name_page.sitemap')|trans }}</a></li>
 
                     <li><a href="{{ path('contact_us') }}">{{ ('page.name_page.contact')|trans }}</a></li>
+
+                    {% if app.session.get('role') %}
+                    <li><a href="https://discord.gg/tnXZATu" target="_blank"><i style="font-size: 22px;" class="fab fa-discord"></i></a></li>
+                    {% endif %}
 
                 </ul>
             </div>

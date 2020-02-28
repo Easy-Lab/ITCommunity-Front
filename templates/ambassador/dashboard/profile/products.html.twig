@@ -1,0 +1,23 @@
+{% extends 'ambassador/profile/layout.html.twig' %}
+
+{% block content %}
+    <div class="container mt-2 mb-5 profile-products-form" id="profile-product-js">
+
+        {% include 'ambassador/_forms/products.html.twig' %}
+
+
+        <form action="{{ path('ambassador_profile_products') }}" method="post">
+
+            {% for element in form_properties %}
+                {% include ['ambassador/_forms/_properties/' ~ element.slug ~ '.html.twig', 'ambassador/_forms/_properties/_' ~ element.type ~ '.html.twig'] %}
+            {% endfor %}
+
+            <div class="mt-5 register-button">
+                <a href="{{ path('ambassador_profile') }}" class="btn btn-secondary">{{ ('page._common.button.annuler')|trans }}</a>
+                {% if app.user.products|length > 0 %}
+                    <button class="btn btn-theme {{ dealer_enabled ? 'js-require-dealer' }} float-right" {{ dealer_enabled ? 'disabled' }}>{{ ('page._common.button.enregistrer')|trans }}</button>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+{% endblock %}

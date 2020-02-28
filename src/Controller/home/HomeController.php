@@ -3,6 +3,7 @@
 
 namespace App\Controller\home;
 
+use App\Service\UserService;
 use App\Utils\Features;
 use App\Utils\Validator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,7 +16,7 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function index(Features $features, Request $request){
+    public function index(Features $features, Request $request, UserService $userService){
         $client = HttpClient::create();
         $responseCpu = $client->request('GET','http://gpu-cpu-api.atcreative.fr/api/cpu');
         $statusCodeCpu = $responseCpu->getStatusCode();
@@ -39,7 +40,8 @@ class HomeController extends AbstractController
             'zipcode_maxlength'=>$zipcode_maxlength,
             'products_cpu'=>array_reverse($content),
             'products_gpu'=>array_reverse($contentGpu),
-            'actual_route'=>$actual_route
+            'actual_route'=>$actual_route,
+            'user'=>$userService->getUser(),
         ]);
     }
 
@@ -76,7 +78,7 @@ class HomeController extends AbstractController
     /**
      * @Route("/contact-us", name="contact_us")
      */
-    public function contactUs(Validator $validator, Request $request)
+    public function contactUs(Validator $validator, Request $request, UserService $userService)
     {
 //        $reasons = $this->getDoctrine()->getRepository(ContactUsReason::class)->findAll(['id' => 'ASC']);
 //
@@ -177,7 +179,8 @@ class HomeController extends AbstractController
 
         return $this->render('main/contact_us.html.twig', [
             'validator' => $validator,
-            'actual_route'=>$actual_route
+            'actual_route'=>$actual_route,
+            'user'=>$userService->getUser(),
 //            "reasons" => $reasons,
 //            'openGarden'=>$features->get('environment.events.enabled'),
 //

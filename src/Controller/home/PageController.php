@@ -2,6 +2,7 @@
 
 namespace App\Controller\home;
 
+use App\Service\UserService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,7 +12,7 @@ class PageController extends AbstractController
     /**
      * @Route("/page/{slug}", name="static_page")
      */
-    public function index($slug, Request $request)
+    public function index($slug, Request $request, UserService $userService)
     {
         $lang = $request->getLocale();
 //        $staticPage = $this->getDoctrine()->getRepository(StaticPage::class)->findOneBySlug($slug);
@@ -40,6 +41,7 @@ class PageController extends AbstractController
 //        if (!$staticPageContent) throw $this->createNotFoundException();
 
         return $this->render('page/index.html.twig', [
+            'user'=>$userService->getUser(),
 //            'staticPageContent' => $staticPageContent,
 //            'title' => $staticPageContent->getTitle(),
 

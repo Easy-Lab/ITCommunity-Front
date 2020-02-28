@@ -6,67 +6,77 @@
     </div>
     <div class="container mt-3 dashboard dashboard-ambassador">
 
-{#        {% if app.user.activatedAt is null %}#}
-{#            <p class="alert alert-warning"#}
-{#               id="margeTop">{{ 'page.ambassador.dashboard.layout.account_not_activated'|trans }}#}
-{#                <br>{{ "page.ambassador.dashboard.layout.section.profile.invalid_activated"|trans }}<a#}
-{#                        href="{{ path('ambassador_voucher_relance') }}"> {{ "page.ambassador.dashboard.layout.section.profile.relance_mail"|trans }}</a>#}
-{#            </p>#}
-{#        {% endif %}#}
+        {#        {% if app.user.activatedAt is null %}#}
+        {#            <p class="alert alert-warning"#}
+        {#               id="margeTop">{{ 'page.ambassador.dashboard.layout.account_not_activated'|trans }}#}
+        {#                <br>{{ "page.ambassador.dashboard.layout.section.profile.invalid_activated"|trans }}<a#}
+        {#                        href="{{ path('ambassador_voucher_relance') }}"> {{ "page.ambassador.dashboard.layout.section.profile.relance_mail"|trans }}</a>#}
+        {#            </p>#}
+        {#        {% endif %}#}
 
 
-            <div class="row header">
+        <div class="row header">
 
-                <div class="col-xs-12 col-4">
+            <div class="col-xs-12 col-4">
 
-                    <h5 class="welcome-message">{{ 'page.ambassador.dashboard.layout.section.profile.title'|trans({ '%pseudo%': user['username'] })|raw }}</h5>
+                <h5 class="welcome-message">{{ 'page.ambassador.dashboard.layout.section.profile.title'|trans({ '%pseudo%': user['username'] })|raw }}</h5>
 
-                </div>
-            </div>
-
-            <div class="row header">
-
-
-            </div>
-
-            <div class="row mt-4">
-                <div class="col-xs-12 col-md-4 d-none d-sm-block" id="scrollbg" style="z-index: 1;">
-                    <div class="nav flex-column nav-pills sticky-part-holder">
-                        <a class="nav-link {{ actual_route in ['user_dashboard_invitation'] ? 'active' }}"
-                           href="{{ path('user_dashboard_invitation') }}">
-                            {{ 'page.ambassador.dashboard.layout.section.navigation.voucher'|trans }}
-                        </a>
-
-{#                        <a class="nav-link {{ actual_route == 'ambassador_dashboard_share' ? 'active' }}"#}
-{#                           href="{{ path('ambassador_dashboard_share') }}">#}
-{#                            {{ 'page.ambassador.dashboard.layout.section.navigation.share'|trans }}#}
-{#                        </a>#}
-{#                        <a class="nav-link {{ actual_route == 'ambassador_message' ? 'active' }}"#}
-{#                           href="{{ path('ambassador_message') }}">#}
-{#                            {{ 'page.ambassador.dashboard.layout.section.navigation.message'|trans }}#}
-{#                        </a>#}
-{#                        <a class="nav-link {{ actual_route == 'ambassador_evaluation' ? 'active' }}"#}
-{#                           href="{{ path('ambassador_evaluation') }}">#}
-{#                            {{ 'page.ambassador.dashboard.layout.section.navigation.evaluation'|trans }}#}
-{#                        </a>#}
-{#                        <a class="nav-link {{ actual_route == 'ambassador_points' ? 'active' }}"#}
-{#                           href="{{ path('ambassador_points') }}">#}
-{#                            {{ 'page.ambassador.dashboard.layout.section.navigation.points'|trans }}#}
-{#                        </a>#}
-{#                        <a style="display: none" class="nav-link {{ actual_route == 'ambassador_ranking' ? 'active' }}"#}
-{#                           href="{{ path('ambassador_ranking') }}">#}
-{#                            {{ 'page.ambassador.dashboard.layout.section.navigation.ranking'|trans }}#}
-{#                        </a>#}
-{#                        <a class="nav-link" href="{{ path('ambassador_profile') }}">#}
-{#                            {{ 'page.ambassador.dashboard.layout.section.navigation.profile'|trans }}#}
-{#                        </a>#}
-                    </div>
-                </div>
-                <div class="col-xs-12 col-md-8">
-                    {% block content %}{% endblock %}
-                </div>
             </div>
         </div>
+
+        <div class="row header">
+            <div class="col-4 col-xs-12">
+
+                {% set profilePictureUrl = (profilePicture is not null) ? asset(assets_url ~ 'uploads/' ~ profilePicture['path']) : asset(assets_url ~ 'images/default-photo-profile.png') %}
+                <div class="profile-picture d-sm-block"
+                     style="background-image: url('{{ profilePictureUrl }}')">
+                    {% if profilePicture is null %}
+                        <div class="profile-picture-missing">
+                            <div class="profile-picture-missing-message">{{ 'page.ambassador.dashboard.layout.section.profile.no_profile_picture'|trans }}</div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-xs-12 col-md-4 d-none d-sm-block" id="scrollbg" style="z-index: 1;">
+                <div class="nav flex-column nav-pills sticky-part-holder">
+                    <a class="nav-link {{ actual_route in ['user_dashboard_invitation'] ? 'active' }}"
+                       href="{{ path('user_dashboard_invitation') }}">
+                        {{ 'page.ambassador.dashboard.layout.section.navigation.voucher'|trans }}
+                    </a>
+{#                    <a class="nav-link {{ actual_route in ['user_dashboard_share'] ? 'active' }}"#}
+{#                    >#}
+{#                        {{ 'page.ambassador.dashboard.layout.section.navigation.share'|trans }}#}
+{#                    </a>#}
+                    <a class="nav-link {{ actual_route in ['user_dashboard_question'] ? 'active' }}"
+                    >
+                        {{ 'page.ambassador.dashboard.layout.section.navigation.question'|trans }}
+                    </a>
+                    <a class="nav-link {{ actual_route in ['user_dashboard_evaluation'] ? 'active' }}"
+                    >
+                        {{ 'page.ambassador.dashboard.layout.section.navigation.evaluation'|trans }}
+                    </a>
+
+                    <a class="nav-link {{ actual_route in ['user_dashboard_point'] ? 'active' }}"
+                    >
+                        {{ 'page.ambassador.dashboard.layout.section.navigation.point'|trans }}
+                    </a>
+                    <a class="nav-link {{ actual_route in ['user_dashboard_profile'] ? 'active' }}"
+                       href="{{ path('user_dashboard_profile') }}"
+                    >
+                        {{ 'page.ambassador.dashboard.layout.section.navigation.profile'|trans }}
+                    </a>
+
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-8">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </div>
 
 
 {% endblock %}

@@ -35,6 +35,9 @@
                         <textarea class="form-control text-field" name="message" id="message" maxlength="1000"
                                   data-error="{{ validator.error('message') }}">{{ validator.value('message') }}</textarea>
                     </div>
+                <div class="col text-right">
+                    <button class="btn btn-theme">{{ 'page.ambassador.dashboard.voucher.section.voucher.form.send_button'|trans }}</button>
+                </div>
 
             </form>
         </div>
