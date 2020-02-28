@@ -1,0 +1,22 @@
+{% extends 'mails/layoutContact.html.twig' %}
+
+{% block body %}
+	<p>{{ ('mail.common.hello')|trans }}&nbsp;{{contact['firstname']}}</p>
+	<p>{{user['firstname']}} {{ ('mail.contact.discover.title')|trans }}</p>
+	<p>{{ ('mail.contact.discover.content')|trans }}</p>
+	<ul>
+		<li>{{ ('mail.contact.discover.step1')|trans }}</li>
+        <li>{{ ('mail.contact.discover.step3')|trans }}</li>
+		<li>{{ ('mail.contact.discover.step4')|trans }}</li>
+		<li>{{ ('mail.contact.discover.step5')|trans }}</li>
+	</ul>
+
+	<table cellspacing="0" cellpadding="0"> <tr>
+			<td class="respButtonMail" align="left" width="260" height="45" bgcolor="#1E90FF" style="-webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; color: #ffffff; display: block; text-align: center;">
+				<a href="{{router_scheme ~ '://' ~ router_host ~ path('ambassador_register', {'hash': hash}) }}?utm_source=Platform_mail&utm_medium=email&utm_campaign=Platform_Contact&utm_content=evaluate" target="_blank" style="color: #fff;text-transform: inherit; text-align: left; padding-right: 30px; min-width: 80px; display: inline-block; vertical-align: middle; touch-action: manipulation; cursor: pointer;  padding: 14px 13px; font-size: 16px; border-radius: 5px; text-decoration: none;">{{ 'mail.contact.discover.button'|trans }}</a>
+			</td>
+		</tr>
+	</table>
+
+	<p><i>{{ 'mail.common.sign'|trans }}</i></p>
+{% endblock %}
