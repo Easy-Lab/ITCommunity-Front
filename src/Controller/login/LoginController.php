@@ -35,8 +35,19 @@ class LoginController extends AbstractController
                             'email'=>$user['email'],
                         ];
                         $loginService->createSession($data, $token['token'], $request);
-                        $validator->success('login_success');
-                        return $this->redirectToRoute('user_dashboard_invitation');
+                        $user = $userService->getUser($token['token'],null);
+                        if ($user){
+                            if ($user['step'] == 1){
+                                return $this->redirectToRoute('register_step_2');
+                            }
+                            if ($user['step'] == 2){
+                                return $this->redirectToRoute('register_step_3');
+                            }
+                            $validator->success('login_success');
+                            return $this->redirectToRoute('user_dashboard_invitation');
+                        }
+                        $validator->fail('login_failed');
+                        return $this->redirectToRoute('login');
                     }
                     $validator->fail('login_failed');
                     return $this->redirectToRoute('login');

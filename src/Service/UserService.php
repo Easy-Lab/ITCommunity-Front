@@ -70,6 +70,33 @@ class UserService
         return null;
     }
 
+    public function addStep(int $step)
+    {
+        if ($this->session) {
+            $client = HttpClient::create(['headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . $this->session->get('token')
+            ]]);
+            $data =
+                [
+                    'step' => $step,
+                ];
+            $response = $client->request('PATCH', getenv('API_URL') . '/users/' . $this->session->get('username')
+                , [
+                    'headers' => ['content_type' => 'application/json'],
+                    'body' => json_encode($data)
+                ]);
+            $statusCode = $response->getStatusCode();
+            if ($statusCode == 200) {
+                return true;
+
+            } else {
+                return false;
+            }
+        }
+        return false;
+    }
+
     public function getReviews()
     {
         if ($this->session) {
