@@ -1,0 +1,53 @@
+<div class="popup-profile profile-preview profile-preview-popup" id="linkAmbProfile">
+    <div class="element">
+        {% set profilePicture = null %}
+        {% for picture in user['pictures'] %}
+            {% if picture['name'] == 'environment_0' %}
+                {% set profilePicture = picture %}
+            {% endif %}
+        {% endfor %}
+        {% if profilePicture is not null %}
+            <div class="profile-preview-picture-holder"
+                 style="background-image: url('{{ 'global.uploads_url'|trans ~ profilePicture['path'] }}');">
+            </div>
+        {% else %}
+            <div class="user-picture-missing">
+                <div class="missing-message">{{ ('page._common.global.missing_image_placeholder'|trans) |raw }}</div>
+            </div>
+        {% endif %}
+    </div>
+        <p class="city_map_break">
+            {{ user['zipcode'] }} - {{ user['city'] }}
+        </p>
+        <h6 class="colorPseudo">{{ user['username'] }}</h6>
+        <p style="font-size: 10px; margin-top:8px;" class="user_rating_resp">
+            {% set rating = user['reviews'][0]['rating'] %}
+
+            <span class="rating">
+                    {{ user['reviews'][0]['companyComponent'] }} {{ user['reviews'][0]['nameComponent'] }} :
+        {% for i in 1..5 %}
+            <span class="icon-star{{ rating < i ? '-empty' : '' }}"></span>
+        {% endfor %}
+    </span>
+        </p>
+        <span class="block-ellipsis">
+        {{ user['reviews'][0]['body'] }}
+    </span>
+        <p style="font-size: 10px; margin-top:8px;" class="user_rating_resp">
+            {% set rating2 = user['reviews'][1]['rating'] %}
+
+            <span class="rating">
+                    {{ user['reviews'][1]['companyComponent'] }} {{ user['reviews'][1]['nameComponent'] }} :
+        {% for i in 1..5 %}
+            <span class="icon-star{{ rating2 < i ? '-empty' : '' }}"></span>
+        {% endfor %}
+    </span>
+        </p>
+        <span class="block-ellipsis">
+        {{ user['reviews'][1]['body'] }}
+    </span>
+        <a href="{{ path('user_unknow_profile', {'username': user['username']}) }}" class="btn btn-theme profile-preview-action" target="_blank" id="buttonViewProfile">
+            {{ ('page.ambassador.dashboard.layout.section.profile.view_profil') |trans }} <i class="fa fa-angle-right float-right p-1"></i>
+        </a>
+
+</div>

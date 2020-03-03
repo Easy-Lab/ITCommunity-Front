@@ -18,6 +18,7 @@ global:
   site_name: "ITCommunity"
   fb_app_id: ""
   images_url: 'http://localhost:8000/assets'
+  uploads_url: 'http://localhost:8000/uploads/'
 
 page:
   menu:
@@ -69,6 +70,16 @@ page:
       image: ""
     h1: "Titre de la Homepage"
   ambassador:
+    report:
+      form:
+        message: "Votre message"
+        lastname: "Nom"
+        firstname: "Prénom"
+        email: "Email"
+      consult: "Consultez notre politique de protection des données personnelles"
+      notification_public: "Message public"
+      notification_email: "Message privé"
+      sent: "Envoyer"
     unsubscribe:
       form:
         reason_type:
@@ -88,6 +99,10 @@ page:
         feedback: "Commentaire :"
       title: 'Merci de nous faire part des raisons de votre départ'
     profile:
+      message:
+        placeholder: "Message"
+      contact:
+        introduction: ''
       header:
         column:
           2:
@@ -212,6 +227,8 @@ page:
         section:
           profile:
             contact:
+              contact_me_for: "VOUS SOUHAITEZ EN SAVOIR PLUS ?"
+              more: ''
               options: "MES OPTIONS DE CONTACT"
               conseil: "Me demander un conseil"
               demo: "Me demander une démonstration"

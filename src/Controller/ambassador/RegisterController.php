@@ -238,7 +238,7 @@ class RegisterController extends AbstractController
                     $responseCpu = $clientPostCpu->request('POST', getenv('API_URL') . '/reviews', [
                         'body' => json_encode($dataCpu)
                     ]);
-
+                    $userService->addStep(2);
                     return $this->redirectToRoute('register_step_3');
 
                 }
@@ -269,6 +269,7 @@ class RegisterController extends AbstractController
         $environmentPictures= null;
         if ($request->hasSession() && $this->session) {
             if ($validator->post()){
+                $userService->addStep(3);
                 return $this->redirectToRoute('user_dashboard_invitation');
             }
 
