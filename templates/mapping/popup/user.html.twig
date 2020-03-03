@@ -1,14 +1,21 @@
 <div class="popup-profile profile-preview profile-preview-popup" id="linkAmbProfile">
     <div class="element">
-        {#            {% set profilePicture = (environment_0 is defined) ? asset(base_path ~ '/uploads/' ~ environment_0['path']) : (environment_1 is defined) ? asset(base_path ~ '/uploads/' ~ environment_1['path']) : (environment_2 is defined) ? asset(base_path ~ '/uploads/' ~ environment_2['path']) : asset(assets_url ~ 'images/img-11.jpg') %}#}
-        {#            <div class="profile-preview-picture-holder"#}
-        {#                 style="background-image: url('{{ profilePicture }}'); {{ popup is defined ? 'max-width: 100%; min-width: auto;' }} ">#}
-        {#                {% if environment_0 is not defined and environment_1 is not defined and environment_2 is not defined %}#}
-        {#                    <div class="user-picture-missing">#}
-        {#                        <div class="missing-message">{{ ('page._common.global.missing_image_placeholder'|trans) |raw }}</div>#}
-        {#                    </div>#}
-        {#                {% endif %}#}
-        {#            </div>#}
+        {% set profilePicture = null %}
+        {% for picture in user['pictures'] %}
+            {% if picture['name'] == 'environment_0' %}
+                {% set profilePicture = picture %}
+            {% endif %}
+        {% endfor %}
+        {% if profilePicture is not null %}
+            <div class="profile-preview-picture-holder"
+                 style="background-image: url('{{ 'global.uploads_url'|trans ~ profilePicture['path'] }}');">
+            </div>
+        {% else %}
+            <div class="user-picture-missing">
+                <div class="missing-message">{{ ('page._common.global.missing_image_placeholder'|trans) |raw }}</div>
+            </div>
+        {% endif %}
+    </div>
         <p class="city_map_break">
             {{ user['zipcode'] }} - {{ user['city'] }}
         </p>
@@ -39,10 +46,8 @@
         <span class="block-ellipsis">
         {{ user['reviews'][1]['body'] }}
     </span>
-        <a href="" class="btn btn-theme profile-preview-action" target="_blank" id="buttonViewProfile">
+        <a href="{{ path('user_unknow_profile', {'username': user['username']}) }}" class="btn btn-theme profile-preview-action" target="_blank" id="buttonViewProfile">
             {{ ('page.ambassador.dashboard.layout.section.profile.view_profil') |trans }} <i class="fa fa-angle-right float-right p-1"></i>
         </a>
-
-    </div>
 
 </div>

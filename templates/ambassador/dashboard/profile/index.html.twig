@@ -169,7 +169,7 @@
                                                         <div style="display: flex; flex-direction: row;">
                                                             <img class="pictoQP" id="pts_interro_profile"
                                                                  style="height: 43px; width: auto;"
-                                                                 src="{{ asset(assets_url ~ 'images/profile_question.png') }}">
+                                                                 src="{{ 'global.images_url'|trans ~ asset('images/profile_question.png') }}">
                                                             <span class="margQP"
                                                                   style="margin-top: 15px;">{{ "page.ambassador.dashboard.layout.section.profile.contact.conseil"|trans }}</span>
                                                         </div>
@@ -183,7 +183,7 @@
                                                         <div style="display: flex; flex-direction: row;">
                                                             <img class="pictoQP" id="pts_interro_profile"
                                                                  style="height: 43px; width: auto;"
-                                                                 src="{{ asset(assets_url ~ 'images/profile_question.png') }}">
+                                                                 src="{{ 'global.images_url'|trans ~ asset('images/profile_question.png') }}">
                                                             <span class="margQP"
                                                                   style="margin-top: 15px;">{{ "page.ambassador.dashboard.layout.section.profile.contact.demo"|trans }}</span>
                                                         </div>
@@ -205,17 +205,17 @@
                                                     <a id="contact-popup-close" class="close-popup-btn" href="javascript:;" style="margin-right: -25px;"><i
                                                                 class="icon-cancel"></i></a>
                                                 </div>
-                                                <p style="margin-top: 5px;text-align: center; margin-bottom: 10px;">{{ "ambassadors.contact.complete"|trans }}</p>
-
 
                                                 <form class="js-ambassador-contact-check-form"
                                                       action=""
-                                                      method="post" style="margin-top: -35px;">{{ "page.ambassador.profile.message.placeholder"|trans }}
+                                                      method="post" style="margin-top: -35px;">
+
+                                                    <label for="messageConseil">{{ "page.ambassador.profile.message.placeholder"|trans }}</label>
 
                                                     <div class="form-group">
                                                 <textarea required class="form-control" name="message" type="text"
-                                                          maxlength="300"
-                                                          placeholder="{{ "page.ambassador.dashboard.layout.section.profile.contact.placeholder1"|trans }}"
+                                                          maxlength="300" id="messageConseil"
+                                                          placeholder="{{ "page.ambassador.report.form.message"|trans }}"
                                                           data-error="{{ validator.error('message') }}">{{ validator.value('message') }}</textarea>
                                                     </div>
 
@@ -230,14 +230,16 @@
 {#                                                    </div>#}
 
                                                     <div class="form-group">
-                                                        <input required class="form-control" type="text" name="firstname"
+                                                        <label for="firstnameConseil">{{ "page.ambassador.report.form.firstname"|trans }}</label>
+                                                        <input required class="form-control" type="text" name="firstname" id="firstnameConseil"
                                                                value="{{ validator.value('firstname') }}"
                                                                placeholder=" {{ "page.ambassador.report.form.firstname"|trans }} "
                                                                data-error="{{ validator.error('firstname') }}"/>
                                                     </div>
 
                                                     <div class="form-group">
-                                                        <input required class="form-control" type="text" name="lastname"
+                                                        <label for="lastnameConseil">{{ "page.ambassador.report.form.lastname"|trans }}</label>
+                                                        <input required class="form-control" type="text" name="lastname" id="lastnameConseil"
                                                                value="{{ validator.value('lastname') }}"
                                                                placeholder="{{ "page.ambassador.report.form.lastname"|trans }}"
                                                                data-error="{{ validator.error('lastname') }}"/>
@@ -245,8 +247,9 @@
 
 
                                                     <div class="form-group">
+                                                        <label for="emailConseil">{{ "page.ambassador.report.form.email"|trans }}</label>
                                                         <input required class="form-control js-ambassador-contact-check-email"
-                                                               type="email" name="email" value="{{ validator.value('email') }}"
+                                                               type="email" name="email" id="emailConseil" value="{{ validator.value('email') }}"
                                                                placeholder="{{ "page.ambassador.report.form.email"|trans }}"
                                                                data-error="{{ validator.error('email') }}"/>
                                                     </div>
@@ -280,12 +283,12 @@
                                                                         <label for="conseil_notification_public" style="display:block;">
                                                                             <input name="conseil_notification" type="radio" id="conseil_notification_public" value="public"
                                                                                    data-checked="{{ validator.checked('conseil_notification_public') }}"/>
-                                                                            <span>{{ "page.ambassador.dashboard.layout.section.profile.contact.notification_public"|trans }}</span>
+                                                                            <span>{{ "page.ambassador.report.notification_public"|trans }}</span>
                                                                         </label>
                                                                     <label for="conseil_notification_email" style="display:block;">
                                                                         <input name="conseil_notification" type="radio" id="conseil_notification_email" value="sms" data-error="{{ validator.error('conseil_notification') }}"
                                                                                data-checked="{{ validator.checked('conseil_notification_email') }}"/>
-                                                                        <span>{{ "page.ambassador.dashboard.layout.section.profile.contact.notification_email"|trans }}</span>
+                                                                        <span>{{ "page.ambassador.report.notification_email"|trans }}</span>
                                                                     </label>
                                                                 </div>
 
@@ -302,13 +305,13 @@
                                                     <div class="row">
                                                         <div class="col-7">
                                                                 <span><a target="_blank"
-                                                                                                   href="{{ url('static_page', {'slug': 'cgu'}) }}#personal_data">{{ "page.ambassador.dashboard.layout.section.profile.contact.consult"|trans }}</a>
+                                                                         href="{{ url('static_page', {'slug': 'cgu'}) }}#personal_data">{{ "page.ambassador.report.consult"|trans }}</a>
                                                                 </span>
 
                                                             </div>
                                                     <div class="col-5">
                                                         <button class="btn btn-theme no-arrow bigger"
-                                                                type="submit">{{ "page.ambassador.dashboard.layout.section.profile.contact.sent"|trans }}</button>
+                                                                type="submit">{{ "page.ambassador.report.sent"|trans }}</button>
 
                                                     </div>
                                                     </div>
@@ -322,17 +325,16 @@
                                                     <a id="contact-popup-close" class="close-popup-btn" href="javascript:;" style="margin-right: -25px;"><i
                                                                 class="icon-cancel"></i></a>
                                                 </div>
-                                                <p style="margin-top: 4px;text-align: center;">{{ "ambassadors.contact.complete"|trans }}</p>
-
 
                                                 <form class="js-ambassador-contact-check-form"
                                                       action=""
-                                                      method="post" style="margin-top: -35px;">{{ "page.ambassador.profile.message.placeholder"|trans }}
+                                                      method="post" style="margin-top: -35px;">
+                                                    <label for="messageDemo">{{ "page.ambassador.profile.message.placeholder"|trans }}</label>
 
                                                     <div class="form-group">
                                                 <textarea required class="form-control" name="message" type="text"
-                                                          maxlength="300"
-                                                          placeholder="{{ "page.ambassador.dashboard.layout.section.profile.contact.placeholder2"|trans }}"
+                                                          maxlength="300" id="messageDemo"
+                                                          placeholder="{{ "page.ambassador.report.form.message"|trans }}"
                                                           data-error="{{ validator.error('message') }}">{{ validator.value('message') }}</textarea>
                                                     </div>
 
@@ -347,14 +349,16 @@
 {#                                                    </div>#}
 
                                                     <div class="form-group">
-                                                        <input required class="form-control" type="text" name="firstname"
+                                                        <label for="firstnameDemo">{{ "page.ambassador.report.form.firstname"|trans }}</label>
+                                                        <input required class="form-control" type="text" name="firstname" id="firstnameDemo"
                                                                value="{{ validator.value('firstname') }}"
                                                                placeholder=" {{ "page.ambassador.report.form.firstname"|trans }} "
                                                                data-error="{{ validator.error('firstname') }}"/>
                                                     </div>
 
                                                     <div class="form-group">
-                                                        <input required class="form-control" type="text" name="lastname"
+                                                        <label for="lastnameDemo">{{ "page.ambassador.report.form.lastname"|trans }}</label>
+                                                        <input required class="form-control" type="text" name="lastname" id="lastnameDemo"
                                                                value="{{ validator.value('lastname') }}"
                                                                placeholder="{{ "page.ambassador.report.form.lastname"|trans }}"
                                                                data-error="{{ validator.error('lastname') }}"/>
@@ -362,7 +366,8 @@
 
 
                                                     <div class="form-group">
-                                                        <input required class="form-control js-ambassador-contact-check-email"
+                                                        <label for="emailDemo">{{ "page.ambassador.report.form.email"|trans }}</label>
+                                                        <input required class="form-control js-ambassador-contact-check-email" id="emailDemo"
                                                                type="email" name="email" value="{{ validator.value('email') }}"
                                                                placeholder="{{ "page.ambassador.report.form.email"|trans }}"
                                                                data-error="{{ validator.error('email') }}"/>
@@ -396,12 +401,12 @@
                                                                     <label for="demo_notification_public" style="display:block;">
                                                                         <input name="demo_notification" type="radio" id="demo_notification_public" value="public"
                                                                                data-checked="{{ validator.checked('gender','demo_notification_public') }}"/>
-                                                                        <span>{{ "page.ambassador.dashboard.layout.section.profile.contact.notification_public"|trans }}</span>
+                                                                        <span>{{ "page.ambassador.report.notification_public"|trans }}</span>
                                                                     </label>
                                                                 <label for="demo_notification_email" style="display:block;">
                                                                     <input name="demo_notification" type="radio" id="demo_notification_email" value="email" data-error="{{ validator.error('demo_notification') }}"
                                                                            data-checked="{{ validator.checked('gender','demo_notification_email') }}"/>
-                                                                    <span>{{ "page.ambassador.dashboard.layout.section.profile.contact.notification_email"|trans }}</span>
+                                                                    <span>{{ "page.ambassador.report.notification_email"|trans }}</span>
                                                                 </label>
                                                             </div>
                                                             </div>
@@ -417,13 +422,13 @@
                                                     <div class="row">
                                                         <div class="col-7">
                                                                 <span><a target="_blank"
-                                                                         href="{{ url('static_page', {'slug': 'cgu'}) }}#personal_data">{{ "page.ambassador.dashboard.layout.section.profile.contact.consult"|trans }}</a>
+                                                                         href="{{ url('static_page', {'slug': 'cgu'}) }}#personal_data">{{ "page.ambassador.report.consult"|trans }}</a>
                                                                 </span>
 
                                                         </div>
                                                         <div class="col-5">
                                                             <button class="btn btn-theme no-arrow bigger"
-                                                                    type="submit">{{ "page.ambassador.dashboard.layout.section.profile.contact.sent"|trans }}</button>
+                                                                    type="submit">{{ "page.ambassador.report.sent"|trans }}</button>
 
                                                         </div>
                                                     </div>
@@ -722,7 +727,7 @@
 
         </div> <!-- end profile -->
     </div>
-    <script src="{{ asset(assets_url ~ 'assets/js/jquery-3.2.1.min.js') }}"></script>
+    <script src="{{ asset(assets_url ~ 'assets/js/jquery.min.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function () {
           if($('#demo_notification_sms')){

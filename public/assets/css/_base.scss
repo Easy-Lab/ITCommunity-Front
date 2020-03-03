@@ -245,27 +245,24 @@
 
   font: 400 11px 'Nunito Sans', Arial, sans-serif;
 
-  [data-element="location"] {
-    p {
+
+  .city_map_break{
       font-size: 18px;
       text-transform: uppercase;
       font-weight: bold;
       margin: 0;
       padding: 10px 0;
-    }
   }
 
-  [data-element="pseudo"] {
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
+
     h6 {
       text-transform: uppercase;
       font-weight: bold;
       margin: 0;
-      padding: 10px 0;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
     }
-  }
 }
 
 .city_map_break{
@@ -281,9 +278,19 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-size: 15px;
+  font-size: 13px;
 }
 
 #buttonViewProfile{
   margin-top: 15px;
+}
+
+.rating{
+  font-size: 15px;
+  .icon-star{
+    color: #1E90FF !important;
+  }
+  .icon-star-empty{
+    color: #1E90FF !important;
+  }
 }
