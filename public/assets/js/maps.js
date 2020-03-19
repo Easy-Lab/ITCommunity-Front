@@ -285,6 +285,7 @@ var CustomMap = function () {
                     id: marker.get("id")
                 },
                 success: function (json) {
+                    console.log(json)
                     var infoWindow = new google.maps.InfoWindow({
                         content: json.popup,
                         maxWidth: 278
@@ -338,7 +339,7 @@ var CustomMap = function () {
                 cluster_styles.push({
                     width: 31,
                     height: 38,
-                    url: typeof window.mapClustererImage !== 'undefined' ? window.mapClustererImage : 'https://husqvarna-static.ambassadorslab.com/assets/images/clusterer.png',
+                    url: typeof window.mapClustererImage !== 'undefined' ? window.mapClustererImage : 'https://itcommunity.fr/public/assets/images/clusterer.png',
                     textColor: 'white',
                     textSize: 24,
                     anchor: [-5, 0]
@@ -501,6 +502,7 @@ var HomeAmbassadorsMap = function () {
 
         var appelAmbassador = function () {
 
+            console.log(self.$element.attr('data-endpoint'));
             $.ajax({
 
                 method: 'post',

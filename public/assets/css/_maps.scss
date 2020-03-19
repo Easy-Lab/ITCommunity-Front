@@ -1,0 +1,215 @@
+.geolocation-status {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  .js-geolocation-status {
+    display: none;
+    border-radius: 20px;
+    line-height: 40px;
+    font-size: 18px;
+    padding: 0 20px;
+    color: #fff;
+    background-color: rgba(0,0,0,0.7);
+    font-family: Helvetica, Tahoma, Arial, sans-serif;
+    margin-bottom: 20px;
+  }
+  z-index: 999999999999;
+}
+
+.js-geolocation.disabled {
+  opacity: 0.6;
+}
+
+.home-ambassadors-map {
+  height: 100vh;
+}
+
+.dealers-map {
+  height: 600px;
+}
+
+.home-ambassadors-listing, .ambassadors-listing {
+    font-size: 0px !important;
+}
+
+.home-ambassadors-listing {
+  height: 100%;
+  max-height: 100vh;
+  overflow-y: auto;
+}
+
+.map-result {
+  box-sizing: border-box;
+  width: 50%;
+  padding: 20px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.ambassadors-map {
+  height: 500px;
+}
+
+.ambassadors-listing {
+  background-color: #eee;
+}
+
+.popup-profile {
+  padding-left: 23px;
+}
+
+.profile-preview-border {
+    border: 1px solid #7f7f7f;
+    border-radius: 5px;
+    padding: 15px;
+}
+
+.user-picture-missing {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 10px;
+
+    div.missing-message {
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+}
+
+.profile-preview-open-garden-frame {
+  background: #ed1c24;
+  padding: 5px 7px 7px 7px;
+  /* margin-bottom: 15px; */
+  height: 170px;
+  max-height: 170px;
+  min-height: 137px;
+
+
+    p {
+        margin: 5px;
+        color: white;
+    }
+
+    .profile-preview-picture-holder {
+      height: 123px;
+      min-height: 140px;
+      max-height: 110px;
+    }
+}
+
+.profile-preview-picture-holder {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    height: 170px;
+    min-height: 170px;
+    max-height: 170px;
+   // margin-bottom: 16px;
+    background-size: cover;
+    position: relative;
+}
+
+.popup-profile {
+  .profile-preview-picture-holder {
+    min-width: 255px;
+  }
+}
+
+@media (max-width: 300px) {
+  .popup-profile {
+    max-width: 250px;
+  }
+}
+
+.profile-preview {
+
+  .profile-preview-picture {
+    max-width: 100%;
+    display: inline-block;
+    max-height: 170px;
+  }
+
+  .profile-preview-action {
+    display: block;
+    width: 100%;
+    text-align: left;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+
+  h5, h6 {
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+}
+
+.map-zoom {
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  user-select: none;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+  border-radius: 2px;
+  overflow: hidden;
+  cursor: pointer;
+  background-color: rgb(255, 255, 255);
+  width: 65px;
+  height: 90px;
+  font-size: 0;
+
+  button {
+    background: none;
+    display: block;
+    border: 0px;
+    margin: 0px;
+    padding: 0px;
+    position: relative;
+    cursor: pointer;
+    width: 65px;
+    height: 45px;
+    font-size: 25px;
+    outline: none;
+    font-family: Helvetica, Arial, sans-serif;
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+}
+
+.js-home-ambassadors-listing {
+  > p {
+    display: none;
+  }
+
+  &.empty-result {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    > p {
+      display: block;
+      text-align: center;
+      color: #999;
+      font-size: 20px;
+    }
+  }
+}
+
+#divAmbDealer{
+  overflow: scroll;
+  height: 500px;
+}
