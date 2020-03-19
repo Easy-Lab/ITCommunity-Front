@@ -72,6 +72,10 @@ page:
   ambassador:
     report:
       form:
+        already:
+          label: "Avez vous déjâ posé une question sur la plateforme ?"
+          yes: "Oui"
+          no: "Non"
         message: "Votre message"
         lastname: "Nom"
         firstname: "Prénom"
