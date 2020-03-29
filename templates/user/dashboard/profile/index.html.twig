@@ -222,7 +222,7 @@
                                         </div>
 
                                         <form class="js-ambassador-contact-check-form"
-                                              action=""
+                                              action="{{ path('user_contact_conseil', {'username': user['username']}) }}"
                                               method="post" style="display: none;" id="form-contact-conseil">
 
                                             <label for="messageConseil">{{ "page.ambassador.profile.message.placeholder"|trans }}</label>
@@ -265,9 +265,9 @@
 
                                                 <div class="form-group">
                                                     <label for="emailConseil">{{ "page.ambassador.report.form.email"|trans }}</label>
-                                                    <input required
-                                                           class="form-control js-ambassador-contact-check-email"
-                                                           type="email" name="email" id="emailConseil"
+                                                    <input
+                                                           class="form-control"
+                                                           type="email" name="emailConseil" id="emailConseil"
                                                            value="{{ validator.value('email') }}"
                                                            placeholder="{{ "page.ambassador.report.form.email"|trans }}"
                                                            data-error="{{ validator.error('email') }}"/>
@@ -275,10 +275,10 @@
                                             </div>
                                             <div class="contact-conseil-already">
                                                 <div class="form-group">
-                                                    <label for="emailConseil">{{ "page.ambassador.report.form.email"|trans }}</label>
-                                                    <input required
-                                                           class="form-control js-ambassador-contact-check-email"
-                                                           type="email" name="email" id="emailConseil"
+                                                    <label for="emailConseilOnly">{{ "page.ambassador.report.form.email"|trans }}</label>
+                                                    <input
+                                                           class="form-control"
+                                                           type="email" name="emailConseilOnly" id="emailConseilOnly"
                                                            value="{{ validator.value('email') }}"
                                                            placeholder="{{ "page.ambassador.report.form.email"|trans }}"
                                                            data-error="{{ validator.error('email') }}"/>
@@ -318,7 +318,7 @@
                                                         </label>
                                                         <label for="conseil_notification_email" style="display:block;">
                                                             <input name="conseil_notification" type="radio"
-                                                                   id="conseil_notification_email" value="sms"
+                                                                   id="conseil_notification_email" value="private"
                                                                    data-error="{{ validator.error('conseil_notification') }}"
                                                                    data-checked="{{ validator.checked('conseil_notification_email') }}"/>
                                                             <span>{{ "page.ambassador.report.notification_email"|trans }}</span>
@@ -374,7 +374,7 @@
                                         </div>
 
                                         <form class="js-ambassador-contact-check-form"
-                                              action=""
+                                              action="{{ path('user_contact_demo', {'username': user['username']}) }}"
                                               method="post" style="display: none;" id="form-contact-demo">
                                             <label for="messageDemo">{{ "page.ambassador.profile.message.placeholder"|trans }}</label>
 
@@ -416,19 +416,19 @@
 
                                             <div class="form-group">
                                                 <label for="emailDemo">{{ "page.ambassador.report.form.email"|trans }}</label>
-                                                <input required class="form-control js-ambassador-contact-check-email"
+                                                <input class="form-control"
                                                        id="emailDemo"
-                                                       type="email" name="email" value="{{ validator.value('email') }}"
+                                                       type="email" name="emailDemo" value="{{ validator.value('email') }}"
                                                        placeholder="{{ "page.ambassador.report.form.email"|trans }}"
                                                        data-error="{{ validator.error('email') }}"/>
                                             </div>
                                             </div>
                                             <div class="contact-demo-already">
                                                 <div class="form-group">
-                                                    <label for="emailDemo">{{ "page.ambassador.report.form.email"|trans }}</label>
-                                                    <input required class="form-control js-ambassador-contact-check-email"
-                                                           id="emailDemo"
-                                                           type="email" name="email" value="{{ validator.value('email') }}"
+                                                    <label for="emailDemoOnly">{{ "page.ambassador.report.form.email"|trans }}</label>
+                                                    <input class="form-control"
+                                                           id="emailDemoOnly"
+                                                           type="email" name="emailDemoOnly" value="{{ validator.value('email') }}"
                                                            placeholder="{{ "page.ambassador.report.form.email"|trans }}"
                                                            data-error="{{ validator.error('email') }}"/>
                                                 </div>
@@ -467,7 +467,7 @@
                                                         </label>
                                                         <label for="demo_notification_email" style="display:block;">
                                                             <input name="demo_notification" type="radio"
-                                                                   id="demo_notification_email" value="email"
+                                                                   id="demo_notification_email" value="private"
                                                                    data-error="{{ validator.error('demo_notification') }}"
                                                                    data-checked="{{ validator.checked('gender','demo_notification_email') }}"/>
                                                             <span>{{ "page.ambassador.report.notification_email"|trans }}</span>
@@ -518,142 +518,92 @@
                             </div>
                         {% endfor %}
 
-                        {#                        {% if (nbReceivedMember + messageStats.nb_total + nbSentVoucher + messageStats.nb_answered) != 0 %}#}
-                        {#                            <div class="subsection">#}
-                        {#                                <div class="activity">#}
+                                                {% if messages|length > 0 %}
+                                                    <div class="subsection">
+                                                        <div class="messages" id="slugMessages">
 
-                        {#                                    <div class="title">#}
-                        {#                                        <p>{{ "page.ambassador.dashboard.layout.section.profile.activity.title"|trans }}</p>#}
-                        {#                                    </div>#}
+                                                            <div class="title">
+                                                                <p>{{ "page.ambassador.dashboard.message.profile.title"|trans|raw }} {% if editable %}
+                                                                    <a href="{{ path('user_dashboard_question') }}"><i
+                                                                                    class="icon-pencil"></i><a>{% endif %}</p>
+                                                            </div>
 
-                        {#                                    <div class="profile-stats">#}
-                        {#                                        {% if stats_events_enabled %}#}
-                        {#                                            <div class="profile-stat">#}
-                        {#                                                <p>#}
-                        {#                                                    <i class="icon-group"></i> {{ "page.ambassador.dashboard.layout.section.profile.activity.receive_member"|trans }}#}
-                        {#                                                    <b>{{ nbReceivedMember }}</b></p>#}
-                        {#                                            </div>#}
-                        {#                                        {% endif %}#}
-                        {#                                        <div class="profile-stat">#}
-                        {#                                            <p>#}
-                        {#                                                <i class="icon-help-circled"></i> {{ "page.ambassador.dashboard.layout.section.profile.activity.receive_question"|trans }}#}
-                        {#                                                <b>{{ messageStats.nb_total }}</b></p>#}
-                        {#                                        </div>#}
-                        {#                                        <div class="profile-stat">#}
-                        {#                                            <p>#}
-                        {#                                                <i class="icon-voucher"></i> {{ "page.ambassador.dashboard.layout.section.profile.activity.receive_voucher"|trans }}#}
-                        {#                                                <b>{{ nbSentVoucher }}</b></p>#}
-                        {#                                        </div>#}
-                        {#                                        <div class="profile-stat">#}
-                        {#                                            <p>#}
-                        {#                                                <i class="icon-speech-bubble-outline-of-rectangular-shape"></i> {{ "page.ambassador.dashboard.layout.section.profile.activity.receive_response"|trans }}#}
-                        {#                                                <b>{{ messageStats.nb_answered }}</b></p>#}
-                        {#                                        </div>#}
-                        {#                                    </div>#}
+                                                            <div class="content">
+                                                                {% if messages|length > 0 %}
+                                                                    {% for idx,row in messages |sort|reverse %}
+                                                                        {% if row['type'] == false %}
+                                                                        <div class="{{ idx >= 5 ? 'hidden' }}">
+                                                                            <p class="question-header">{{ row.contact['firstname'] }} {{ row.contact['lastname'][:1] }}
+                                                                                . {{ 'page.ambassador.dashboard.layout.section.profile.le'|trans }} {{ row['created']|date('d-m-Y') }}</p>
+                                                                            <p class="question">{{ row['question'] }}</p>
+                                                                            {% if row['answer'] is defined %}
+                                                                                <p class="answer-header">{{ 'page.ambassador.dashboard.layout.section.profile.answer_at'|trans }}{{ row['updated']|date('d-m-Y') }}</p>
+                                                                                <p class="answer">{{ row['answer'] }}</p>
+                                                                            {% else %}
+                                                                                <p class="answer">{{ "page.ambassador.dashboard.message.profile.wait"|trans|raw }}</p>
+                                                                            {% endif %}
+                                                                        </div>
+                                                                        {% endif %}
+                                                                    {% endfor %}
+                                                                    {% if messages|length > 5 %}
+                                                                        <button class="btn btn-theme no-arrow bigger show-more-btn buttonbecomea"
+                                                                                type="submit">{{ "page.ambassador.dashboard.message.profile.button_see_more"|trans|raw }}</button>
+                                                                    {% endif %}
+                                                                {% else %}
+                                                                    <p class="text-muted">{{ "page.ambassador.dashboard.message.profile.no_receive"|trans|raw }}</p>
 
-                        {#                                </div> <!-- end description -->#}
-                        {#                            </div> <!-- end subsection -->#}
-                        {#                        {% endif %}#}
+                                                                {% endif %}
+                                                            </div>
 
+                                                        </div> <!-- end messages -->
+                                                    </div> <!-- end subsection -->
+                                                {% endif %}
 
-                        {#                        {% if messages|length > 0 %}#}
-                        {#                            <div class="subsection">#}
-                        {#                                <div class="messages" id="slugMessages">#}
+                                                {% if evaluations|length > 0 %}
 
-                        {#                                    <div class="title">#}
-                        {#                                        <p>{{ "page.ambassador.dashboard.message.profile.title"|trans|raw }} {% if editable %}#}
-                        {#                                            <a href="{{ path('ambassador_message') }}"><i#}
-                        {#                                                            class="icon-pencil"></i><a>{% endif %}</p>#}
-                        {#                                    </div>#}
+                                                    <div class="subsection">
+                                                        <div class="evaluations">
 
-                        {#                                    <div class="content">#}
-                        {#                                        {% if messages|length > 0 %}#}
-                        {#                                            {% for idx,row in messages |sort|reverse %}#}
-                        {#                                                <div class="{{ idx >= 5 ? 'hidden' }}">#}
-                        {#                                                    <p class="question-header">{{ row.contact.firstname }} {{ row.contact.lastname[:1] }}#}
-                        {#                                                        . {{ 'page.ambassador.dashboard.layout.section.profile.le'|trans }} {{ row.message.questionAt|date('d-m-Y') }}</p>#}
-                        {#                                                    <p class="question">{{ row.message.question }}</p>#}
-                        {#                                                    {% if row.message.answerAt is not null %}#}
-                        {#                                                        <p class="answer-header">{{ 'page.ambassador.dashboard.layout.section.profile.answer_at'|trans }}{{ row.message.answerAt|date('d-m-Y') }}</p>#}
-                        {#                                                        <p class="answer">{{ row.message.answer }}</p>#}
-                        {#                                                    {% else %}#}
-                        {#                                                        <p class="answer">{{ "page.ambassador.dashboard.message.profile.wait"|trans|raw }}</p>#}
-                        {#                                                    {% endif %}#}
-                        {#                                                </div>#}
-                        {#                                            {% endfor %}#}
-                        {#                                            {% if messages|length > 5 %}#}
-                        {#                                                <button class="btn btn-theme no-arrow bigger show-more-btn buttonbecomea"#}
-                        {#                                                        type="submit">{{ "page.ambassador.dashboard.message.profile.button_see_more"|trans|raw }}</button>#}
-                        {#                                            {% endif %}#}
-                        {#                                        {% else %}#}
-                        {#                                            <p class="text-muted">{{ "page.ambassador.dashboard.message.profile.no_receive"|trans|raw }}</p>#}
+                                                            {% set ratingLabels = {1: 'Décevant', 2: 'Passable', 3: 'Bien', 4: 'Très bien', 5: 'Parfait'} %}
+                                                            <div class="row">
 
-                        {#                                        {% endif %}#}
-                        {#                                    </div>#}
-
-                        {#                                </div> <!-- end messages -->#}
-                        {#                            </div> <!-- end subsection -->#}
-                        {#                        {% endif %}#}
-
-                        {#                        {% if evaluations|length > 0 %}#}
-
-                        {#                            <div class="subsection">#}
-                        {#                                <div class="evaluations">#}
-
-                        {#                                    {% set ratingLabels = {1: 'Décevant', 2: 'Passable', 3: 'Bien', 4: 'Très bien', 5: 'Parfait'} %}#}
-                        {#                                    <div class="row">#}
-
-                        {#                                        <div class="col-xs-12 col">#}
-                        {#                                            <div class="received-evaluations {{ synthesis_enabled is defined and synthesis_enabled == false ? 'evaluation-synthesis-disabled' }}">#}
-                        {#                                                <div class="title">#}
-                        {#                                                    <p>#}
-                        {#                                                        {% if synthesis_enabled is defined and synthesis_enabled %}#}
-                        {#                                                            {{ "page.ambassador.dashboard.evaluation.profile.view_receive"|trans|raw }} ({{ evaluations|length }})#}
-                        {#                                                        {% else %}#}
-                        {#                                                            {{ "page.ambassador.dashboard.evaluation.profile.summary_view_receive"|trans|raw }}#}
-                        {#                                                            <br class="responsive-br"><i#}
-                        {#                                                                class="icon-star"></i> {{ evaluations|length == 0 ? 'N/A' : stats.note|round(1) ~ '/5' }} - {{ evaluations|length }}#}
-                        {#                                                            <span>avis</span>#}
-                        {#                                                        {% endif %}#}
-                        {#                                                    </p>#}
-                        {#                                                </div>#}
-
-                        {#                                                <div>#}
-                        {#                                                    {% if evaluations|length == 0 %}#}
-                        {#                                                        {% if editable %}#}
-                        {#                                                            <p class="text-muted">{{ "page.ambassador.dashboard.evaluation.profile.no_receive_again"|trans|raw }}</p>#}
-                        {#                                                        {% else %}#}
-                        {#                                                            <p class="text-muted">{{ "page.ambassador.dashboard.evaluation.profile.no_receive"|trans|raw }}</p>#}
-                        {#                                                        {% endif %}#}
-                        {#                                                    {% else %}#}
-                        {#                                                        <div class="row">#}
-                        {#                                                            {% set defaultNbEvaluation = (synthesis_enabled is defined and synthesis_enabled) ? 5 : 6 %}#}
-                        {#                                                            {% for idx,row in evaluations %}#}
-                        {#                                                                <div class="evaluation col-xs-12 col{{ synthesis_enabled is defined and synthesis_enabled ? '-12' : '-6' }} {{ idx >= defaultNbEvaluation ? 'hidden' }}">#}
-                        {#                                                                    <p class="evaluation-writer">{{ row.evaluation.evaluatedAt|date('d/m/Y') }} {{ row.contact.firstname }} {{ row.contact.lastname[:1] }}#}
-                        {#                                                                        .</p>#}
-                        {#                                                                    <div class="evaluation-rating">#}
-                        {#                                                                        {{ ratingLabels[row.evaluation.rating] }}#}
-                        {#                                                                        <ul>#}
-                        {#                                                                            {% for i in 1..5 %}#}
-                        {#                                                                                <span class="icon-star{{ i > row.evaluation.rating|round(1) ? '-empty' : '' }}"></span>#}
-                        {#                                                                            {% endfor %}#}
-                        {#                                                                        </ul>#}
-                        {#                                                                    </div>#}
-                        {#                                                                    <p class="evaluation-feedback">{{ row.evaluation.feedback }}</p>#}
-                        {#                                                                </div>#}
-                        {#                                                            {% endfor %}#}
-                        {#                                                            {% if evaluations|length > defaultNbEvaluation %}#}
-                        {#                                                                <button class="btn btn-theme no-arrow bigger show-more-btn buttonbecomea"#}
-                        {#                                                                        type="submit">{{ "page.ambassador.dashboard.evaluation.profile.button_see_more"|trans|raw }}</button>{% endif %}#}
-                        {#                                                        </div>#}
-                        {#                                                    {% endif %}#}
-                        {#                                                </div>#}
+                                                                        <div>
+                                                                            {% if evaluations|length == 0 %}
+                                                                                {% if editable %}
+                                                                                    <p class="text-muted">{{ "page.ambassador.dashboard.evaluation.profile.no_receive_again"|trans|raw }}</p>
+                                                                                {% else %}
+                                                                                    <p class="text-muted">{{ "page.ambassador.dashboard.evaluation.profile.no_receive"|trans|raw }}</p>
+                                                                                {% endif %}
+                                                                            {% else %}
+                                                                                <div class="row">
+                                                                                    {% set defaultNbEvaluation = 6 %}
+                                                                                    {% for idx,row in evaluations %}
+                                                                                        <div class="evaluation col-xs-12 col-12">
+                                                                                            <p class="evaluation-writer">{{ row['created']|date('d/m/Y') }} {{ row.contact['firstname'] }} {{ row.contact['lastname'][:1] }}
+                                                                                                .</p>
+                                                                                            <div class="evaluation-rating">
+                                                                                                {{ ratingLabels[row['rating']] }}
+                                                                                                <ul>
+                                                                                                    {% for i in 1..5 %}
+                                                                                                        <span class="icon-star{{ i > row['rating']|round(1) ? '-empty' : '' }}"></span>
+                                                                                                    {% endfor %}
+                                                                                                </ul>
+                                                                                            </div>
+                                                                                            <p class="evaluation-feedback">{{ row['feedback'] }}</p>
+                                                                                        </div>
+                                                                                    {% endfor %}
+                                                                                    {% if evaluations|length > defaultNbEvaluation %}
+                                                                                        <button class="btn btn-theme no-arrow bigger show-more-btn buttonbecomea"
+                                                                                                type="submit">{{ "page.ambassador.dashboard.evaluation.profile.button_see_more"|trans|raw }}</button>{% endif %}
+                                                                                </div>
+                                                                            {% endif %}
+                                                                        </div>
 
 
-                        {#                                            </div> <!-- end received-evaluations -->#}
-                        {#                                        </div> <!-- end col -->#}
-
+                                                                    </div> <!-- end received-evaluations -->
+                                                                </div> <!-- end col -->
+                                                    </div>
+                                                {% endif %}
                         {#                                        {% if synthesis_enabled is defined and synthesis_enabled %}#}
                         {#                                            <div class="col-xs-12 col">#}
                         {#                                                <div class="synthesis-evaluations">#}
@@ -799,24 +749,41 @@
                 $('#form-contact-conseil').css('display','block');
                 $('.contact-conseil-already').css('display','block');
                 $('.contact-conseil-unknow').css('display','none');
+                $('#emailConseilOnly').prop('required',true);
+                $('#emailConseil').prop('required',false);
+                $('#firstnameConseil').prop('required',false);
+                $('#lastnameConseil').prop('required',false);
+
             })
             $('#checkbox-conseil-unknow').click(function () {
                 $('#checkbox-conseil-already').prop('checked', false);
                 $('#form-contact-conseil').css('display','block');
                 $('.contact-conseil-already').css('display','none');
                 $('.contact-conseil-unknow').css('display','block');
+                $('#emailConseilOnly').prop('required',false);
+                $('#emailConseil').prop('required',true);
+                $('#firstnameConseil').prop('required',true);
+                $('#lastnameConseil').prop('required',true);
             })
             $('#checkbox-demo-already').click(function () {
                 $('#checkbox-demo-unknow').prop('checked', false);
                 $('#form-contact-demo').css('display','block');
                 $('.contact-demo-already').css('display','block');
                 $('.contact-demo-unknow').css('display','none');
+                $('#emailDemoOnly').prop('required',true);
+                $('#emailDemo').prop('required',false);
+                $('#firstnameDemo').prop('required',false);
+                $('#lastnameDemo').prop('required',false);
             })
             $('#checkbox-demo-unknow').click(function () {
                 $('#checkbox-demo-already').prop('checked', false);
                 $('#form-contact-demo').css('display','block');
                 $('.contact-demo-already').css('display','none');
                 $('.contact-demo-unknow').css('display','block');
+                $('#emailDemoOnly').prop('required',false);
+                $('#emailDemo').prop('required',true);
+                $('#firstnameDemo').prop('required',true);
+                $('#lastnameDemo').prop('required',true);
             })
         })
     </script>

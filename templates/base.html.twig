@@ -136,20 +136,20 @@
                 <p>{{ 'page.report_bug.description'|trans }}</p>
 
 
-                <form action="" method="post">
+                <form action="{{ path('bug_report') }}" method="post">
                     <div class="form-group">
                         <label for="firstname">{{ 'page.contact_us.form.firstname.label'|trans }}</label>
-                        <input placeholder="{{ 'page.contact_us.form.firstname.placeholder'|trans }}" required class="form-control" type="text" name="firstname"/>
+                        <input placeholder="{{ 'page.contact_us.form.firstname.placeholder'|trans }}" required class="form-control" type="text" name="firstname" value="{% if user %}{{ user['firstname'] }}{% endif %}"/>
                     </div>
 
                     <div class="form-group">
                         <label for="lastname">{{ 'page.contact_us.form.lastname.label'|trans }}</label>
-                        <input placeholder="{{ 'page.contact_us.form.lastname.placeholder'|trans }}" required class="form-control" type="text" name="lastname" />
+                        <input placeholder="{{ 'page.contact_us.form.lastname.placeholder'|trans }}" required class="form-control" type="text" name="lastname" value="{% if user %}{{ user['lastname'] }}{% endif %}"/>
                     </div>
 
                     <div class="form-group">
                         <label for="email">{{ 'page.contact_us.form.email.label'|trans }}</label>
-                        <input placeholder="{{ 'page.contact_us.form.email.placeholder'|trans }}" required class="form-control" type="text" name="email" />
+                        <input placeholder="{{ 'page.contact_us.form.email.placeholder'|trans }}" required class="form-control" type="text" name="email" value="{% if user %}{{ user['email'] }}{% endif %}"/>
                     </div>
 
                     <div class="form-group">

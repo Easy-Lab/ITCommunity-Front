@@ -51,12 +51,12 @@
 {#                    >#}
 {#                        {{ 'page.ambassador.dashboard.layout.section.navigation.share'|trans }}#}
 {#                    </a>#}
-{#                    <a class="nav-link {{ actual_route in ['user_dashboard_question'] ? 'active' }}"#}
-{#                    >#}
-{#                        {{ 'page.ambassador.dashboard.layout.section.navigation.question'|trans }}#}
-{#                    </a>#}
+                    <a class="nav-link {{ actual_route in ['user_dashboard_question'] ? 'active' }}"
+                       href="{{ path('user_dashboard_question') }}">
+                        {{ 'page.ambassador.dashboard.layout.section.navigation.question'|trans }}
+                    </a>
                     <a class="nav-link {{ actual_route in ['user_dashboard_evaluation'] ? 'active' }}"
-                    >
+                       href="{{ path('user_dashboard_evaluation') }}">
                         {{ 'page.ambassador.dashboard.layout.section.navigation.evaluation'|trans }}
                     </a>
 
