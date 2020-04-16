@@ -1,0 +1,39 @@
+{% extends 'user/layout.html.twig' %}
+
+{% block content %}
+    <header class="title">{{ 'page.ambassador.dashboard.evaluation.section.evaluation.title'|trans }}</header>
+    {% if evaluations|length == 0 %}
+        <p class="text-muted mt-3">{{ 'page.ambassador.dashboard.evaluation.section.evaluation.no_evaluations'|trans }}</p>
+    {% endif %}
+    <div class="row">
+
+        <div class="col-xs-12 col-md-12">
+            <div class="row">
+
+                {% for i,row in evaluations %}
+                    <div class="{{ i >= 5 ? 'evaluation-hidden' }} card mb-2 col-xs-12 col-md-12">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ row.contact['firstname'] }} {{ row.contact['lastname']|first }} le {{ row['created']|date('d-m-Y') }}.</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">
+                                <div class="rating">
+                                    {% for i in 1..5 %}
+                                        <span class="icon-star{{ i > row['rating'] ? '-empty' : '' }}"></span>
+                                    {% endfor %}
+                                </div>
+                            </h6>
+                            <p class="card-text">{{ row['feedback'] }}</p>
+{#                            <p class="text-muted">{{ 'page.ambassador.dashboard.evaluation.section.evaluation.date_label'|trans }} {{ row['createdAt']|date('d/m/Y') }}</p>#}
+                        </div>
+                    </div>
+                {% endfor %}
+
+            </div>
+        </div>
+        {% if evaluations|length > 5 %}
+            <button class="btn btn-theme text-uppercase font-weight-bold" id="evaluations-hidden-trigger">{{ 'page._common.button.see_more_button'|trans }}</button>
+        {% endif %}
+    </div>
+
+
+
+{% endblock %}

@@ -1,0 +1,16 @@
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {% block layout_header %}{% endblock %}
+
+    <div class="container mt-3 edit-profile-ambassador">
+
+            <div class="col-md-12">
+                {% block content %}{% endblock %}
+            </div>
+
+        </div>
+
+{% endblock %}

@@ -4,6 +4,7 @@
 namespace App\Controller\ambassador;
 
 
+use App\Service\UserService;
 use App\Utils\Features;
 use App\Utils\ImageEditor;
 use App\Utils\Validator;
@@ -24,14 +25,14 @@ class PictureController extends AbstractController
 
     public function __construct(ContainerInterface $container, SessionInterface $session)
     {
-        $this->container=$container;
-        $this->session=$session;
+        $this->container = $container;
+        $this->session = $session;
 
     }
 
 
     /**
-     * @Route("/ambassador/picture/upload", name="ambassador_picture_upload")
+     * @Route("/user/picture/upload", name="ambassador_picture_upload")
      */
     public function upload(Request $request, Features $features, ImageEditor $imageEditor, Validator $validator)
     {
@@ -163,6 +164,49 @@ class PictureController extends AbstractController
             return $this->json(['success' => false]);
         }
         $validator->fail('no_session');
+        return $this->redirectToRoute('login');
+    }
+
+    /**
+     * @Route("/user/picture/delete", name="ambassador_picture_delete")
+     */
+    public function delete(Request $request, UserService $userService)
+    {
+        if ($request->hasSession() && $this->session)
+        {
+            $user = $userService->getUser();
+
+            $type = $request->get('type');
+            $id = $request->get('id');
+
+            $path = null;
+            $clientPicture = HttpClient::create(['headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . $this->session->get('token')
+            ]]);
+            $responsePicture = $clientPicture->request('GET', getenv('API_URL') . '/picture/'.$id);
+            if ($responsePicture->getStatusCode() == 200)
+            {
+                $data = $responsePicture->toArray();
+                if ($data['path']){
+                    $path = $data['path'];
+                    $filepath = getenv("FRONT_URL") . "/public/uploads/$path";
+                    if (file_exists($filepath))
+                    {
+                        @unlink($filepath);
+                    }
+                    $filepathThumb = getenv("FRONT_URL") . "/public/uploads/thumbs/$path";
+                    if (file_exists($filepathThumb))
+                    {
+                        @unlink($filepathThumb);
+                    }
+                    $deletePicture = $clientPicture->request('DELETE', getenv('API_URL') . '/picture/'.$id);
+                    return $this->json(['success' => 'Delete']);
+                }
+                return $this->json(['failed' => $data]);
+            }
+            return $this->json(['failed' => $responsePicture->getStatusCode(), 'hash'=>$id]);
+        }
         return $this->redirectToRoute('login');
     }
 }

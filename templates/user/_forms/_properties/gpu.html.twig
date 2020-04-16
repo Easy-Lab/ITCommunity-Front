@@ -5,10 +5,11 @@
         <select name="gpu" id="gpu"
                 class="form-control"
                 data-error="{{ validator.error('gpu') }}"
-                data-selected="{% if cgu is defined %}{{ gpu.id }}{% endif %}"
         required >
-            <option selected>CHOISIR</option>
         {% for option in elementGpu %}
+            {% if option.product_name == gpu['nameComponent'] %}
+                <option value="{{ option.id }}" selected>{{ option.company }} {{ option.product_name }} {{ option.gpu_clock }} {{ option.memory_clock }}</option>
+            {% endif %}
                 <option value="{{ option.id }}">{{ option.company }} {{ option.product_name }} {{ option.gpu_clock }} {{ option.memory_clock }}</option>
         {% endfor %}
         </select>
@@ -29,7 +30,7 @@
                 </p>
         </div>
 
-        <select class="hidden" data-selected="{% if gpu is defined %}{{ validator.value(gpu.rating) }}{% else %}{{ validator.value('gpu_rating') }}{% endif %}" name="gpu_rating" id="gpu_rating">
+        <select class="hidden" data-selected="{% if gpu is defined %}{{ gpu['rating'] }}{% else %}{{ validator.value('gpu_rating') }}{% endif %}" name="gpu_rating" id="gpu_rating">
                 {% for i in [1,2,3,4,5] %}
                         <option value="{{ i }}">{{ i }}/5</option>
                 {% endfor %}
@@ -38,13 +39,13 @@
         <ul id="gpu-work-rating">
                 {% for i in 1..5 %}
                         <li class="environmentGpu-rating-stars" data-value="{{ i }}">
-                                <i id="environmentGpu-rating-stars-{{ i }}" class="icon-star{% if gpu is defined %}{% if i > validator.value(gpu.rating) %}-empty{% endif %}{% else %}{% if i > validator.value('gpu_rating') %}-empty{% endif %}{% endif %}"></i>
+                                <i id="environmentGpu-rating-stars-{{ i }}" class="icon-star{% if gpu is defined %}{% if i > gpu['rating'] %}-empty{% endif %}{% else %}{% if i > validator.value('gpu_rating') %}-empty{% endif %}{% endif %}"></i>
                         </li>
                 {% endfor %}
         </ul>
 
         <div class="group-form">
                 <p>{{ 'page.ambassador._forms.gpu.feedback.label'|trans }}</p>
-                <textarea minlength="40" maxlength="300" class="form-control text-field" name="gpu_feedback" id="gpu_feedback" data-error="{{ validator.error('gpu_feedback') }}" required>{% if gpu is defined %}{{ validator.value(gpu.body) }}{% else %}{{ validator.value('gpu_feedback') }}{% endif %}</textarea>
+                <textarea minlength="40" maxlength="300" class="form-control text-field" name="gpu_feedback" id="gpu_feedback" data-error="{{ validator.error('gpu_feedback') }}" required>{% if gpu is defined %}{{ gpu['body'] }}{% else %}{{ validator.value('gpu_feedback') }}{% endif %}</textarea>
         </div>
 </div>

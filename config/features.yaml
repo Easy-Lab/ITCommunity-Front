@@ -94,3 +94,11 @@ parameters:
     - no_visitors
     - goal_achieved
     - other
+
+  features.forms.profile.informations:
+    - full_name
+    - username
+
+  features.forms.profile.products:
+    - gpu
+    - cpu

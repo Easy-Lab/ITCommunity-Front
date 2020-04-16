@@ -1,0 +1,11 @@
+{% extends 'user/dashboard/profile/layout.html.twig' %}
+
+{% block content %}
+    <div class="container mt-2">
+
+        {% set element_i = 0 %}
+        {% include 'user/_forms/_properties/pictures.html.twig' %}
+
+        <a href="{{ path('user_dashboard_profile') }}" class="btn btn-primary mt-3">{{"page._common.button.enregistrer"|trans }}</a>
+    </div>
+{% endblock %}

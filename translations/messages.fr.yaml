@@ -1,10 +1,25 @@
 validator:
   message:
+    fail: "Une erreur est survenue"
     custom:
+      form:
+        spam: "Message envoyé !"
+        html: "Vous ne pouvez pas utiliser de caractères spéciaux"
+        url: "Vous ne pouvez pas envoyer un lien URL par message"
       login_failed: "Echec de la connexion, veuillez vérifier votre email ou votre mot de passe"
       login_success: "Bienvenue sur votre Tableau de Bord"
       error_password: "Les mots de passes ne sont pas identiques"
       no_session: "Vous n'êtes pas ou plus connecté"
+      update:
+        success: "Mis à jour avec succès !"
+      bug:
+        success_send: "Votre report de bug a bien été envoyé !"
+      contact:
+        mail:
+          success_send: "Message envoyé avec succès"
+      reviews:
+        success_update: "Vos informations ont été mises à jour !"
+
   error:
     generic:
       required: "Ce champ est obligatoire"
@@ -21,6 +36,12 @@ global:
   uploads_url: 'http://localhost:8000/uploads/'
 
 page:
+  evaluation:
+    button_avis: "Envoyez votre avis"
+    hello: "Bonjour"
+    exchange: "Vous avez échangé avec"
+    thanks: "Nous espérons que votre échange s’est bien déroulé. Merci de nous faire part de votre avis."
+    stars: "Cliquez sur le nombre d’étoiles correspondant à votre appréciation :"
   menu:
     tab: "Tableau de Bord"
   _common:
@@ -28,6 +49,7 @@ page:
       title: "Devenir un Utilisateur"
     button:
       confirmation: "Confirmation"
+      enregistrer: "Sauvegarder"
       data: "Etes vous sur d'effectuer cette action ?"
       annuler: "Annuler"
       confirmer: "Confirmer"
@@ -70,6 +92,10 @@ page:
       image: ""
     h1: "Titre de la Homepage"
   ambassador:
+    update:
+      layout:
+        informations:
+          title: "Mes informations personnelles"
     report:
       form:
         already:
@@ -114,6 +140,32 @@ page:
           3:
             title: "Ma note de mon CPU"
     dashboard:
+      ranking:
+        title: "Classement général (Top 10)"
+      message:
+        profile:
+          title: "Vos questions / mes réponses"
+          wait: "En attente de réponse"
+          no_receive: "Cet Utilisateur n'a pas encore reçu de questions."
+          button_see_more: "Voir plus"
+        meta:
+          title: "Gérer vos questions publiques"
+        title: "Liste de vos questions"
+        form:
+          answer:
+            placeholder: "Rédigez votre réponse"
+          answer_button: "Répondre"
+          edit_button: "Modifier"
+          cancel_button: "Annuler"
+          delete_button_confirm: "Êtes-vous sûr de vouloir supprimer cette question ?"
+        section:
+          unanswered:
+            title: "En attente de réponses"
+            no_questions: "Vous n'avez pas encore reçu de question."
+          answered:
+            title: "Déjà répondues"
+            no_answered_questions: "Vous n'avez répondu à aucune question pour le moment."
+
       share:
         section:
           event:
@@ -121,6 +173,22 @@ page:
               description:
                 gpu: "Mon avis sur mon GPU"
                 cpu: "Mon avis sur mon CPU"
+      evaluation:
+        profile:
+          view_receive: "avis reçus"
+          summary_view_receive: "synthèse des avis reçus"
+          no_receive_again: "Vous n'avez pas encore reçu d'avis."
+          no_receive: "Aucun avis reçu."
+          button_see_more: "Voir plus"
+        meta:
+          title: "Consulter vos évaluations"
+        section:
+          kpis:
+            nb_evaluations_description: "Avis reçus"
+          evaluation:
+            title: "Synthèse des avis de vos contacts"
+            no_evaluations: "Vous n'avez pas encore d'évaluation."
+            date_label: "Avis reçu le"
       edit:
         profile:
           title_edit_mdp: "Modification du mot de passe"
@@ -238,6 +306,7 @@ page:
               demo: "Me demander une démonstration"
             buttonTab: "Mon tableau de bord"
             title: "Bonjour %pseudo%,<br>Bienvenue sur votre Tableau de Bord."
+            myPoints: "Vous avez %total_points% points."
             views_description: "Votre profil a été affiché <span>%views%</span> fois"
             questions_description: "Vous avez <span>%nb_questions%</span> question(s) en attente"
             no_profile_picture: "Vous n'avez pas chargé de photo de profil"
