@@ -17,6 +17,8 @@ validator:
       contact:
         mail:
           success_send: "Message envoyé avec succès"
+      reviews:
+        success_update: "Vos informations ont été mises à jour !"
 
   error:
     generic:

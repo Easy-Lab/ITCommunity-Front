@@ -117,6 +117,82 @@ class UserService
         return null;
     }
 
+    public function getMessages(){
+        if ($this->session) {
+            $client = HttpClient::create(['headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . $this->session->get('token')
+            ]]);
+            $response = $client->request('GET', getenv('API_URL') . '/users/' . $this->session->get('username') . '/messages?expand=contact'
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode == 200) {
+                return $response->toArray();
+
+            } else {
+                return null;
+            }
+        }
+        return null;
+    }
+
+    public function getEvaluations(){
+        if ($this->session) {
+            $client = HttpClient::create(['headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . $this->session->get('token')
+            ]]);
+            $response = $client->request('GET', getenv('API_URL') . '/users/' . $this->session->get('username') . '/evaluations?expand=contact'
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode == 200) {
+                return $response->toArray();
+
+            } else {
+                return null;
+            }
+        }
+        return null;
+    }
+
+    public function getRanking(){
+        if ($this->session) {
+            $client = HttpClient::create(['headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . $this->session->get('token')
+            ]]);
+            $response = $client->request('GET', getenv('API_URL') . '/points'
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode == 200) {
+                return $response->toArray();
+
+            } else {
+                return null;
+            }
+        }
+        return null;
+    }
+
+    public function getMyPoints(){
+        if ($this->session) {
+            $client = HttpClient::create(['headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . $this->session->get('token')
+            ]]);
+            $response = $client->request('GET', getenv('API_URL') . '/users/my/points'
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode == 200) {
+                return $response->toArray();
+
+            } else {
+                return null;
+            }
+        }
+        return null;
+    }
+
     public function getProfilePicture()
     {
         $pictures = $this->getPictures();

@@ -6,10 +6,11 @@
         <select name="cpu" id="cpu"
                 class="form-control"
                 data-error="{{ validator.error('cpu') }}"
-                data-selected="{% if cpu is defined %}{{ cpu.id }}{% endif %}"
         required >
-            <option selected>CHOISIR</option>
         {% for option in elementCpu %}
+            {% if option.product_name == cpu['nameComponent'] %}
+                <option value="{{ option.id }}" selected>{{ option.company }} {{ option.product_name }} {{ option.cores }} cores {{ option.clock }}</option>
+            {% endif %}
                 <option value="{{ option.id }}">{{ option.company }} {{ option.product_name }} {{ option.cores }} cores {{ option.clock }}</option>
         {% endfor %}
         </select>
@@ -30,7 +31,7 @@
                 </p>
         </div>
 
-        <select class="hidden" data-selected="{% if cpu is defined %}{{ validator.value(cpu.rating) }}{% else %}{{ validator.value('cpu_rating') }}{% endif %}" name="cpu_rating" id="cpu_rating">
+        <select class="hidden" data-selected="{% if cpu is defined %}{{ cpu['rating'] }}{% else %}{{ validator.value('cpu_rating') }}{% endif %}" name="cpu_rating" id="cpu_rating">
                 {% for i in [1,2,3,4,5] %}
                         <option value="{{ i }}">{{ i }}/5</option>
                 {% endfor %}
@@ -39,13 +40,13 @@
         <ul id="cpu-work-rating">
                 {% for i in 1..5 %}
                         <li class="environmentCpu-rating-stars" data-value="{{ i }}">
-                                <i id="environmentCpu-rating-stars-{{ i }}" class="icon-star{% if cpu is defined %}{% if i > validator.value(cpu.rating) %}-empty{% endif %}{% else %}{% if i > validator.value('cpu_rating') %}-empty{% endif %}{% endif %}"></i>
+                                <i id="environmentCpu-rating-stars-{{ i }}" class="icon-star{% if cpu is defined %}{% if i > cpu['rating'] %}-empty{% endif %}{% else %}{% if i > validator.value('cpu_rating') %}-empty{% endif %}{% endif %}"></i>
                         </li>
                 {% endfor %}
         </ul>
 
         <div class="group-form">
                 <p>{{ 'page.ambassador._forms.cpu.feedback.label'|trans }}</p>
-                <textarea minlength="40" maxlength="300" class="form-control text-field" name="cpu_feedback" id="cpu_feedback" data-error="{{ validator.error('cpu_feedback') }}" required>{% if cpu is defined %}{{ validator.value(cpu.body) }}{% else %}{{ validator.value('cpu_feedback') }}{% endif %}</textarea>
+                <textarea minlength="40" maxlength="300" class="form-control text-field" name="cpu_feedback" id="cpu_feedback" data-error="{{ validator.error('cpu_feedback') }}" required>{% if cpu is defined %}{{ cpu['body'] }}{% else %}{{ validator.value('cpu_feedback') }}{% endif %}</textarea>
         </div>
 </div>

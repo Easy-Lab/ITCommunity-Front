@@ -36,7 +36,7 @@
                                     <div style="    position: absolute;
     display: inline-block;
     top: 0%;
-    right: -8%;" id="pencil-{{ nbPictures }}"><a href=""><i
+    right: -8%;" id="pencil-{{ nbPictures }}"><a href="{{ path('user_dashboard_pictures') }}"><i
                                                     class="icon-pencil"></i></a></div>
                                 {% endif %}
                             </div>
@@ -60,7 +60,7 @@
                                         <div style="    position: absolute;
     display: inline-block;
     top: 0%;
-    right: -8%;"><a href=""><i class="icon-pencil"></i></a></div>
+    right: -8%;"><a href="{{ path('user_dashboard_pictures') }}"><i class="icon-pencil"></i></a></div>
                                     {% endif %}
                                 </div>
                             </div>
@@ -90,7 +90,7 @@
                                     <div style="    position: absolute;
     display: inline-block;
     top: 0%;
-    right: -15%;"><a href=""><i class="icon-pencil"></i></a></div>
+    right: -15%;"><a href="{{ path('user_dashboard_pictures') }}"><i class="icon-pencil"></i></a></div>
                                 {% endif %}
                             </div>
 
@@ -105,7 +105,7 @@
                                         {% endif %}
                                         {% for element in column.elements %}
                                             <div class="element" data-element="{{ element.slug }}">
-                                                {% include ['ambassador/dashboard/profile/_properties/' ~ element.slug ~ '.html.twig', 'ambassador/profile/_properties/_' ~ element.type ~ '.html.twig'] %}
+                                                {% include ['user/dashboard/profile/_properties/' ~ element.slug ~ '.html.twig', 'ambassador/profile/_properties/_' ~ element.type ~ '.html.twig'] %}
                                             </div>
                                         {% endfor %}
                                     </div>
@@ -126,8 +126,7 @@
                                 {% if editable %}
 
                                     <p class="title">{{ "page.ambassador.dashboard.layout.section.profile.contact.options"|trans }}
-                                        <a href=""><i
-                                                    class="icon-pencil"></i></a></p>
+                                        </p>
                                     <br>
                                     <div class="row">
                                         <div class="col-12 col-xs-12">
@@ -234,15 +233,6 @@
                                                           data-error="{{ validator.error('message') }}">{{ validator.value('message') }}</textarea>
                                             </div>
 
-                                            {#                                                    <div class="form-group">#}
-                                            {#                                                        <div data-error="{{ validator.error('is_public_message') }}">#}
-                                            {#                                                            <label>#}
-                                            {#                                                                <input name="is_public_message" type="checkbox"#}
-                                            {#                                                                       data-checked="{{ validator.checked('is_public_message') }}"/>#}
-                                            {#                                                                <span>{{ "page.ambassador.dashboard.layout.section.profile.contact.question_no_private"|trans }}</span>#}
-                                            {#                                                            </label>#}
-                                            {#                                                        </div>#}
-                                            {#                                                    </div>#}
                                             <div class="contact-conseil-unknow">
                                                 <div class="form-group">
                                                     <label for="firstnameConseil">{{ "page.ambassador.report.form.firstname"|trans }}</label>
@@ -286,28 +276,6 @@
                                             </div>
 
                                             <div class="row" id="multiple_checkbox_conseil" style="margin-left: 0px;">
-                                                {#                                                        {% if reachable_sms %}#}
-                                                {#                                                            <div class="form-group">#}
-                                                {#                                                                <div data-error="">#}
-                                                {#                                                                    <label for="conseil_notification_public" style="display:block;">#}
-                                                {#                                                                        <input name="conseil_notification" type="radio" id="conseil_notification_public" value="public"#}
-                                                {#                                                                               data-checked="{{ validator.checked('gender','conseil_notification_public') }}"/>#}
-                                                {#                                                                        <span>{{ "page.ambassador.dashboard.layout.section.profile.contact.notification_public"|trans }}</span>#}
-                                                {#                                                                    </label>#}
-                                                {#                                                                    <label for="conseil_notification_email" style="display:block;">#}
-                                                {#                                                                        <input name="conseil_notification" type="radio" id="conseil_notification_email" value="email"#}
-                                                {#                                                                               data-checked="{{ validator.checked('gender','conseil_notification_email') }}"/>#}
-                                                {#                                                                        <span>{{ "page.ambassador.dashboard.layout.section.profile.contact.notification_email"|trans }}</span>#}
-                                                {#                                                                    </label>#}
-                                                {#                                                                    <label for="conseil_notification_sms" style="display:block;">#}
-                                                {#                                                                        <input name="conseil_notification" type="radio" id="conseil_notification_sms" value="sms" data-error="{{ validator.error('conseil_notification') }}"#}
-                                                {#                                                                               data-checked="{{ validator.checked('gender','conseil_notification_sms') }}"/>#}
-                                                {#                                                                        <span>{{ "page.ambassador.dashboard.layout.section.profile.contact.notification_sms"|trans }}</span>#}
-                                                {#                                                                    </label>#}
-                                                {#                                                            </div>#}
-                                                {#                                                            </div>#}
-
-                                                {#                                                        {% else %}#}
                                                 <div class="form-group">
                                                     <div data-error="">
                                                         <label for="conseil_notification_public" style="display:block;">
@@ -385,15 +353,6 @@
                                                           data-error="{{ validator.error('message') }}">{{ validator.value('message') }}</textarea>
                                             </div>
 
-                                            {#                                                    <div class="form-group">#}
-                                            {#                                                        <div data-error="{{ validator.error('is_public_message') }}">#}
-                                            {#                                                            <label>#}
-                                            {#                                                                <input name="is_public_message" type="checkbox"#}
-                                            {#                                                                       data-checked="{{ validator.checked('is_public_message') }}"/>#}
-                                            {#                                                                <span>{{ "page.ambassador.dashboard.layout.section.profile.contact.question_no_private"|trans }}</span>#}
-                                            {#                                                            </label>#}
-                                            {#                                                        </div>#}
-                                            {#                                                    </div>#}
                                             <div class="contact-demo-unknow">
                                             <div class="form-group">
                                                 <label for="firstnameDemo">{{ "page.ambassador.report.form.firstname"|trans }}</label>
@@ -435,28 +394,6 @@
                                             </div>
                                             <div class="row" id="multiple_checkbox_demo"
                                                  style="margin-left: 0px;">
-                                                {#                                                        {% if reachable_sms %}#}
-                                                {#                                                            <div class="form-group">#}
-                                                {#                                                                <div data-error="">#}
-                                                {#                                                                    <label for="demo_notification_public" style="display:block;">#}
-                                                {#                                                                        <input name="demo_notification" type="radio" id="demo_notification_public" value="public"#}
-                                                {#                                                                               data-checked="{{ validator.checked('gender','demo_notification_public') }}"/>#}
-                                                {#                                                                        <span>{{ "page.ambassador.dashboard.layout.section.profile.contact.notification_public"|trans }}</span>#}
-                                                {#                                                                    </label>#}
-                                                {#                                                                <label for="demo_notification_email" style="display:block;">#}
-                                                {#                                                                    <input name="demo_notification" type="radio" id="demo_notification_email" value="email"#}
-                                                {#                                                                           data-checked="{{ validator.checked('gender','demo_notification_email') }}"/>#}
-                                                {#                                                                    <span>{{ "page.ambassador.dashboard.layout.section.profile.contact.notification_email"|trans }}</span>#}
-                                                {#                                                                </label>#}
-                                                {#                                                                <label for="demo_notification_sms" style="display:block;">#}
-                                                {#                                                                    <input name="demo_notification" type="radio" id="demo_notification_sms" value="sms" data-error="{{ validator.error('demo_notification') }}"#}
-                                                {#                                                                           data-checked="{{ validator.checked('gender','demo_notification_sms') }}"/>#}
-                                                {#                                                                    <span>{{ "page.ambassador.dashboard.layout.section.profile.contact.notification_sms"|trans }}</span>#}
-                                                {#                                                                </label>#}
-                                                {#                                                            </div>#}
-                                                {#                                                            </div>#}
-
-                                                {#                                                        {% else %}#}
                                                 <div class="form-group">
                                                     <div data-error="">
                                                         <label for="demo_notification_public" style="display:block;">
@@ -514,7 +451,7 @@
 
                         {% for element in structure.content %}
                             <div class="subsection" data-element="{{ element.slug }}">
-                                {% include 'ambassador/dashboard/profile/_properties/' ~ element.slug ~ '.html.twig' %}
+                                {% include 'user/dashboard/profile/_properties/' ~ element.slug ~ '.html.twig' %}
                             </div>
                         {% endfor %}
 
@@ -562,6 +499,11 @@
                                                 {% if evaluations|length > 0 %}
 
                                                     <div class="subsection">
+                                                        <div class="title">
+                                                            <p>{{ "page.ambassador.dashboard.evaluation.profile.title"|trans|raw }} {% if editable %}
+                                                                <a href="{{ path('user_dashboard_evaluation') }}"><i
+                                                                                class="icon-pencil"></i><a>{% endif %}</p>
+                                                        </div>
                                                         <div class="evaluations">
 
                                                             {% set ratingLabels = {1: 'Décevant', 2: 'Passable', 3: 'Bien', 4: 'Très bien', 5: 'Parfait'} %}
@@ -579,7 +521,7 @@
                                                                                     {% set defaultNbEvaluation = 6 %}
                                                                                     {% for idx,row in evaluations %}
                                                                                         <div class="evaluation col-xs-12 col-12">
-                                                                                            <p class="evaluation-writer">{{ row['created']|date('d/m/Y') }} {{ row.contact['firstname'] }} {{ row.contact['lastname'][:1] }}
+                                                                                            <p class="evaluation-writer">{{ row.contact['firstname'] }} {{ row.contact['lastname'][:1] }}
                                                                                                 .</p>
                                                                                             <div class="evaluation-rating">
                                                                                                 {{ ratingLabels[row['rating']] }}
@@ -604,74 +546,6 @@
                                                                 </div> <!-- end col -->
                                                     </div>
                                                 {% endif %}
-                        {#                                        {% if synthesis_enabled is defined and synthesis_enabled %}#}
-                        {#                                            <div class="col-xs-12 col">#}
-                        {#                                                <div class="synthesis-evaluations">#}
-                        {#                                                    <div class="title">#}
-                        {#                                                        <p>{{ "page.ambassador.dashboard.evaluation.profile.summary_view_receive"|trans|raw }}</p>#}
-                        {#                                                    </div>#}
-
-                        {#                                                    <div class="content">#}
-                        {#                                                        {% if evaluations|length == 0 %}#}
-                        {#                                                            {% if editable %}#}
-                        {#                                                                <p class="text-muted">{{ "page.ambassador.dashboard.evaluation.profile.no_receive_again"|trans|raw }}</p>#}
-                        {#                                                            {% else %}#}
-                        {#                                                                <p class="text-muted">{{ "page.ambassador.dashboard.evaluation.profile.no_receive"|trans|raw }}</p>#}
-                        {#                                                            {% endif %}#}
-                        {#                                                        {% else %}#}
-                        {#                                                            <div class="row">#}
-                        {#                                                                <div class="col-xs-12 col-12">#}
-                        {#                                                                    <div class="synthesis-rating">#}
-                        {#                                                                        <ul>#}
-                        {#                                                                            <li>#}
-                        {#                                                                                <i class="icon-star{% if stats.note|round(1) < 1 %}-empty{% endif %}"></i>#}
-                        {#                                                                            </li>#}
-                        {#                                                                            <li>#}
-                        {#                                                                                <i class="icon-star{% if stats.note|round(1) < 2 %}-empty{% endif %}"></i>#}
-                        {#                                                                            </li>#}
-                        {#                                                                            <li>#}
-                        {#                                                                                <i class="icon-star{% if stats.note|round(1) < 3 %}-empty{% endif %}"></i>#}
-                        {#                                                                            </li>#}
-                        {#                                                                            <li>#}
-                        {#                                                                                <i class="icon-star{% if stats.note|round(1) < 4 %}-empty{% endif %}"></i>#}
-                        {#                                                                            </li>#}
-                        {#                                                                            <li>#}
-                        {#                                                                                <i class="icon-star{% if stats.note|round(1) < 5 %}-empty{% endif %}"></i>#}
-                        {#                                                                            </li>#}
-                        {#                                                                        </ul>#}
-                        {#                                                                        {{ stats.note|round(1) }} / 5#}
-                        {#                                                                    </div>#}
-                        {#                                                                </div>#}
-
-                        {#                                                                {% for key, ratingLabel in ratingLabels|reverse(true) %}#}
-                        {#                                                                    <div class="col-10">#}
-                        {#                                                                        <p class="synthesis-label">{{ ratingLabel }}</p>#}
-                        {#                                                                    </div>#}
-
-                        {#                                                                    <div class="col-2">#}
-                        {#                                                                        <p class="synthesis-label">#}
-                        {#                                                                            {% for stat in evaluationStats if stat.rating == key %}#}
-                        {#                                                                                {{ stat.count }}#}
-                        {#                                                                            {% else %}#}
-                        {#                                                                                0#}
-                        {#                                                                            {% endfor %}#}
-                        {#                                                                        </p>#}
-                        {#                                                                    </div>#}
-                        {#                                                                {% endfor %}#}
-                        {#                                                            </div> <!-- end row -->#}
-                        {#                                                        {% endif %}#}
-                        {#                                                    </div> <!-- end content -->#}
-                        {#                                                </div> <!-- end synthesis-evaluations -->#}
-                        {#                                            </div> <!-- end col -->#}
-                        {#                                        {% endif %}#}
-
-                        {#                                    </div> <!-- end row -->#}
-
-                        {#                                </div> <!-- end evaluations -->#}
-                        {#                            </div> <!-- end subsection -->#}
-                        {#                        {% endif %}#}
-
-
                         {% if editable %}
 
                             <div class="subsection">

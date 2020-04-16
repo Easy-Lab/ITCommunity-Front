@@ -1,13 +1,11 @@
-{% extends 'ambassador/profile/layout.html.twig' %}
+{% extends 'user/dashboard/profile/layout.html.twig' %}
 
 {% block content %}
     <div class="container mt-2">
 
-        <h2>{{ 'page.ambassador.dashboard.layout.section.navigation.photos'|trans }}</h2>
-
         {% set element_i = 0 %}
-        {% include 'ambassador/_forms/_properties/pictures.html.twig' %}
+        {% include 'user/_forms/_properties/pictures.html.twig' %}
 
-        <a href="{{ path('ambassador_profile') }}" class="btn btn-primary mt-3" style="float: right;">{{"page.ambassador.pref.mail.goback"|trans }}</a>
+        <a href="{{ path('user_dashboard_profile') }}" class="btn btn-primary mt-3">{{"page._common.button.enregistrer"|trans }}</a>
     </div>
 {% endblock %}

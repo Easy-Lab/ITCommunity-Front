@@ -1,0 +1,84 @@
+{% extends 'user/layout.html.twig' %}
+
+{% block content %}
+    <header class="title">{{ 'page.ambassador.dashboard.message.title'|trans }}</header>
+
+    <header class="subtitle">{{ 'page.ambassador.dashboard.message.section.unanswered.title'|trans }}</header>
+
+    {% if unanswered|length == 0 %}
+        <p class="text-muted ml-2">{{ 'page.ambassador.dashboard.message.section.unanswered.no_questions'|trans }}</p>
+    {% endif %}
+
+    {% for row in unanswered %}
+        <div class="card">
+            <div class="card-body">
+                <h6 class="card-title">{{ row.contact['firstname']}} {{ row.contact['lastname']|first|upper }} le {{ row['created']|date('d-m-Y') }}.</h6>
+                <p class="card-text">{{ row['question'] }}</p>
+
+                <form action="{{ path('user_message_edit', {'hash': row['hash']}) }}" method="post">
+                    <div class="form-group">
+                        <textarea required name="answer" maxlength="300" class="form-control text-field" placeholder="{{ 'page.ambassador.dashboard.message.form.answer.placeholder'|trans }}" data-error="{{ validator.error('answer') }}"></textarea>
+                    </div>
+                    <button class="card-link btn btn-primary">{{ 'page.ambassador.dashboard.message.form.answer_button'|trans }}</button>
+{#                    <a href="{{ path('user_message_delete', {'hash': row['hash']}) }}" class="btn float-right" data-confirm="{{ 'page.ambassador.dashboard.message.form.delete_button_confirm'|trans }}">#}
+{#                        <i class="fa fa-trash"></i>#}
+{#                    </a>#}
+                </form>
+            </div>
+        </div>
+    {% endfor %}
+
+    <header class="subtitle mt-4">{{ 'page.ambassador.dashboard.message.section.answered.title'|trans }}</header>
+
+    {% if answered|length == 0 %}
+        <p class="text-muted ml-2">{{ 'page.ambassador.dashboard.message.section.answered.no_answered_questions'|trans }}</p>
+    {% endif %}
+
+    {% for row in answered %}
+        <div class="card">
+            <div class="card-body">
+                <h6 class="card-title">{{ row.contact['firstname'] }} {{ row.contact['lastname']|first|upper }} le {{ row['created']|date('d-m-Y') }}.</h6>
+                <p class="card-text">{{ row['question'] }}</p>
+
+                <form action="{{ path('user_message_edit', {'hash': row['hash']}) }}" method="post">
+
+                    <p class="ml-3 answer">{{ row['answer'] }}</p>
+
+                    <div class="form-group hidden">
+                        <textarea required name="answer" maxlength="300" class="form-control text-field" placeholder="{{ 'page.ambassador.dashboard.message.form.answer.placeholder'|trans }}" data-error="{{ validator.error('answser') }}">{{ row['answer'] }}</textarea>
+                    </div>
+
+                    <span class="btn btn-primary expand-edit-message">{{ 'page.ambassador.dashboard.message.form.edit_button'|trans }}</span>
+                    <span class="btn btn-primary hide-edit-message" style="display: none;">{{ 'page.ambassador.dashboard.message.form.cancel_button'|trans }}</span>
+                    <button class="card-link btn btn-primary" style="display:none;">{{ 'page.ambassador.dashboard.message.form.edit_button'|trans }}</button>
+{#                    <a href="{{ path('user_message_delete', {'hash': row['hash']}) }}" class="btn float-right" data-confirm="{{ 'page.ambassador.dashboard.message.form.delete_button_confirm'|trans }}">#}
+{#                        <i class="fa fa-trash"></i>#}
+{#                    </a>#}
+                </form>
+            </div>
+        </div>
+    {% endfor %}
+
+    <script src="{{ asset(assets_url ~ 'assets/js/jquery.min.js') }}"></script>
+<script>
+    $('span.expand-edit-message').click(function() {
+        $(this).siblings('p.answer').fadeOut();
+        $(this).fadeOut(function() {
+            $(this).next('span.hide-edit-message').fadeIn();
+            $(this).siblings('button').fadeIn();
+            $(this).prev('div').fadeIn();
+        });
+    })
+
+    $('span.hide-edit-message').click(function() {
+        $(this).next('button').fadeOut();
+        $(this).siblings('div').fadeOut(function() {
+            $(this).siblings('p.answer').fadeIn();
+            $(this).siblings('span.expand-edit-message').fadeIn();
+        });
+        $(this).fadeOut();
+    })
+
+
+</script>
+{% endblock %}

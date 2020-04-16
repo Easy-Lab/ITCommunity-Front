@@ -2,13 +2,13 @@
     <div class="col-xs-12 col">
         <div class="form-group">
             <label for="firstname">{{ 'page.ambassador._forms.firstname.label'|trans }}</label>
-            <input type="text" class="form-control" name="firstname" id="firstname" value="{{ validator.value('firstname') }}" data-error="{{ validator.error('firstname') }}">
+            <input type="text" class="form-control" name="firstname" id="firstname" value="{% if user %}{{ user['firstname'] }}{% else %}{{ validator.value('firstname') }}{% endif %}" data-error="{{ validator.error('firstname') }}">
         </div>
     </div>
     <div class="col-xs-12 col">
         <div class="form-group">
             <label for="lastname">{{ 'page.ambassador._forms.lastname.label'|trans }}</label>
-            <input type="text" class="form-control" name="lastname" id="lastname" value="{{ validator.value('lastname') }}" data-error="{{ validator.error('lastname') }}">
+            <input type="text" class="form-control" name="lastname" id="lastname" value="{% if user %}{{ user['lastname'] }}{% else %}{{ validator.value('lastname') }}{% endif %}" data-error="{{ validator.error('lastname') }}">
         </div>
     </div>
 </div>

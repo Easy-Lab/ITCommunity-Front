@@ -62,7 +62,7 @@ class MailService
         return true;
     }
 
-    public function send($slug, $to, array $vars, $replyTo = [], $object=null)
+    public function send($slug, $to, array $vars, $replyTo = [], $object=null, $mailAdmin=null)
     {
         $success = false;
         $error = null;
@@ -80,14 +80,19 @@ class MailService
             }else{
                 $subject = $object;
             }
-
+            $mailFrom = null;
+            if ($mailAdmin){
+                $mailFrom = $this->container->getParameter('mailer_from_contact');
+            }else{
+                $mailFrom = $this->container->getParameter('mailer_from_address');
+            }
             // Chemin du template du mail
             $template = "mails/".str_replace('.', '/', $slug).".html.twig";
             $body = $this->templating->render($template, $vars);
             $message = (new \Swift_Message())
                 ->setSubject($subject)
                 ->setFrom([
-                    $this->container->getParameter('mailer_from_address') => $this->container->getParameter('mailer_from_label')
+                    $mailFrom => $this->container->getParameter('mailer_from_label')
                 ])
                 ->setTo($to)
                 ->setReplyTo($replyTo)
