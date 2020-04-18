@@ -3,6 +3,9 @@ validator:
     fail: "Une erreur est survenue"
     custom:
       form:
+        success: "Votre message a bien été envoyé !"
+        errorApi: "Une erreur est survenue durant l'envoie de votre message"
+        error: "Une erreur est survenue dans le formulaire, veuillez le vérifier"
         spam: "Message envoyé !"
         html: "Vous ne pouvez pas utiliser de caractères spéciaux"
         url: "Vous ne pouvez pas envoyer un lien URL par message"
