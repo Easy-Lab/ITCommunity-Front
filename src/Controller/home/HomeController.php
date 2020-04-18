@@ -80,100 +80,80 @@ class HomeController extends AbstractController
      */
     public function contactUs(Validator $validator, Request $request, UserService $userService)
     {
-//        $reasons = $this->getDoctrine()->getRepository(ContactUsReason::class)->findAll(['id' => 'ASC']);
-//
-//        if ($validator->post())
-//        {
-//            if ($features->get('ambassador.contact.captcha')) {
-//                $recaptcha = new \ReCaptcha\ReCaptcha($this->getParameter('google_recaptcha_secret'));
-//                if (!$recaptcha->verify($request->get('g-recaptcha-response'), $request->getClientIp())->isSuccess()) {
-//                    $validator->fail('form.google_recaptcha_failed');
-//                }
-//            }
-//
-//            $validator
-//                ->required('firstname', 'lastname', 'email', 'message', 'reason')
-//                ->email('email');
-//
-//            if($validator->get('reason') !== null) {
-//                $reason = $this->getDoctrine()->getRepository(ContactUsReason::class)->find(
-//                    $validator->get('reason')
-//                );
-//                if(!$reason) $validator->error('reason', 'in_array', true);
-//            }
-//
-//            if ($request->get('phone')) {
-//                $validator->phone('phone');
-//            }
-//
-//            if ($validator->check())
-//            {
-//                if ($validator->get('texte') != "") {
-//                    $validator->success('form.spam');
-//                    return $this->redirectToRoute('contact_us');
-//                }
-//
-//                if ($validator->DatacheckSpam($validator->get('firstname')) != null) {
-//                    $error = $validator->DatacheckSpam($validator->get('firstname'));
-//                    $validator->keep()->fail('form.' . $error);
-//                    return $this->redirectToRoute('contact_us');
-//
-//                }
-//                if ($validator->DatacheckSpam($validator->get('lastname')) != null) {
-//                    $error = $validator->DatacheckSpam($validator->get('lastname'));
-//                    $validator->keep()->fail('form.' . $error);
-//                    return $this->redirectToRoute('contact_us');
-//
-//                }
-//                if ($validator->DatacheckSpam($validator->get('email')) != null) {
-//                    $error = $validator->DatacheckSpam($validator->get('email'));
-//                    $validator->keep()->fail('form.' . $error);
-//                    return $this->redirectToRoute('contact_us');
-//
-//                }
-//                if ($validator->DatacheckSpam($validator->get('message')) != null) {
-//                    $error = $validator->DatacheckSpam($validator->get('message'));
-//                    $validator->keep()->fail('form.' . $error);
-//                    return $this->redirectToRoute('contact_us');
-//
-//                }
-//
-//                // Store
-//                $newContactUs = $this->getDoctrine()->getRepository(ContactUs::class)->blankInstance(
-//                    $request->get('firstname'),
-//                    $request->get('lastname'),
-//                    ($request->get('phone')) ? $request->get('phone') : null,
-//                    $request->get('email'),
-//                    $request->get('message'),
-//                    $reason
-//                );
-//
-//                $userService->setCrypted($newContactUs, 'firstname', $request->get('firstname'));
-//                $userService->setCrypted($newContactUs, 'lastname', $request->get('lastname'));
-//                $userService->setCrypted($newContactUs, 'email', strtolower($request->get('email')));
-//                if($request->get('phone')) $userService->setCrypted($newContactUs, 'phone', $request->get('phone'));
-//
-//                $em = $this->getDoctrine()->getManager();
-//                $em->persist($newContactUs);
-//                $em->flush();
-//
-//                // Send e-mail
-//                $mailService->sendContactUsMail(
-//                    $request->get('firstname'),
-//                    $request->get('lastname'),
-//                    ($request->get('phone')) ? $request->get('phone') : null,
-//                    $request->get('email'),
-//                    $request->get('message'),
-//                    $reason
-//                );
-//
-//                $validator->success('contact.contact_us.success_send');
-//
-//                return $this->redirectToRoute('home');
-//            }
-//
-//            $validator->fail();
-//        }
+        if ($validator->post())
+        {
+
+            $validator
+                ->required('firstname', 'lastname', 'email', 'message', 'reason')
+                ->email('email');
+
+
+            if ($request->get('phone')) {
+                $validator->phone('phone');
+            }
+
+            if ($validator->check())
+            {
+                if ($validator->get('texte') != "") {
+                    $validator->success('form.spam');
+                    return $this->redirectToRoute('contact_us');
+                }
+
+                if ($validator->DatacheckSpam($validator->get('firstname')) != null) {
+                    $error = $validator->DatacheckSpam($validator->get('firstname'));
+                    $validator->keep()->fail('form.' . $error);
+                    return $this->redirectToRoute('contact_us');
+
+                }
+                if ($validator->DatacheckSpam($validator->get('lastname')) != null) {
+                    $error = $validator->DatacheckSpam($validator->get('lastname'));
+                    $validator->keep()->fail('form.' . $error);
+                    return $this->redirectToRoute('contact_us');
+
+                }
+                if ($validator->DatacheckSpam($validator->get('email')) != null) {
+                    $error = $validator->DatacheckSpam($validator->get('email'));
+                    $validator->keep()->fail('form.' . $error);
+                    return $this->redirectToRoute('contact_us');
+
+                }
+                if ($validator->DatacheckSpam($validator->get('reason')) != null) {
+                    $error = $validator->DatacheckSpam($validator->get('reason'));
+                    $validator->keep()->fail('form.' . $error);
+                    return $this->redirectToRoute('contact_us');
+
+                }
+                if ($validator->DatacheckSpam($validator->get('message')) != null) {
+                    $error = $validator->DatacheckSpam($validator->get('message'));
+                    $validator->keep()->fail('form.' . $error);
+                    return $this->redirectToRoute('contact_us');
+
+                }
+                $dataContact =
+                    [
+                        'firstname'=>$validator->get('firstname'),
+                        'lastname'=>$validator->get('lastname'),
+                        'email'=>$validator->get('email'),
+                        'phone'=>is_null($validator->get('phone')) ? null : $validator->get('phone'),
+                        'subject'=>$validator->get('reason'),
+                        'body'=>$validator->get('message')
+                    ];
+                $client = HttpClient::create();
+                $responseContact = $client->request('POST', getenv('API_URL') . '/contactforms', [
+                    'headers' => ['content_type' => 'application/json'],
+                    'body' => json_encode($dataContact)
+                ]);
+                if ($responseContact->getStatusCode() == 200 || $responseContact->getStatusCode() == 201)
+                {
+                    $validator->success('form.success');
+                    return $this->redirectToRoute('contact_us');
+                }
+                $validator->keep()->fail('form.errorApi');
+                return $this->redirectToRoute('contact_us');
+            }
+            $validator->keep()->fail('form.error');
+            return $this->redirectToRoute('contact_us');
+        }
 
         $actual_route = $request->get('actual_route', 'contact_us');
 
@@ -181,12 +161,6 @@ class HomeController extends AbstractController
             'validator' => $validator,
             'actual_route'=>$actual_route,
             'user'=>$userService->getUser(),
-//            "reasons" => $reasons,
-//            'openGarden'=>$features->get('environment.events.enabled'),
-//
-//            'meta_key' => 'page.contact_us',
-//            'dealerHusqSearch'=>$features->get('dealer.search.husq')
-
         ]);
     }
 }

@@ -82,9 +82,9 @@ class MailService
             }
             $mailFrom = null;
             if ($mailAdmin){
-                $mailFrom = $this->container->getParameter('mailer_from_contact');
+                $mailFrom = getenv('mailer_from_contact');
             }else{
-                $mailFrom = $this->container->getParameter('mailer_from_address');
+                $mailFrom = getenv('mailer_from_address');
             }
             // Chemin du template du mail
             $template = "mails/".str_replace('.', '/', $slug).".html.twig";
@@ -92,7 +92,7 @@ class MailService
             $message = (new \Swift_Message())
                 ->setSubject($subject)
                 ->setFrom([
-                    $mailFrom => $this->container->getParameter('mailer_from_label')
+                    $mailFrom => getenv('mailer_from_label')
                 ])
                 ->setTo($to)
                 ->setReplyTo($replyTo)
