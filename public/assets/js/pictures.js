@@ -175,7 +175,7 @@ if($('.image-editor').length) {
             $imageEditor.find('.cropit-image-update').hide()
             $imageEditor.find('.cropit-control').hide()
 
-            var endpoint = $imageEditor.attr('data-endpoint');
+            var endpoint = $imageEditor.attr('data-delete');
             var id = $imageEditor.attr('data-id');
             var type = $imageEditor.attr('data-type');
             var user = $imageEditor.attr('data-user');
@@ -204,6 +204,9 @@ if($('.image-editor').length) {
                     if($imageEditor.closest('.images-orderable').length) {
                         $imageEditor.appendTo($imageEditor.closest('.images-orderable'))
                     }
+                },
+                error: function (data) {
+                    console.log(data);
                 }
             })
             return false;

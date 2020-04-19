@@ -1,0 +1,18 @@
+
+{% extends 'user/register/layout.html.twig' %}
+
+
+{% block content %}
+
+    <form action="{{ path('register_step_3') }}" method="post">
+                {% for element in form_properties %}
+                    {% include ['user/_forms/_properties/' ~ element ~ '.html.twig'] %}
+                {% endfor %}
+                <div class="row mb-5 mt-5">
+                    <div class="col-xs-12 col"></div>
+                    <div class="col-xs-12 col text-right">
+                        <button type="submit" class="btn btn-theme">{{ 'page.ambassador.register.step_3.submit_button'|trans }}</button>
+                    </div>
+                </div>
+            </form>
+{% endblock %}

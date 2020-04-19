@@ -1,0 +1,18 @@
+{% extends 'user/dashboard/profile/layout.html.twig' %}
+
+{% block content %}
+    <div class="container mt-2 mb-5">
+        <h2>{{ ('page.ambassador.update.layout.informations.title') |trans}}</h2>
+        <form action="{{ path('user_dashboard_informations') }}" method="post">
+
+            {% for element in form_properties %}
+                {% include ['user/_forms/_properties/' ~ element ~ '.html.twig', 'user/_forms/_properties/_' ~ element ~ '.html.twig'] %}
+            {% endfor %}
+
+            <div class="mt-5 register-button">
+                <a href="{{ path('user_dashboard_profile') }}" class="btn btn-secondary">{{ ('page._common.button.annuler')|trans }}</a>
+                <button class="btn btn-theme float-right">{{ ('page._common.button.enregistrer')|trans }}</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

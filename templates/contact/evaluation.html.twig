@@ -7,9 +7,9 @@
             <div class="col-md-6 col-xs-12">
 
                 <p class="title">{{ 'page.evaluation.hello'|trans }}
-                    <span>{{ contact['firstname'] }} {{ contact['lastname'] }}</span></p>
+                    <span>{{ message['contact']['firstname'] }} {{ message['contact']['lastname'] }}</span></p>
                 <p>{{ 'page.evaluation.exchange'|trans }} <span
-                            class="font-weight-bold">{{ contact.['user']['pseudo'] }}</span></p>
+                            class="font-weight-bold">{{ message['user']['username'] }}</span></p>
                 <p>{{ 'page.evaluation.thanks'|trans }}</p>
 
                 <p class="rating-input-label">{{ 'page.evaluation.stars'|trans }}</p>

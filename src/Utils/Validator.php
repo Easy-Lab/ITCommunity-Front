@@ -402,7 +402,7 @@ class Validator
                 if (!filter_var($value, FILTER_VALIDATE_EMAIL)) $error = 'email';
                 break;
             case 'phone' :
-                switch($this->container->getParameter('locale')) {
+                switch(getenv('locale')) {
                     // TODO:
                      case 'es':
                          $_pattern = "/^\+?\d{7,15}$/";
@@ -434,7 +434,7 @@ class Validator
                 }
                 break;
             case 'zipcode' :
-                switch($this->container->getParameter('locale')) {
+                switch(getenv('locale')) {
                     // TODO: add other countries rules
                     // case 'es':
                     // ...
@@ -445,7 +445,7 @@ class Validator
                 }
                 break;
             case 'dni':
-                switch($this->container->getParameter('locale')) {
+                switch(getenv('locale')) {
                     case 'es':
                         $_pattern1 = "/^[0-9]{8}[[:alpha:]]{1}$/";
                         $_pattern2 = "/^[[:alpha:]]{1}[0-9]{7}[[:alpha:]]{1}$/";

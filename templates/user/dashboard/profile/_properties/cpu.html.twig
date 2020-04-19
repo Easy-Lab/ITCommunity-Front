@@ -1,0 +1,10 @@
+<div class="name">
+        <span>{{ cpu['companyComponent']}} {{ cpu['nameComponent'] }} {{ cpu['otherInformationComponent'] }}</span>
+</div>
+<div class="rating">
+    {% for i in 1..5 %}
+        <span class="icon-star{{ i > cpu['rating'] ? '-empty' }}"></span>
+    {% endfor %}
+    {{ cpu['rating']|round(1) }} / 5
+    {% if editable %}<a href="{{ path('user_dashboard_products') }}"><i class="icon-pencil"></i></a>{% endif %}
+</div>
