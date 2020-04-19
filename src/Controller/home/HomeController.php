@@ -42,6 +42,7 @@ class HomeController extends AbstractController
             'products_gpu'=>array_reverse($contentGpu),
             'actual_route'=>$actual_route,
             'user'=>$userService->getUser(),
+            'google_maps_frontend_api_key'=>getenv("GOOGLE_MAPS_FRONTEND_API_KEY")
         ]);
     }
 
