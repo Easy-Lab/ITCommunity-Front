@@ -1,6 +1,6 @@
 {% set footer_show_participation = true %}
 
-{% extends 'ambassador/register/layout.html.twig' %}
+{% extends 'user/register/layout.html.twig' %}
 
 {% block layout_header %}
 
@@ -18,27 +18,16 @@
 
 {% block content %}
     <div class="ambassador-register-step-0">
-        <div class="{# register-condition" #}">
+        <div>
 
             <p class="required_informations">{{ "page.ambassador.register.step_0.introduction"|trans|raw }}</p>
 
-
-            {#        <p class="alert alert-warning text-center" id="not-eligible-message">Votre installation n'ayant pas été réalisée par un professionnel, nous ne pouvons pas être sûr de sa qualité. Vous n'êtes pas éligible au programme Ambassadeurs.</p>#}
-
-            {% set form_url = ((contact is defined and contact != null) ? path('ambassador_register', {'hash': contact.hash}) : path('ambassador_register') ) %}
-            {% set firstname_value = ((contact is defined and contact != null) ? contact.firstname : validator.value('firstname') ) %}
-            {% set lastname_value = ((contact is defined and contact != null) ? contact.lastname : validator.value('lastname') ) %}
-            {% set username_value = ((contact is defined and contact != null) ? contact.email : validator.value('username') ) %}
+            {% set form_url = ((hash is defined and hash != null) ? path('ambassador_register', {'hash': hash}) : path('ambassador_register') ) %}
 
             <form action="{{ form_url }}" method="post">
                 {% for element in form_properties %}
-                    {% include ['ambassador/_forms/_properties/' ~ element ~ '.html.twig'] %}
+                    {% include ['user/_forms/_properties/' ~ element ~ '.html.twig'] %}
                 {% endfor %}
-
-{#                <p class="mt-3"><small>{{ ('page.ambassador.register.step_0.text_end'|trans)}} <a id="refConditions" class="refConditions" style="color: #273a60 ;text-decoration: underline !important;" target="_blank" href="{{ path('static_page', {'slug': ('page.ambassador.register.step_0.lienMentions'|trans)}) }}">{{ ('page.ambassador.register.step_0.add_text_end'|trans)}}</a></small></p>#}
-
-                {#<!-- <div class="g-recaptcha" data-sitekey="{{ google_recaptcha_key }}"></div> -->#}
-
                 <div class="row mb-5 mt-5">
                     <div class="col"></div>
                     <div class="col text-right">

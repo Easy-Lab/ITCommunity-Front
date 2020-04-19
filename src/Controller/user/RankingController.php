@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Controller\ambassador;
+namespace App\Controller\user;
 
 
 use App\Service\UserService;
@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
-class EvaluationController extends AbstractController
+class RankingController extends AbstractController
 {
     protected $features;
     protected $session;
@@ -24,7 +24,7 @@ class EvaluationController extends AbstractController
     }
 
     /**
-     * @Route("/user/evaluation", name="user_dashboard_evaluation")
+     * @Route("/user/classement", name="user_dashboard_ranking")
      */
     public function index(Validator $validator, Request $request, UserService $userService)
     {
@@ -38,12 +38,12 @@ class EvaluationController extends AbstractController
                 $profilePicture = $userService->getProfilePicture();
                 $myPoints = $userService->getMyPoints();
             }
-            $evaluations = $userService->getEvaluations();
-            $actual_route = $request->get('actual_route', 'user_dashboard_evaluation');
+            $ranking = $userService->getRanking();
+            $actual_route = $request->get('actual_route', 'user_dashboard_ranking');
 
-        return $this->render('user/evaluation/index.html.twig', [
+        return $this->render('user/ranking/index.html.twig', [
             'validator' => $validator,
-            'evaluations'=>$evaluations,
+            'ranking'=>$ranking,
             'actual_route'=>$actual_route,
             'user'=>$user,
             'profilePicture'=>$profilePicture,

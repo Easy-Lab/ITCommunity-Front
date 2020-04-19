@@ -41,7 +41,14 @@ class UserService
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode == 200) {
-                return $response->toArray();
+                $data = $response->toArray();
+                if (array_key_exists('firstname',$data))
+                {
+                    return $data;
+                }else
+                    {
+                    return null;
+                }
 
             } else {
                 return null;
