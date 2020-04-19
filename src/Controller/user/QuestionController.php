@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Controller\ambassador;
+namespace App\Controller\user;
 
 
 use App\Service\UserService;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\ambassador;
+namespace App\Controller\user;
 
 use App\Service\LoginService;
 use App\Service\UserService;
@@ -79,14 +79,15 @@ class RegisterController extends AbstractController
                         'lastname' => $validator->get('lastname'),
                         'email' => $validator->get('username'),
                         'username' => $validator->get('pseudo'),
-                        'plainPassword' => $validator->get('password'),
                         'address' => $validator->get('address'),
                         'address2' => $validator->get('address2'),
-                        'zipcode' => $validator->get('zipcode'),
                         'city' => $validator->get('city'),
+                        'zipcode' => $validator->get('zipcode'),
                         'phone' => $validator->get('phone'),
-                        'informationsEnabled' => $informations,
                         'step' => 1,
+                        'informationsEnabled' => $informations,
+                        'ip'=>$_SERVER['REMOTE_ADDR'],
+                        'plainPassword' => $validator->get('password'),
                     ];
                 $client = HttpClient::create();
                 $response = $client->request('POST', getenv('API_URL') . '/users', [
@@ -120,6 +121,7 @@ class RegisterController extends AbstractController
             'actual_route' => $actual_route,
             'form_properties' => $form,
             'user'=>$userService->getUser(),
+            'hash'=>$hash
 
         ]);
     }
