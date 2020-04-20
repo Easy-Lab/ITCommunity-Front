@@ -185,7 +185,7 @@ class MappingController extends AbstractController
             $user = null;
         }
 
-        $markers = $this->prepareMarkerPopUp($user, $translator);
+        $markers = $this->prepareMarkerPopUp($user[0], $translator);
 
         return new JsonResponse($markers);
     }
