@@ -95,6 +95,12 @@ page:
       image: ""
     h1: "Titre de la Homepage"
   ambassador:
+    pref:
+      mail:
+        title: 'Choisissez les messages que vous souhaitez recevoir'
+        subtitle: "Pour modifier vos préférences des e-mails, veuillez renseigner les champs suivants :\t "
+        reasontitle2: 'Les e-mails d''information de la plateforme'
+        reason2: 'Ces e-mails ont pour but de vous informer des nouveautés du programme, de vous conseiller et d''avoir des tips. Pour ne plus les recevoir, cliquez sur la case correspondante.'
     update:
       layout:
         informations:
@@ -353,6 +359,16 @@ page:
             event_description: "Vous avez <span>%nb_participations%</span> participation(s) en attente"
             answer_at: 'Répondu le '
             le: 'le'
+            password:
+              title: "Changement de mot de passe"
+              form:
+                current_password:
+                  label: "Mot de passe actuel"
+                new_password:
+                  label: "Nouveau mot de passe"
+                new_password_confirm:
+                  label: "Confirmez votre nouveau mot de passe"
+                update_button: "Mettre à jour mon mot de passe"
           navigation:
             voucher: "Invitez vos contacts"
             share: "Partagez votre contenu"

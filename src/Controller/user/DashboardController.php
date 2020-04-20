@@ -32,14 +32,12 @@ class DashboardController extends AbstractController
      */
     public function index(Request $request, Validator $validator, UserService $userService)
     {
-        if ($request->hasSession() && $this->session)
-        {
+        if ($request->hasSession() && $this->session) {
             $user = $userService->getUser();
             $profilePicture = null;
             $myPoints = 0;
             $messages = null;
-            if ($user)
-            {
+            if ($user) {
                 $profilePicture = $userService->getProfilePicture();
                 $myPoints = $userService->getMyPoints();
                 $messages = $userService->getMessages();
@@ -50,8 +48,8 @@ class DashboardController extends AbstractController
                 'actual_route' => $actual_route,
                 'profilePicture' => $profilePicture,
                 'user' => $user,
-                'myPoints'=>$myPoints,
-                'messages'=>$messages
+                'myPoints' => $myPoints,
+                'messages' => $messages
             ]);
         }
         return $this->redirectToRoute('login');
@@ -62,8 +60,7 @@ class DashboardController extends AbstractController
      */
     public function profile(Request $request, Validator $validator, UserService $userService)
     {
-        if ($request->hasSession() && $this->session)
-        {
+        if ($request->hasSession() && $this->session) {
             $user = $userService->getUser();
             $profilePicture = null;
             $environmentPictures = null;
@@ -76,8 +73,7 @@ class DashboardController extends AbstractController
             $evaluations = null;
             $myPoints = 0;
 
-            if ($user)
-            {
+            if ($user) {
                 $profilePicture = $userService->getProfilePicture();
                 $environmentPictures = $userService->getEnvironmentPictures();
                 $gpu = $userService->getGpu();
@@ -103,9 +99,9 @@ class DashboardController extends AbstractController
                 'environment1' => $environment1,
                 'environment2' => $environment2,
                 'structure' => $userService->getStructure(),
-                'messages'=>$messages,
-                'evaluations'=>$evaluations,
-                'myPoints'=>$myPoints
+                'messages' => $messages,
+                'evaluations' => $evaluations,
+                'myPoints' => $myPoints
 
             ]);
         }
@@ -123,11 +119,9 @@ class DashboardController extends AbstractController
         $response = $client->request('GET', getenv('API_URL') . '/users?expand=profile,reviews,pictures&user_filter[username]=' . $username
         );
         $statusCode = $response->getStatusCode();
-        if ($statusCode == 200)
-        {
+        if ($statusCode == 200) {
             $data = $response->toArray();
-        } else
-            {
+        } else {
             return $this->redirectToRoute('home');
         }
 
@@ -142,15 +136,11 @@ class DashboardController extends AbstractController
         $evaluations = null;
         $user = $data['users'][0];
         $tabPictures = [];
-        if ($user['pictures'])
-        {
-            foreach ($user['pictures'] as $picture)
-            {
-                if ($picture['name'] == 'profile_picture')
-                {
+        if ($user['pictures']) {
+            foreach ($user['pictures'] as $picture) {
+                if ($picture['name'] == 'profile_picture') {
                     $profilePicture = $picture;
-                } else
-                    {
+                } else {
                     if ($picture['name'] == 'environment_0') $environment0 = $picture;
                     if ($picture['name'] == 'environment_1') $environment1 = $picture;
                     if ($picture['name'] == 'environment_2') $environment2 = $picture;
@@ -179,8 +169,8 @@ class DashboardController extends AbstractController
             'environment1' => $environment1,
             'environment2' => $environment2,
             'structure' => $userService->getStructure(),
-            'messages'=>$messages,
-            'evaluations'=>$evaluations
+            'messages' => $messages,
+            'evaluations' => $evaluations
 
         ]);
 
@@ -191,13 +181,11 @@ class DashboardController extends AbstractController
      */
     public function unsub(Request $request, Validator $validator, UserService $userService, Features $features)
     {
-        if ($request->hasSession() && $this->session)
-        {
+        if ($request->hasSession() && $this->session) {
             $user = $userService->getUser();
             $profilePicture = null;
             $myPoints = 0;
-            if ($user)
-            {
+            if ($user) {
                 $profilePicture = $userService->getProfilePicture();
                 $myPoints = $userService->getMyPoints();
             }
@@ -219,18 +207,98 @@ class DashboardController extends AbstractController
      */
     public function preference(Request $request, Validator $validator, UserService $userService, Features $features)
     {
-        if ($request->hasSession() && $this->session)
-        {
+        if ($request->hasSession() && $this->session) {
             $user = $userService->getUser();
             $profilePicture = null;
             $myPoints = 0;
-            if ($user)
-            {
+            if ($user) {
                 $profilePicture = $userService->getProfilePicture();
                 $myPoints = $userService->getMyPoints();
             }
+            if ($validator->post()) {
+                if ($validator->get('informations_enabled')) {
+                    $informations = true;
+                } else {
+                    $informations = false;
+                }
+                $client = HttpClient::create(['headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => 'Bearer ' . $this->session->get('token')
+                ]]);
+                $data =
+                    [
+                        'informationsEnabled' => $informations
+                    ];
+                $response = $client->request('PATCH', getenv('API_URL') . '/users/' . $this->session->get('username')
+                    , [
+                        'headers' => ['content_type' => 'application/json'],
+                        'body' => json_encode($data)
+                    ]);
+                $statusCode = $response->getStatusCode();
+                if ($statusCode == 200) {
+                    $validator->success('update.success');
+                    return $this->redirectToRoute('user_dashboard_profile');
+                } else {
+                    $validator->keep()->fail();
+                    return $this->redirectToRoute('user_dashboard_preference');
+                }
+            }
             $actual_route = $request->get('actual_route', 'user_dashboard_preference');
-            return $this->render('user/dashboard/profile/unsubscribe.html.twig', [
+            return $this->render('user/dashboard/profile/mails.html.twig', [
+                'validator' => $validator,
+                'actual_route' => $actual_route,
+                'profilePicture' => $profilePicture,
+                'user' => $user,
+                'myPoints' => $myPoints
+            ]);
+        }
+        return $this->redirectToRoute('login');
+    }
+
+    /**
+     * @Route("/dashboard/profile/password", name="user_dashboard_password")
+     */
+    public function password(Request $request, Validator $validator, UserService $userService, Features $features)
+    {
+        if ($request->hasSession() && $this->session) {
+            $user = $userService->getUser();
+            $profilePicture = null;
+            $myPoints = 0;
+            if ($user) {
+                $profilePicture = $userService->getProfilePicture();
+                $myPoints = $userService->getMyPoints();
+            }
+            if ($validator->post()) {
+                $validator->required('password', 'passwordConfirm');
+                if ($validator->check()) {
+                    if ($validator->get('password') == $validator->get('passwordConfirm')) {
+                        $client = HttpClient::create(['headers' => [
+                            'Content-Type' => 'application/json',
+                            'Authorization' => 'Bearer ' . $this->session->get('token')
+                        ]]);
+                        $data =
+                            [
+                                'plainPassword' => $validator->get('password')
+                            ];
+                        $response = $client->request('PATCH', getenv('API_URL') . '/users/' . $this->session->get('username')
+                            , [
+                                'headers' => ['content_type' => 'application/json'],
+                                'body' => json_encode($data)
+                            ]);
+                        $statusCode = $response->getStatusCode();
+                        if ($statusCode == 200) {
+                            $request->getSession()->invalidate();
+                            $validator->success('update.success');
+                            return $this->redirectToRoute('login');
+                        } else {
+                            $validator->keep()->fail();
+                            return $this->redirectToRoute('user_dashboard_password');
+                        }
+                    }
+                }
+            }
+            $actual_route = $request->get('actual_route', 'user_dashboard_password');
+            return $this->render('user/dashboard/profile/password.html.twig', [
                 'validator' => $validator,
                 'actual_route' => $actual_route,
                 'profilePicture' => $profilePicture,
@@ -246,55 +314,47 @@ class DashboardController extends AbstractController
      */
     public function informations(Request $request, Validator $validator, UserService $userService, Features $features)
     {
-        if ($request->hasSession() && $this->session)
-        {
+        if ($request->hasSession() && $this->session) {
             $user = $userService->getUser();
             $profilePicture = null;
             $myPoints = 0;
-            if ($user)
-            {
+            if ($user) {
                 $profilePicture = $userService->getProfilePicture();
                 $myPoints = $userService->getMyPoints();
             }
 
             $properties = $features->get("forms.profile.informations");
-            if (is_array($properties))
-            {
-                foreach ($properties as $property)
-                {
+            if (is_array($properties)) {
+                foreach ($properties as $property) {
                     $form[] = $property;
                 }
             }
             $actual_route = $request->get('actual_route', 'user_dashboard_informations');
-            if ($validator->post())
-            {
-                $validator->required('firstname','lastname','username','pseudo');
-                if ($validator->check())
-                {
+            if ($validator->post()) {
+                $validator->required('firstname', 'lastname', 'username', 'pseudo');
+                if ($validator->check()) {
                     $client = HttpClient::create(['headers' => [
                         'Content-Type' => 'application/json',
                         'Authorization' => 'Bearer ' . $this->session->get('token')
                     ]]);
                     $data =
                         [
-                            'firstname'=>$validator->get('firstname'),
-                            'lastname'=>$validator->get('lastname'),
-                            'email'=>$validator->get('username'),
-                            'username'=>$validator->get('pseudo')
+                            'firstname' => $validator->get('firstname'),
+                            'lastname' => $validator->get('lastname'),
+                            'email' => $validator->get('username'),
+                            'username' => $validator->get('pseudo')
                         ];
-                    $response = $client->request('PATCH', getenv('API_URL') . '/users/'.$this->session->get('username')
+                    $response = $client->request('PATCH', getenv('API_URL') . '/users/' . $this->session->get('username')
                         , [
                             'headers' => ['content_type' => 'application/json'],
                             'body' => json_encode($data)
                         ]);
                     $statusCode = $response->getStatusCode();
-                    if ($statusCode == 200)
-                    {
+                    if ($statusCode == 200) {
                         $request->getSession()->invalidate();
                         $validator->success('update.success');
                         return $this->redirectToRoute('login');
-                    } else
-                    {
+                    } else {
                         $validator->keep()->fail();
                         return $this->redirectToRoute('user_dashboard_informations');
                     }
@@ -306,7 +366,7 @@ class DashboardController extends AbstractController
                 'profilePicture' => $profilePicture,
                 'user' => $user,
                 'myPoints' => $myPoints,
-                'form_properties'=>$form
+                'form_properties' => $form
             ]);
         }
         return $this->redirectToRoute('login');
@@ -317,13 +377,11 @@ class DashboardController extends AbstractController
      */
     public function products(Request $request, Validator $validator, UserService $userService, Features $features)
     {
-        if ($request->hasSession() && $this->session)
-        {
+        if ($request->hasSession() && $this->session) {
             $user = $userService->getUser();
             $profilePicture = null;
             $myPoints = 0;
-            if ($user)
-            {
+            if ($user) {
                 $profilePicture = $userService->getProfilePicture();
                 $myPoints = $userService->getMyPoints();
                 $gpu = $userService->getGpu();
@@ -331,10 +389,8 @@ class DashboardController extends AbstractController
             }
 
             $properties = $features->get("forms.profile.products");
-            if (is_array($properties))
-            {
-                foreach ($properties as $property)
-                {
+            if (is_array($properties)) {
+                foreach ($properties as $property) {
                     $form[] = $property;
                 }
             }
@@ -342,8 +398,7 @@ class DashboardController extends AbstractController
             $client = HttpClient::create();
             $responseGpu = $client->request('GET', 'http://gpu-cpu-api.atcreative.fr/api/gpu');
             $statusCodeGpu = $responseGpu->getStatusCode();
-            if ($statusCodeGpu == 200)
-            {
+            if ($statusCodeGpu == 200) {
                 $contentGpu = $responseGpu->toArray();
             } else {
                 $contentGpu = null;
@@ -351,56 +406,47 @@ class DashboardController extends AbstractController
 
             $responseCpu = $client->request('GET', 'http://gpu-cpu-api.atcreative.fr/api/cpu');
             $statusCodeCpu = $responseCpu->getStatusCode();
-            if ($statusCodeCpu == 200)
-            {
+            if ($statusCodeCpu == 200) {
                 $contentCpu = $responseCpu->toArray();
             } else {
                 $contentCpu = null;
             }
 
             $actual_route = $request->get('actual_route', 'user_dashboard_products');
-            if ($validator->post())
-            {
+            if ($validator->post()) {
                 $validator->required('gpu', 'gpu_rating', 'gpu_feedback', 'cpu', 'cpu_rating', 'cpu_feedback');
 
-                if ($validator->get('gpu') == null)
-                {
+                if ($validator->get('gpu') == null) {
                     $validator->error('gpu', 'required');
                     $validator->keep()->fail('error_gpu');
                     return $this->redirectToRoute('user_dashboard_products');
                 }
 
-                if ($validator->get('cpu') == null)
-                {
+                if ($validator->get('cpu') == null) {
                     $validator->error('cpu', 'required');
                     $validator->keep()->fail('error_cpu');
                     return $this->redirectToRoute('user_dashboard_products');
                 }
 
-                if ($validator->get('gpu_rating') == null)
-                {
+                if ($validator->get('gpu_rating') == null) {
                     $validator->error('gpu_rating', 'required');
                     $validator->keep()->fail('error_gpu_rating');
                     return $this->redirectToRoute('user_dashboard_products');
                 }
 
-                if ($validator->get('cpu_rating') == null)
-                {
+                if ($validator->get('cpu_rating') == null) {
                     $validator->error('cpu_rating', 'required');
                     $validator->keep()->fail('error_cpu_rating');
                     return $this->redirectToRoute('user_dashboard_products');
                 }
 
-                if ($validator->check())
-                {
+                if ($validator->check()) {
                     $urlGpu = 'http://gpu-cpu-api.atcreative.fr/api/gpu/' . $validator->get('gpu');
                     $infoGpu = $client->request('GET', $urlGpu);
                     $httpCodeGpu = $infoGpu->getStatusCode();
-                    if ($httpCodeGpu == 200)
-                    {
+                    if ($httpCodeGpu == 200) {
                         $contentInfoGpu = $infoGpu->toArray();
-                    } else
-                    {
+                    } else {
                         $validator->keep()->fail();
                         return $this->redirectToRoute('user_dashboard_products');
                     }
@@ -417,11 +463,9 @@ class DashboardController extends AbstractController
                     $urlCpu = 'http://gpu-cpu-api.atcreative.fr/api/cpu/' . $validator->get('cpu');
                     $infoCpu = $client->request('GET', $urlCpu);
                     $httpCodeCpu = $infoCpu->getStatusCode();
-                    if ($httpCodeCpu == 200)
-                    {
+                    if ($httpCodeCpu == 200) {
                         $contentInfoCpu = $infoCpu->toArray();
-                    } else
-                    {
+                    } else {
                         $validator->keep()->fail();
                         return $this->redirectToRoute('user_dashboard_products');
                     }
@@ -443,15 +487,14 @@ class DashboardController extends AbstractController
                         'Content-Type' => 'application/json',
                         'Authorization' => 'Bearer ' . $this->session->get('token')
                     ]]);
-                    $responseGpu = $clientPatchGpu->request('PATCH', getenv('API_URL') . '/reviews/'.$gpu['hash'], [
+                    $responseGpu = $clientPatchGpu->request('PATCH', getenv('API_URL') . '/reviews/' . $gpu['hash'], [
                         'body' => json_encode($dataGpu)
                     ]);
 
-                    $responseCpu = $clientPatchCpu->request('PATCH', getenv('API_URL') . '/reviews/'.$cpu['hash'], [
+                    $responseCpu = $clientPatchCpu->request('PATCH', getenv('API_URL') . '/reviews/' . $cpu['hash'], [
                         'body' => json_encode($dataCpu)
                     ]);
-                    if ($responseGpu->getStatusCode() == 200 && $responseCpu->getStatusCode() == 200)
-                    {
+                    if ($responseGpu->getStatusCode() == 200 && $responseCpu->getStatusCode() == 200) {
                         $validator->success('reviews.success_update');
                         return $this->redirectToRoute('user_dashboard_profile');
                     }
@@ -465,11 +508,11 @@ class DashboardController extends AbstractController
                 'profilePicture' => $profilePicture,
                 'user' => $user,
                 'myPoints' => $myPoints,
-                'form_properties'=>$form,
+                'form_properties' => $form,
                 'elementGpu' => array_reverse($contentGpu),
                 'elementCpu' => array_reverse($contentCpu),
-                'gpu'=>$gpu,
-                'cpu'=>$cpu
+                'gpu' => $gpu,
+                'cpu' => $cpu
             ]);
         }
         return $this->redirectToRoute('login');
@@ -480,14 +523,12 @@ class DashboardController extends AbstractController
      */
     public function pictures(Request $request, Validator $validator, UserService $userService, Features $features)
     {
-        if ($request->hasSession() && $this->session)
-        {
+        if ($request->hasSession() && $this->session) {
             $user = $userService->getUser();
             $profilePicture = null;
             $myPoints = 0;
             $environmentPictures = null;
-            if ($user)
-            {
+            if ($user) {
                 $profilePicture = $userService->getProfilePicture();
                 $myPoints = $userService->getMyPoints();
                 $environmentPictures = $userService->getEnvironmentPictures();
@@ -499,7 +540,7 @@ class DashboardController extends AbstractController
                 'profilePicture' => $profilePicture,
                 'user' => $user,
                 'myPoints' => $myPoints,
-                'pictures'=>$environmentPictures,
+                'pictures' => $environmentPictures,
                 'pictures_count' => $features->get('environment.pictures.count'),
             ]);
         }
