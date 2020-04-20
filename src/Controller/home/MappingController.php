@@ -164,7 +164,6 @@ class MappingController extends AbstractController
         return $this->json([
             'markers' => $markers,
             'results' => $results,
-            'users'=>$users
         ]);
     }
 
