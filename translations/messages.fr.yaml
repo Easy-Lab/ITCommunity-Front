@@ -35,8 +35,8 @@ validator:
 global:
   site_name: "ITCommunity"
   fb_app_id: ""
-  images_url: 'http://localhost:8000/assets'
-  uploads_url: 'http://localhost:8000/uploads/'
+  images_url: 'https://itcommunity.fr/assets'
+  uploads_url: 'https://itcommunity.fr/uploads/'
 
 page:
   evaluation:
