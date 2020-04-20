@@ -120,7 +120,7 @@ class DashboardController extends AbstractController
         $client = HttpClient::create(['headers' => [
             'Content-Type' => 'application/json',
         ]]);
-        $response = $client->request('GET', getenv('API_URL') . '/users?expand=profile&user_filter[username]=' . $username
+        $response = $client->request('GET', getenv('API_URL') . '/users?expand=profile,reviews,pictures&user_filter[username]=' . $username
         );
         $statusCode = $response->getStatusCode();
         if ($statusCode == 200)
@@ -140,7 +140,6 @@ class DashboardController extends AbstractController
         $environment2 = null;
         $messages = null;
         $evaluations = null;
-
         $user = $data['users'][0];
         $tabPictures = [];
         if ($user['pictures'])
@@ -163,8 +162,8 @@ class DashboardController extends AbstractController
         }
         $gpu = $user['reviews'][0];
         $cpu = $user['reviews'][1];
-        $messages = $user['messages'];
-        $evaluations = $user['evaluations'];
+        $messages = $userService->getMessages($username);
+        $evaluations = $userService->getEvaluations($username);
 
         $actual_route = $request->get('actual_route', 'user_profile');
         return $this->render('user/dashboard/profile/index.html.twig', [

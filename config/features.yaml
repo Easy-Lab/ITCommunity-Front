@@ -50,7 +50,6 @@ parameters:
     - phone
     - terms_of_service
     - informations_enabled
-    - newsletter_enabled
 
   features.forms.register.step_2:
     - gpu

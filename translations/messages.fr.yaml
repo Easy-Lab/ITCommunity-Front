@@ -178,6 +178,7 @@ page:
                 cpu: "Mon avis sur mon CPU"
       evaluation:
         profile:
+          title: "MES EVALUATIONS"
           view_receive: "avis reçus"
           summary_view_receive: "synthèse des avis reçus"
           no_receive_again: "Vous n'avez pas encore reçu d'avis."

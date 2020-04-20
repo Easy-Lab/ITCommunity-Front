@@ -124,8 +124,22 @@ class UserService
         return null;
     }
 
-    public function getMessages(){
+    public function getMessages(string $username=null){
         if ($this->session) {
+            if ($username){
+                $client = HttpClient::create(['headers' => [
+                    'Content-Type' => 'application/json',
+                ]]);
+                $response = $client->request('GET', getenv('API_URL') . '/users/' . $username . '/messages?expand=contact'
+                );
+                $statusCode = $response->getStatusCode();
+                if ($statusCode == 200) {
+                    return $response->toArray();
+
+                } else {
+                    return null;
+                }
+            }
             $client = HttpClient::create(['headers' => [
                 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . $this->session->get('token')
@@ -143,8 +157,22 @@ class UserService
         return null;
     }
 
-    public function getEvaluations(){
+    public function getEvaluations(string $username=null){
         if ($this->session) {
+            if ($username){
+                $client = HttpClient::create(['headers' => [
+                    'Content-Type' => 'application/json',
+                ]]);
+                $response = $client->request('GET', getenv('API_URL') . '/users/' . $username . '/evaluations?expand=contact'
+                );
+                $statusCode = $response->getStatusCode();
+                if ($statusCode == 200) {
+                    return $response->toArray();
+
+                } else {
+                    return null;
+                }
+            }
             $client = HttpClient::create(['headers' => [
                 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . $this->session->get('token')
