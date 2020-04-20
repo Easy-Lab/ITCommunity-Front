@@ -102,7 +102,7 @@ class MappingController extends AbstractController
             // if (!is_null($zipcode) && !is_null($family_id) && !is_null($subfamily_id)){
 
             if ($users) {
-                foreach ($users as $user) {
+                foreach ($users['users'] as $user) {
 
                     $markers[] = $this->prepareMarker($user, $translator);
 
@@ -152,7 +152,7 @@ class MappingController extends AbstractController
                 $users = null;
             }
             if ($users) {
-                foreach ($users as $idx => $user) {
+                foreach ($users['users'] as $idx => $user) {
 
                     $results[] = $this->prepareResult($user, $idx);
 
