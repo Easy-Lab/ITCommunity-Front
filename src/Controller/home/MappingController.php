@@ -141,7 +141,7 @@ class MappingController extends AbstractController
         // Résultats de la recherche
         $results = [];
 
-        if (!is_null($page)) {
+        if (is_null($page) || $page == 1) {
             $response = $client->request('GET', getenv('API_URL') . '/users?expand=profile,reviews,pictures&user_filter[step]=3&limit=50'
             );
             $statusCode = $response->getStatusCode();
