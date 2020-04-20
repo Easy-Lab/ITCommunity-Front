@@ -142,7 +142,7 @@ class MappingController extends AbstractController
         $results = [];
 
         if (!is_null($page)) {
-            $response = $client->request('GET', getenv('API_URL') . '/users?expand=profile&user_filter[step]=3&limit=50'
+            $response = $client->request('GET', getenv('API_URL') . '/users?expand=profile,reviews,pictures&user_filter[step]=3&limit=50'
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode == 200) {
@@ -177,7 +177,7 @@ class MappingController extends AbstractController
         $client = HttpClient::create(['headers' => [
             'Content-Type' => 'application/json',
         ]]);
-        $response = $client->request('GET', getenv('API_URL') . '/users?expand=profile&user_filter[username]='.$request->get('id')
+        $response = $client->request('GET', getenv('API_URL') . '/users?expand=profile,reviews,pictures&user_filter[username]='.$request->get('id')
         );
         $statusCode = $response->getStatusCode();
         if ($statusCode == 200) {
