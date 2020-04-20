@@ -220,7 +220,7 @@ var CustomMap = function () {
             for (var a = [], e = 1; e <= 5; e++) a.push({
                 width: 31,
                 height: 38,
-                url: void 0 !== window.mapClustererImage ? window.mapClustererImage : "https://husqvarna-static.ambassadorslab.com/assets/images/clusterer.png",
+                url: void 0 !== window.mapClustererImage ? window.mapClustererImage : "https://itcommunity.fr/assets/images/clusterer.png",
                 textColor: "white",
                 textSize: 24,
                 anchor: [-5, 0]
