@@ -7,8 +7,10 @@
                 data-error="{{ validator.error('gpu') }}"
         required >
         {% for option in elementGpu %}
-            {% if option.product_name == gpu['nameComponent'] %}
-                <option value="{{ option.id }}" selected>{{ option.company }} {{ option.product_name }} {{ option.gpu_clock }} {{ option.memory_clock }}</option>
+            {% if gpu is defined %}
+                {% if option.product_name == gpu['nameComponent'] %}
+                    <option value="{{ option.id }}" selected>{{ option.company }} {{ option.product_name }} {{ option.gpu_clock }} {{ option.memory_clock }}</option>
+                {% endif %}
             {% endif %}
                 <option value="{{ option.id }}">{{ option.company }} {{ option.product_name }} {{ option.gpu_clock }} {{ option.memory_clock }}</option>
         {% endfor %}
