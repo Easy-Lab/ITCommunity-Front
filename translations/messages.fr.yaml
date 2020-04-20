@@ -98,7 +98,7 @@ page:
     meta:
       title: "ITCommunity"
       description: "Bienvenu sur la plateforme regroupant les plus grands fans de l'informatique !"
-      image: ""
+      image: "https://itcommunity.fr/assets/images/home.jpg"
     h1: "Titre de la Homepage"
   ambassador:
     pref:
