@@ -305,10 +305,10 @@
 
 {% block javascripts %}
     <script type="text/javascript">
-        tarteaucitron.user.googlemapsKey = '{{ google_maps_frontend_api_key }}';
-         (tarteaucitron.job = tarteaucitron.job || []).push('googlemaps');
+        {#tarteaucitron.user.googlemapsKey = '{{ google_maps_frontend_api_key }}';#}
+        {# (tarteaucitron.job = tarteaucitron.job || []).push('googlemaps');#}
 
-        (tarteaucitron.job = tarteaucitron.job || []).push('jsapi');
+        // (tarteaucitron.job = tarteaucitron.job || []).push('jsapi');
 
         {#//tarteaucitron.job = tarteaucitron.job || []).push('googlemapssearch');#}
 
