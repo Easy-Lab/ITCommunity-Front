@@ -38,6 +38,10 @@ global:
   images_url: 'https://itcommunity.fr/assets'
   uploads_url: 'https://itcommunity.fr/uploads/'
 
+globals:
+  site_name: "ITCommunity"
+  fb_app_id: ""
+
 page:
   evaluation:
     button_avis: "Envoyez votre avis"
@@ -61,6 +65,8 @@ page:
       missing_image_placeholder: "L'Utilisateur va bientôt charger une photo"
       body_class: "ITCommunity"
   name_page:
+    button:
+      data: "confirm"
     cgv: "Conditions de participation"
     cgu: "Mentions légales"
     personal_data: "Données personnelles"
