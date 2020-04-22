@@ -87,7 +87,7 @@ page:
     gpu:
       title: 'Liste des GPU'
     promo:
-      jumb1: "Vous cherchez un renseignement sur un produit ?"
+      jumb1: "Vous cherchez un conseil, un renseignement en informatique ?"
       jumb2: "Ils sont la pour vous aider !"
     jumbotron:
       button: "Décrouvrir la carte"
