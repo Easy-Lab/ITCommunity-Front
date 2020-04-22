@@ -25,17 +25,17 @@
 <nav class="navbar navbar-expand-lg app-navbar">
     <div class="container">
         {% if menu_hidden is not defined or menu_hidden == false %}
-            <div class="navbar-login-collapse">
+            <div class="navbar-login-collapse" style="display: none;">
 
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-login"
                         aria-controls="navbar-login" aria-expanded="false" aria-label="Toggle navigation"
                         style="border: 0px solid white;">
                     <img class=""
                          src="data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='rgb(30,144,255)' viewBox='0 0 22 22'%3E%3Cpath d='M11 11c-1.277 0-2.494.27-3.594.75C4.52 13.012 2.428 15.747 2.063 19c0 1.105.832 2 1.937 2h14c1.105 0 1.938-.895 1.938-2-.366-3.253-2.46-5.988-5.344-7.25-1.1-.48-2.317-.75-3.594-.75zm5-5c0 2.76-2.24 5-5 5S6 8.76 6 6s2.24-5 5-5 5 2.24 5 5z'/%3E%3C/svg%3E"
-                         style="width; 32px; height: 32px;">
+                         style="width: 32px; height: 32px;">
                 </button>
 
-                <div class="collapse navbar-collapse initial" id="navbar-login" style="display: none;">
+                <div class="collapse navbar-collapse initial" id="navbar-login">
                     {% if app.session.get('role') == 'ROLE_USER' %}
                         <div class="navbar-nav navbar-logged">
                             <p class="navbar-logged-label m-0 pl-2">
