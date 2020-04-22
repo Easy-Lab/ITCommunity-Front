@@ -14,38 +14,13 @@ class PageController extends AbstractController
      */
     public function index($slug, Request $request, UserService $userService)
     {
-        $lang = $request->getLocale();
-//        $staticPage = $this->getDoctrine()->getRepository(StaticPage::class)->findOneBySlug($slug);
-//
-//        //Dans le cas de la faq, il peut y avoir une faq-ambassador et une faq-dealer
-//        if($slug == "faq"){
-//
-//            $specialFAQ =  $this->getDoctrine()->getRepository(StaticPage::class)->getSpecialFaq($this->getUser());
-//            if(!empty($specialFAQ))
-//                $staticPage = $specialFAQ;
-//        }
-//
-//        $staticPageContent = $this->getDoctrine()->getRepository(StaticPageContent::class)->findOneBy(array(
-//            'lang' => $lang,
-//            'staticPage' => $staticPage
-//        ));
-//        //Cas particulier de la faq spéciale
-//
-//
-//        if (!$staticPageContent) {
-//            $staticPageContent = $this->getDoctrine()->getRepository(StaticPageContent::class)->findOneBy(array(
-//                'lang' => "fr",
-//                'staticPage' => $staticPage
-//            ));
-//        }
-//        if (!$staticPageContent) throw $this->createNotFoundException();
+        $actual_route = $request->get('actual_route', 'cgu');
 
-        return $this->render('page/index.html.twig', [
+        return $this->render('main/page.html.twig', [
             'user' => $userService->getUser(),
+            'slug'=>$slug,
             'google_analytics_id' => getenv("ANALYTICS_KEY"),
-//            'staticPageContent' => $staticPageContent,
-//            'title' => $staticPageContent->getTitle(),
-
+            'actual_route'=>$actual_route
         ]);
     }
 }
