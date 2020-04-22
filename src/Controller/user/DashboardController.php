@@ -34,24 +34,28 @@ class DashboardController extends AbstractController
     {
         if ($request->hasSession() && $this->session) {
             $user = $userService->getUser();
-            $profilePicture = null;
-            $myPoints = 0;
-            $messages = null;
             if ($user) {
-                $profilePicture = $userService->getProfilePicture();
-                $myPoints = $userService->getMyPoints();
-                $messages = $userService->getMessages();
+
+                $profilePicture = null;
+                $myPoints = 0;
+                $messages = null;
+                if ($user) {
+                    $profilePicture = $userService->getProfilePicture();
+                    $myPoints = $userService->getMyPoints();
+                    $messages = $userService->getMessages();
+                }
+                $actual_route = $request->get('actual_route', 'user_dashboard_invitation');
+                return $this->render('user/dashboard/invitation/index.html.twig', [
+                    'validator' => $validator,
+                    'actual_route' => $actual_route,
+                    'profilePicture' => $profilePicture,
+                    'user' => $user,
+                    'myPoints' => $myPoints,
+                    'messages' => $messages,
+                    'google_analytics_id' => getenv("ANALYTICS_KEY"),
+                ]);
             }
-            $actual_route = $request->get('actual_route', 'user_dashboard_invitation');
-            return $this->render('user/dashboard/invitation/index.html.twig', [
-                'validator' => $validator,
-                'actual_route' => $actual_route,
-                'profilePicture' => $profilePicture,
-                'user' => $user,
-                'myPoints' => $myPoints,
-                'messages' => $messages,
-                'google_analytics_id' => getenv("ANALYTICS_KEY"),
-            ]);
+            return $this->redirectToRoute('login');
         }
         return $this->redirectToRoute('login');
     }
@@ -85,26 +89,28 @@ class DashboardController extends AbstractController
                 $messages = $userService->getMessages();
                 $evaluations = $userService->getEvaluations();
                 $myPoints = $userService->getMyPoints();
+
+                $actual_route = $request->get('actual_route', 'user_dashboard_profile');
+                return $this->render('user/dashboard/profile/index.html.twig', [
+                    'validator' => $validator,
+                    'actual_route' => $actual_route,
+                    'profilePicture' => $profilePicture,
+                    'pictures' => $environmentPictures,
+                    'user' => $user,
+                    'editable' => true,
+                    'gpu' => $gpu,
+                    'cpu' => $cpu,
+                    'environment0' => $environment0,
+                    'environment1' => $environment1,
+                    'environment2' => $environment2,
+                    'structure' => $userService->getStructure(),
+                    'messages' => $messages,
+                    'evaluations' => $evaluations,
+                    'myPoints' => $myPoints,
+                    'google_analytics_id' => getenv("ANALYTICS_KEY"),
+                ]);
             }
-            $actual_route = $request->get('actual_route', 'user_dashboard_profile');
-            return $this->render('user/dashboard/profile/index.html.twig', [
-                'validator' => $validator,
-                'actual_route' => $actual_route,
-                'profilePicture' => $profilePicture,
-                'pictures' => $environmentPictures,
-                'user' => $user,
-                'editable' => true,
-                'gpu' => $gpu,
-                'cpu' => $cpu,
-                'environment0' => $environment0,
-                'environment1' => $environment1,
-                'environment2' => $environment2,
-                'structure' => $userService->getStructure(),
-                'messages' => $messages,
-                'evaluations' => $evaluations,
-                'myPoints' => $myPoints,
-                'google_analytics_id' => getenv("ANALYTICS_KEY"),
-            ]);
+            return $this->redirectToRoute('login');
         }
         return $this->redirectToRoute('login');
     }
@@ -189,17 +195,19 @@ class DashboardController extends AbstractController
             if ($user) {
                 $profilePicture = $userService->getProfilePicture();
                 $myPoints = $userService->getMyPoints();
+
+                $actual_route = $request->get('actual_route', 'user_dashboard_unsubscribe');
+                return $this->render('user/dashboard/profile/unsubscribe.html.twig', [
+                    'validator' => $validator,
+                    'actual_route' => $actual_route,
+                    'profilePicture' => $profilePicture,
+                    'user' => $user,
+                    'reasons' => $features->get('account.deletion.reasons'),
+                    'myPoints' => $myPoints,
+                    'google_analytics_id' => getenv("ANALYTICS_KEY"),
+                ]);
             }
-            $actual_route = $request->get('actual_route', 'user_dashboard_unsubscribe');
-            return $this->render('user/dashboard/profile/unsubscribe.html.twig', [
-                'validator' => $validator,
-                'actual_route' => $actual_route,
-                'profilePicture' => $profilePicture,
-                'user' => $user,
-                'reasons' => $features->get('account.deletion.reasons'),
-                'myPoints' => $myPoints,
-                'google_analytics_id' => getenv("ANALYTICS_KEY"),
-            ]);
+            return $this->redirectToRoute('login');
         }
         return $this->redirectToRoute('login');
     }
@@ -216,6 +224,8 @@ class DashboardController extends AbstractController
             if ($user) {
                 $profilePicture = $userService->getProfilePicture();
                 $myPoints = $userService->getMyPoints();
+            } else {
+                return $this->redirectToRoute('login');
             }
             if ($validator->post()) {
                 if ($validator->get('informations_enabled')) {
@@ -270,6 +280,8 @@ class DashboardController extends AbstractController
             if ($user) {
                 $profilePicture = $userService->getProfilePicture();
                 $myPoints = $userService->getMyPoints();
+            } else {
+                return $this->redirectToRoute('login');
             }
             if ($validator->post()) {
                 $validator->required('password', 'passwordConfirm');
@@ -325,6 +337,8 @@ class DashboardController extends AbstractController
             if ($user) {
                 $profilePicture = $userService->getProfilePicture();
                 $myPoints = $userService->getMyPoints();
+            } else {
+                return $this->redirectToRoute('login');
             }
 
             $properties = $features->get("forms.profile.informations");
@@ -391,6 +405,8 @@ class DashboardController extends AbstractController
                 $myPoints = $userService->getMyPoints();
                 $gpu = $userService->getGpu();
                 $cpu = $userService->getCpu();
+            } else {
+                return $this->redirectToRoute('login');
             }
 
             $properties = $features->get("forms.profile.products");
@@ -538,18 +554,20 @@ class DashboardController extends AbstractController
                 $profilePicture = $userService->getProfilePicture();
                 $myPoints = $userService->getMyPoints();
                 $environmentPictures = $userService->getEnvironmentPictures();
+
+                $actual_route = $request->get('actual_route', 'user_dashboard_pictures');
+                return $this->render('user/dashboard/profile/pictures.html.twig', [
+                    'validator' => $validator,
+                    'actual_route' => $actual_route,
+                    'profilePicture' => $profilePicture,
+                    'user' => $user,
+                    'myPoints' => $myPoints,
+                    'pictures' => $environmentPictures,
+                    'pictures_count' => $features->get('environment.pictures.count'),
+                    'google_analytics_id' => getenv("ANALYTICS_KEY"),
+                ]);
             }
-            $actual_route = $request->get('actual_route', 'user_dashboard_pictures');
-            return $this->render('user/dashboard/profile/pictures.html.twig', [
-                'validator' => $validator,
-                'actual_route' => $actual_route,
-                'profilePicture' => $profilePicture,
-                'user' => $user,
-                'myPoints' => $myPoints,
-                'pictures' => $environmentPictures,
-                'pictures_count' => $features->get('environment.pictures.count'),
-                'google_analytics_id' => getenv("ANALYTICS_KEY"),
-            ]);
+            return $this->redirectToRoute('login');
         }
         return $this->redirectToRoute('login');
     }

@@ -174,7 +174,9 @@ class PictureController extends AbstractController
     {
         if ($request->hasSession() && $this->session) {
             $user = $userService->getUser();
-
+            if (!$user) {
+                return $this->redirectToRoute('login');
+            }
             $type = $request->get('type');
             $id = $request->get('id');
 
