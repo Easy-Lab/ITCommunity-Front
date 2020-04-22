@@ -445,9 +445,9 @@ page:
         terms_of_service:
           label: "J’ai lu et j’accepte les <a href='%url%' target='_blank'>conditions de participation</a>"
           et: " et la "
-          politique: "<a href='%url%' target='_blank'>Politique de données personnelles</a>"
+          politique: "J’ai lu et j’accepte la <a href='%url%' target='_blank'>Politique de données personnelles</a>"
         informations_enabled:
-          label: "J'accepte de recevoir les notifications et informations du programme Ambassadeurs"
+          label: "J'accepte de recevoir les notifications et informations du programme"
         newsletter_enabled:
           label: "Je souhaite recevoir les informations et les nouveautés"
         birthdate:
