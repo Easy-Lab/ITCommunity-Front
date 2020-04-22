@@ -67,10 +67,10 @@ class HomeController extends AbstractController
         $paths = [];
         $paths[] = ['home', []];
         $paths[] = ['discover', []];
-        $paths[] = ['static_page', ['slug' => 'cgv']];
-        $paths[] = ['static_page', ['slug' => 'personal_data']];
-        $paths[] = ['static_page', ['slug' => 'faq']];
         $paths[] = ['static_page', ['slug' => 'cgu']];
+        $paths[] = ['static_page', ['slug' => 'personal_data']];
+        $paths[] = ['static_page', ['slug' => 'cookie']];
+        $paths[] = ['contact_us', []];
         $response = $this->render('sitemap.xml.twig', [
             'paths' => $paths
         ]);
