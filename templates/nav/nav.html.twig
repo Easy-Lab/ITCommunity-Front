@@ -35,7 +35,7 @@
                          style="width; 32px; height: 32px;">
                 </button>
 
-                <div class="collapse navbar-collapse initial" id="navbar-login">
+                <div class="collapse navbar-collapse initial" id="navbar-login" style="display: none;">
                     {% if app.session.get('role') == 'ROLE_USER' %}
                         <div class="navbar-nav navbar-logged">
                             <p class="navbar-logged-label m-0 pl-2">
