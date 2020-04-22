@@ -62,6 +62,7 @@ class LoginController extends AbstractController
             'actual_route' => $actual_route,
             'validator' => $validator,
             'user' => $userService->getUser(),
+            'google_analytics_id' => getenv("ANALYTICS_KEY"),
         ]);
     }
 

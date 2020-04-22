@@ -16,7 +16,8 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function index(Features $features, Request $request, UserService $userService){
+    public function index(Features $features, Request $request, UserService $userService)
+    {
 //        $client = HttpClient::create();
 //        $responseCpu = $client->request('GET','http://gpu-cpu-api.atcreative.fr/api/cpu');
 //        $statusCodeCpu = $responseCpu->getStatusCode();
@@ -36,20 +37,21 @@ class HomeController extends AbstractController
         $zipcode_maxlength = $features->get('home.zipcode.maxlength');
         $actual_route = $request->get('actual_route', 'home');
         return $this->render('home/index.html.twig', [
-            'map'=>$map,
-            'zipcode_maxlength'=>$zipcode_maxlength,
+            'map' => $map,
+            'zipcode_maxlength' => $zipcode_maxlength,
 //            'products_cpu'=>array_reverse($content),
 //            'products_gpu'=>array_reverse($contentGpu),
-            'actual_route'=>$actual_route,
-            'user'=>$userService->getUser(),
-            'google_maps_frontend_api_key'=>getenv("GOOGLE_MAPS_FRONTEND_API_KEY")
+            'actual_route' => $actual_route,
+            'user' => $userService->getUser(),
+            'google_maps_frontend_api_key' => getenv("GOOGLE_MAPS_FRONTEND_API_KEY"),
+            'google_analytics_id' => getenv("ANALYTICS_KEY"),
         ]);
     }
 
     /**
      * @Route("/sitemap", name="sitemap")
      */
-    public function sitemap(Request $request,Validator $validator)
+    public function sitemap(Request $request, Validator $validator)
     {
         return $this->render('main/sitemap.html.twig', [
             'validator' => $validator,
@@ -81,8 +83,7 @@ class HomeController extends AbstractController
      */
     public function contactUs(Validator $validator, Request $request, UserService $userService)
     {
-        if ($validator->post())
-        {
+        if ($validator->post()) {
 
             $validator
                 ->required('firstname', 'lastname', 'email', 'message', 'reason')
@@ -93,8 +94,7 @@ class HomeController extends AbstractController
                 $validator->phone('phone');
             }
 
-            if ($validator->check())
-            {
+            if ($validator->check()) {
                 if ($validator->get('texte') != "") {
                     $validator->success('form.spam');
                     return $this->redirectToRoute('contact_us');
@@ -132,20 +132,19 @@ class HomeController extends AbstractController
                 }
                 $dataContact =
                     [
-                        'firstname'=>$validator->get('firstname'),
-                        'lastname'=>$validator->get('lastname'),
-                        'email'=>$validator->get('email'),
-                        'phone'=>is_null($validator->get('phone')) ? null : $validator->get('phone'),
-                        'subject'=>$validator->get('reason'),
-                        'body'=>$validator->get('message')
+                        'firstname' => $validator->get('firstname'),
+                        'lastname' => $validator->get('lastname'),
+                        'email' => $validator->get('email'),
+                        'phone' => is_null($validator->get('phone')) ? null : $validator->get('phone'),
+                        'subject' => $validator->get('reason'),
+                        'body' => $validator->get('message')
                     ];
                 $client = HttpClient::create();
                 $responseContact = $client->request('POST', getenv('API_URL') . '/contactforms', [
                     'headers' => ['content_type' => 'application/json'],
                     'body' => json_encode($dataContact)
                 ]);
-                if ($responseContact->getStatusCode() == 200 || $responseContact->getStatusCode() == 201)
-                {
+                if ($responseContact->getStatusCode() == 200 || $responseContact->getStatusCode() == 201) {
                     $validator->success('form.success');
                     return $this->redirectToRoute('contact_us');
                 }
@@ -160,8 +159,9 @@ class HomeController extends AbstractController
 
         return $this->render('main/contact_us.html.twig', [
             'validator' => $validator,
-            'actual_route'=>$actual_route,
-            'user'=>$userService->getUser(),
+            'actual_route' => $actual_route,
+            'user' => $userService->getUser(),
+            'google_analytics_id' => getenv("ANALYTICS_KEY"),
         ]);
     }
 }

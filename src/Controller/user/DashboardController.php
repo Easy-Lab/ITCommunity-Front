@@ -49,7 +49,8 @@ class DashboardController extends AbstractController
                 'profilePicture' => $profilePicture,
                 'user' => $user,
                 'myPoints' => $myPoints,
-                'messages' => $messages
+                'messages' => $messages,
+                'google_analytics_id' => getenv("ANALYTICS_KEY"),
             ]);
         }
         return $this->redirectToRoute('login');
@@ -101,8 +102,8 @@ class DashboardController extends AbstractController
                 'structure' => $userService->getStructure(),
                 'messages' => $messages,
                 'evaluations' => $evaluations,
-                'myPoints' => $myPoints
-
+                'myPoints' => $myPoints,
+                'google_analytics_id' => getenv("ANALYTICS_KEY"),
             ]);
         }
         return $this->redirectToRoute('login');
@@ -170,8 +171,8 @@ class DashboardController extends AbstractController
             'environment2' => $environment2,
             'structure' => $userService->getStructure(),
             'messages' => $messages,
-            'evaluations' => $evaluations
-
+            'evaluations' => $evaluations,
+            'google_analytics_id' => getenv("ANALYTICS_KEY"),
         ]);
 
     }
@@ -196,7 +197,8 @@ class DashboardController extends AbstractController
                 'profilePicture' => $profilePicture,
                 'user' => $user,
                 'reasons' => $features->get('account.deletion.reasons'),
-                'myPoints' => $myPoints
+                'myPoints' => $myPoints,
+                'google_analytics_id' => getenv("ANALYTICS_KEY"),
             ]);
         }
         return $this->redirectToRoute('login');
@@ -249,7 +251,8 @@ class DashboardController extends AbstractController
                 'actual_route' => $actual_route,
                 'profilePicture' => $profilePicture,
                 'user' => $user,
-                'myPoints' => $myPoints
+                'myPoints' => $myPoints,
+                'google_analytics_id' => getenv("ANALYTICS_KEY"),
             ]);
         }
         return $this->redirectToRoute('login');
@@ -303,7 +306,8 @@ class DashboardController extends AbstractController
                 'actual_route' => $actual_route,
                 'profilePicture' => $profilePicture,
                 'user' => $user,
-                'myPoints' => $myPoints
+                'myPoints' => $myPoints,
+                'google_analytics_id' => getenv("ANALYTICS_KEY"),
             ]);
         }
         return $this->redirectToRoute('login');
@@ -366,7 +370,8 @@ class DashboardController extends AbstractController
                 'profilePicture' => $profilePicture,
                 'user' => $user,
                 'myPoints' => $myPoints,
-                'form_properties' => $form
+                'form_properties' => $form,
+                'google_analytics_id' => getenv("ANALYTICS_KEY"),
             ]);
         }
         return $this->redirectToRoute('login');
@@ -512,7 +517,8 @@ class DashboardController extends AbstractController
                 'elementGpu' => array_reverse($contentGpu),
                 'elementCpu' => array_reverse($contentCpu),
                 'gpu' => $gpu,
-                'cpu' => $cpu
+                'cpu' => $cpu,
+                'google_analytics_id' => getenv("ANALYTICS_KEY"),
             ]);
         }
         return $this->redirectToRoute('login');
@@ -542,6 +548,7 @@ class DashboardController extends AbstractController
                 'myPoints' => $myPoints,
                 'pictures' => $environmentPictures,
                 'pictures_count' => $features->get('environment.pictures.count'),
+                'google_analytics_id' => getenv("ANALYTICS_KEY"),
             ]);
         }
         return $this->redirectToRoute('login');

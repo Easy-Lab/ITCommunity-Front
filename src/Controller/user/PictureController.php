@@ -172,8 +172,7 @@ class PictureController extends AbstractController
      */
     public function delete(Request $request, UserService $userService)
     {
-        if ($request->hasSession() && $this->session)
-        {
+        if ($request->hasSession() && $this->session) {
             $user = $userService->getUser();
 
             $type = $request->get('type');
@@ -184,28 +183,25 @@ class PictureController extends AbstractController
                 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . $this->session->get('token')
             ]]);
-            $responsePicture = $clientPicture->request('GET', getenv('API_URL') . '/picture/'.$id);
-            if ($responsePicture->getStatusCode() == 200)
-            {
+            $responsePicture = $clientPicture->request('GET', getenv('API_URL') . '/picture/' . $id);
+            if ($responsePicture->getStatusCode() == 200) {
                 $data = $responsePicture->toArray();
-                if ($data['path']){
+                if ($data['path']) {
                     $path = $data['path'];
                     $filepath = getenv("FRONT_URL") . "/public/uploads/$path";
-                    if (file_exists($filepath))
-                    {
+                    if (file_exists($filepath)) {
                         @unlink($filepath);
                     }
                     $filepathThumb = getenv("FRONT_URL") . "/public/uploads/thumbs/$path";
-                    if (file_exists($filepathThumb))
-                    {
+                    if (file_exists($filepathThumb)) {
                         @unlink($filepathThumb);
                     }
-                    $deletePicture = $clientPicture->request('DELETE', getenv('API_URL') . '/picture/'.$id);
+                    $deletePicture = $clientPicture->request('DELETE', getenv('API_URL') . '/picture/' . $id);
                     return $this->json(['success' => 'Delete']);
                 }
                 return $this->json(['failed' => $data]);
             }
-            return $this->json(['failed' => $responsePicture->getStatusCode(), 'hash'=>$id]);
+            return $this->json(['failed' => $responsePicture->getStatusCode(), 'hash' => $id]);
         }
         return $this->redirectToRoute('login');
     }

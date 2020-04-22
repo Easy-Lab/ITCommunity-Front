@@ -320,10 +320,10 @@
 
         {#(tarteaucitron.job = tarteaucitron.job || []).push('recaptcha');#}
 
-        {#tarteaucitron.user.analyticsUa = '{{ google_analytics_id }}';#}
-        {#// tarteaucitron.user.analyticsMore = function () { /* add here your optionnal ga.push() */#}
-        {#// };#}
-        {#(tarteaucitron.job = tarteaucitron.job || []).push('analytics');#}
+        tarteaucitron.user.analyticsUa = '{{ google_analytics_id }}';
+        tarteaucitron.user.analyticsMore = function () { /* add here your optionnal ga.push() */
+        };
+        (tarteaucitron.job = tarteaucitron.job || []).push('analytics');
 
         {# tarteaucitron.user.gajsUa = '{{ google_analytics_id }}';#}
         {# tarteaucitron.user.gajsMore = function () { /* add here your optionnal _ga.push() */ };#}

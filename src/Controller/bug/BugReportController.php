@@ -16,31 +16,27 @@ class BugReportController extends AbstractController
      */
     public function index(Validator $validator)
     {
-        if ($validator->post())
-        {
-            $validator->required('firstname','lastname','email','reason','message');
-            if ($validator->check())
-            {
-                if (!filter_var($validator->get('email'), FILTER_VALIDATE_EMAIL))
-                {
+        if ($validator->post()) {
+            $validator->required('firstname', 'lastname', 'email', 'reason', 'message');
+            if ($validator->check()) {
+                if (!filter_var($validator->get('email'), FILTER_VALIDATE_EMAIL)) {
                     $validator->keep()->fail();
                     return $this->redirectToRoute('home');
                 }
-                $dataReport=
+                $dataReport =
                     [
-                        'firstname'=>$validator->get('firstname'),
-                        'lastname'=>$validator->get('lastname'),
-                        'email'=>$validator->get('email'),
-                        'subject'=>$validator->get('reason'),
-                        'body'=>$validator->get('message')
+                        'firstname' => $validator->get('firstname'),
+                        'lastname' => $validator->get('lastname'),
+                        'email' => $validator->get('email'),
+                        'subject' => $validator->get('reason'),
+                        'body' => $validator->get('message')
                     ];
                 $client = HttpClient::create();
                 $responseBug = $client->request('POST', getenv('API_URL') . '/bugrepports', [
                     'headers' => ['content_type' => 'application/json'],
                     'body' => json_encode($dataReport)
                 ]);
-                if ($responseBug->getStatusCode() == 201 || $responseBug->getStatusCode() == 200)
-                {
+                if ($responseBug->getStatusCode() == 201 || $responseBug->getStatusCode() == 200) {
                     $validator->success('bug.success_send');
                     return $this->redirectToRoute('home');
                 }
