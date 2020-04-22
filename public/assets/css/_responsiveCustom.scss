@@ -1,6 +1,6 @@
 @media (max-width: 767px) {
-  .navbar-login{
-    display: block !important;
+  #navbar-login{
+    display: flex !important;
   }
   .hidden-sm-down {
     display: none !important;
@@ -20,6 +20,9 @@
 }
 
 @media (min-width: 768px) {
+  #navbar-login{
+    display: none !important;
+  }
   .hidden-md-up {
     display: none !important;
   }
