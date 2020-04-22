@@ -496,6 +496,11 @@ page:
           nb: "25 à 45"
           pt: "points"
           description: "Recevez entre 25 et 45 points selon la note de l'évaluation laissé par le contact à la fin de votre échange"
+        invitation:
+          title: "Des points invitation"
+          nb: "50"
+          pt: "points"
+          description: "Recevez 50 points lorsqu'un contact aura rejoint la communauté grâce à votre invitation"
       sliderbecome:
         title: "Comment ça marche ?"
         picto1: "Inscrivez-vous en créant votre espace personnel"
