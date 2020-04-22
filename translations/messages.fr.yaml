@@ -51,6 +51,8 @@ page:
     stars: "Cliquez sur le nombre d’étoiles correspondant à votre appréciation :"
   menu:
     tab: "Tableau de Bord"
+    search: "Trouver un Utilisateur"
+    discover: "Devenir un Utilisateur"
   _common:
     404:
       text: "Cette page n'existe pas"
