@@ -1,5 +1,5 @@
 @media (max-width: 767px) {
-  #navbar-login{
+  .navbar-login-collapse{
     display: flex !important;
   }
   .hidden-sm-down {
@@ -20,7 +20,7 @@
 }
 
 @media (min-width: 768px) {
-  #navbar-login{
+  .navbar-login-collapse{
     display: none !important;
   }
   .hidden-md-up {
