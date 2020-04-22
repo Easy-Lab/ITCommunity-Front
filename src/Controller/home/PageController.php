@@ -41,7 +41,8 @@ class PageController extends AbstractController
 //        if (!$staticPageContent) throw $this->createNotFoundException();
 
         return $this->render('page/index.html.twig', [
-            'user'=>$userService->getUser(),
+            'user' => $userService->getUser(),
+            'google_analytics_id' => getenv("ANALYTICS_KEY"),
 //            'staticPageContent' => $staticPageContent,
 //            'title' => $staticPageContent->getTitle(),
 

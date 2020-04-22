@@ -28,32 +28,28 @@ class EvaluationController extends AbstractController
      */
     public function index(Validator $validator, Request $request, UserService $userService)
     {
-        if ($request->hasSession() && $this->session)
-        {
+        if ($request->hasSession() && $this->session) {
             $user = $userService->getUser();
             $profilePicture = null;
             $myPoints = 0;
-            if ($user)
-            {
+            if ($user) {
                 $profilePicture = $userService->getProfilePicture();
                 $myPoints = $userService->getMyPoints();
             }
             $evaluations = $userService->getEvaluations();
             $actual_route = $request->get('actual_route', 'user_dashboard_evaluation');
 
-        return $this->render('user/evaluation/index.html.twig', [
-            'validator' => $validator,
-            'evaluations'=>$evaluations,
-            'actual_route'=>$actual_route,
-            'user'=>$user,
-            'profilePicture'=>$profilePicture,
-            'myPoints'=>$myPoints
-        ]);
+            return $this->render('user/evaluation/index.html.twig', [
+                'validator' => $validator,
+                'evaluations' => $evaluations,
+                'actual_route' => $actual_route,
+                'user' => $user,
+                'profilePicture' => $profilePicture,
+                'myPoints' => $myPoints,
+                'google_analytics_id' => getenv("ANALYTICS_KEY"),
+            ]);
 
         }
-
-
-
-
+        return $this->redirectToRoute('login');
     }
 }

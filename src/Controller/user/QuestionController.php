@@ -29,13 +29,11 @@ class QuestionController extends AbstractController
      */
     public function index(Validator $validator, Request $request, UserService $userService)
     {
-        if ($request->hasSession() && $this->session)
-        {
+        if ($request->hasSession() && $this->session) {
             $user = $userService->getUser();
             $profilePicture = null;
             $myPoints = 0;
-            if ($user)
-            {
+            if ($user) {
                 $profilePicture = $userService->getProfilePicture();
                 $myPoints = $userService->getMyPoints();
             }
@@ -43,29 +41,26 @@ class QuestionController extends AbstractController
             $messages = $userService->getMessages();
             $unanswered = [];
             $answered = [];
-            foreach ($messages as $message)
-            {
-                if ($message['type'] == false)
-                {
-                    if (array_key_exists('answer',$message))
-                    {
+            foreach ($messages as $message) {
+                if ($message['type'] == false) {
+                    if (array_key_exists('answer', $message)) {
                         $answered[] = $message;
-                    }else
-                        {
+                    } else {
                         $unanswered[] = $message;
                     }
                 }
             }
 
-        return $this->render('user/message/index.html.twig', [
-            'validator' => $validator,
-            'user'=>$user,
-            'profilePicture'=>$profilePicture,
-            'actual_route'=>$actual_route,
-            'answered'=>$answered,
-            'unanswered'=>$unanswered,
-            'myPoints'=>$myPoints
-        ]);
+            return $this->render('user/message/index.html.twig', [
+                'validator' => $validator,
+                'user' => $user,
+                'profilePicture' => $profilePicture,
+                'actual_route' => $actual_route,
+                'answered' => $answered,
+                'unanswered' => $unanswered,
+                'myPoints' => $myPoints,
+                'google_analytics_id' => getenv("ANALYTICS_KEY"),
+            ]);
 
         }
         return $this->redirectToRoute('login');
@@ -76,14 +71,11 @@ class QuestionController extends AbstractController
      */
     public function edit($hash, Validator $validator, Request $request)
     {
-        if ($request->hasSession() && $this->session)
-        {
-            if ($validator->post())
-            {
+        if ($request->hasSession() && $this->session) {
+            if ($validator->post()) {
                 $validator->required('answer');
 
-                if ($validator->check())
-                {
+                if ($validator->check()) {
 
                     $client = HttpClient::create(['headers' => [
                         'Content-Type' => 'application/json',
@@ -99,11 +91,9 @@ class QuestionController extends AbstractController
                             'body' => json_encode($data)
                         ]);
                     $statusCode = $response->getStatusCode();
-                    if ($statusCode == 200)
-                    {
+                    if ($statusCode == 200) {
                         $validator->success('ambassador.message.success_create');
-                    } else
-                        {
+                    } else {
                         $validator->keep()->fail();
                     }
                     return $this->redirectToRoute('user_dashboard_question');

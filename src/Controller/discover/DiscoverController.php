@@ -18,8 +18,9 @@ class DiscoverController extends AbstractController
     {
         $actual_route = $request->get('actual_route', 'discover');
         return $this->render('discover/user.html.twig', [
-            'actual_route'=>$actual_route,
-            'user'=>$userService->getUser(),
+            'actual_route' => $actual_route,
+            'user' => $userService->getUser(),
+            'google_analytics_id' => getenv("ANALYTICS_KEY"),
         ]);
     }
 
