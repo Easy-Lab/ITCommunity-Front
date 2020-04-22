@@ -18,22 +18,22 @@
                 <form action="{{ path('contact_us') }}" method="post">
                     <div class="form-group">
                         <label for="firstname">{{ 'page.contact_us.form.firstname.label'|trans }}</label>
-                        <input placeholder="{{ 'page.contact_us.form.firstname.placeholder'|trans }}" required class="form-control" type="text" name="firstname" value="{{ validator.value('firstname') }}" data-error="{{ validator.error('firstname') }}"/>
+                        <input placeholder="{{ 'page.contact_us.form.firstname.placeholder'|trans }}" required class="form-control" type="text" name="firstname" value="{% if user['firstname'] is defined %}{{ user['firstname'] }}{% else %}{{ validator.value('firstname') }}{% endif %}" data-error="{{ validator.error('firstname') }}"/>
                     </div>
 
                     <div class="form-group">
                         <label for="lastname">{{ 'page.contact_us.form.lastname.label'|trans }}</label>
-                        <input placeholder="{{ 'page.contact_us.form.lastname.placeholder'|trans }}" required class="form-control" type="text" name="lastname" value="{{ validator.value('lastname') }}" data-error="{{ validator.error('lastname') }}"/>
+                        <input placeholder="{{ 'page.contact_us.form.lastname.placeholder'|trans }}" required class="form-control" type="text" name="lastname" value="{% if user['lastname'] is defined %}{{ user['lastname'] }}{% else %}{{ validator.value('lastname') }}{% endif %}" data-error="{{ validator.error('lastname') }}"/>
                     </div>
 
                     <div class="form-group">
                         <label for="phone">{{ 'page.contact_us.form.phone.label'|trans }}</label>
-                        <input placeholder="{{ 'page.contact_us.form.phone.placeholder'|trans }}" class="form-control" type="text" name="phone" value="{{ validator.value('phone') }}" data-error="{{ validator.error('phone') }}"/>
+                        <input placeholder="{{ 'page.contact_us.form.phone.placeholder'|trans }}" class="form-control" type="text" name="phone" value="{% if user['phone'] is defined %}{{ user['phone'] }}{% else %}{{ validator.value('phone') }}{% endif %}" data-error="{{ validator.error('phone') }}"/>
                     </div>
 
                     <div class="form-group">
                         <label for="email">{{ 'page.contact_us.form.email.label'|trans }}</label>
-                        <input placeholder="{{ 'page.contact_us.form.email.placeholder'|trans }}" required class="form-control" type="text" name="email" value="{{ validator.value('email') }}" data-error="{{ validator.error('email') }}"/>
+                        <input placeholder="{{ 'page.contact_us.form.email.placeholder'|trans }}" required class="form-control" type="text" name="email" value="{% if user['email'] is defined %}{{ user['email'] }}{% else %}{{ validator.value('email') }}{% endif %}" data-error="{{ validator.error('email') }}"/>
                     </div>
 
                     <div class="form-group">
