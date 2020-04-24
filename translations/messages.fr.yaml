@@ -2,6 +2,9 @@ validator:
   message:
     fail: "Une erreur est survenue"
     custom:
+      invitation:
+        send: "Votre invitation a bien été envoyée !"
+        failed: "Une erreur est survenu, cette personne à possiblement déjà reçu une invitation"
       form:
         success: "Votre message a bien été envoyé !"
         errorApi: "Une erreur est survenue durant l'envoie de votre message"
@@ -295,18 +298,14 @@ page:
             header:
               contact: "Contact"
               email: "Adresse E-mail"
-              phone: "Numéro de téléphone"
-              status: "Statut de l'invitation"
+              status: "Statut du contact"
               send: "Envoyer un Bon Plan"
               date: "Date d'envoi"
               action: "Gestion"
             content:
               status:
-                email_empty: "Envoi par email impossible"
-                not_sent: "Non envoyé"
-                used: "Utilisé"
-                expired: "Expiré"
-                usable: "Utilisable"
+                0: "Non inscrit"
+                1: "Inscrit"
               send_button: "Envoyer"
               resend_button: "Renvoyer"
               delete_button_confirm: "Êtes-vous sûr de vouloir supprimer ce contact ?"

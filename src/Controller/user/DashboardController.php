@@ -35,14 +35,41 @@ class DashboardController extends AbstractController
         if ($request->hasSession() && $this->session) {
             $user = $userService->getUser();
             if ($user) {
+                if ($validator->post()) {
+                    $validator->required('firstname', 'lastname', 'email', 'message');
+                    if ($validator->check()) {
+                        $datainvitation = [
+                            'firstname' => $validator->get('firstname'),
+                            'lastname' => $validator->get('lastname'),
+                            'email' => $validator->get('email'),
+                            'body' => $validator->get('message')
+                        ];
+                        $client = HttpClient::create(['headers' => [
+                            'Content-Type' => 'application/json',
+                            'Authorization' => 'Bearer ' . $this->session->get('token')
+                        ]]);
+                        $responseInvitation = $client->request('POST', getenv('API_URL') . '/affiliates', [
+                            'headers' => ['content_type' => 'application/json'],
+                            'body' => json_encode($datainvitation)
+                        ]);
+                        if ($responseInvitation->getStatusCode() == 201) {
+                            $validator->success('invitation.send');
+                            return $this->redirectToRoute("user_dashboard_invitation");
+                        }
+                        $validator->fail('invitation.failed');
+                        return $this->redirectToRoute("user_dashboard_invitation");
+                    }
+                }
 
                 $profilePicture = null;
                 $myPoints = 0;
                 $messages = null;
+                $invitations = null;
                 if ($user) {
                     $profilePicture = $userService->getProfilePicture();
                     $myPoints = $userService->getMyPoints();
                     $messages = $userService->getMessages();
+                    $invitations = $userService->getInvitations();
                 }
                 $actual_route = $request->get('actual_route', 'user_dashboard_invitation');
                 return $this->render('user/dashboard/invitation/index.html.twig', [
@@ -52,6 +79,7 @@ class DashboardController extends AbstractController
                     'user' => $user,
                     'myPoints' => $myPoints,
                     'messages' => $messages,
+                    'invitations' => $invitations['affiliates'],
                     'google_analytics_id' => getenv("ANALYTICS_KEY"),
                 ]);
             }
