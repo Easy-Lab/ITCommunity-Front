@@ -2,6 +2,14 @@ validator:
   message:
     fail: "Une erreur est survenue"
     custom:
+      request_password:
+        success: "Un mail vient de vous être envoyé !"
+        unknow: "Email inconnu"
+        failed: "Une erreur est survenue"
+      forgot_password:
+        success: "Votre mot de passe a bien été réinitialisé"
+        failed: "Une erreur est survenue"
+        errorPassword: "Les mots de passe ne sont pas identiques"
       invitation:
         send: "Votre invitation a bien été envoyée !"
         failed: "Une erreur est survenu, cette personne à possiblement déjà reçu une invitation"
@@ -46,6 +54,11 @@ globals:
   fb_app_id: ""
 
 page:
+  _forgot_password:
+    title: "Réinitialiser mon mot de passe "
+    new_psw: "Nouveau mot de passe (6 caractères minimum)"
+    new_psw2: "Confirmer le nouveau mot de passe"
+    new_save: "Enregistrer"
   evaluation:
     button_avis: "Envoyez votre avis"
     hello: "Bonjour"
@@ -84,6 +97,13 @@ page:
     sitemap: "Plan du site"
     contact: "Contact"
   home:
+    faq:
+      expand: "ITCommunity en bref"
+      title1: "Découvrez ITCommunity !"
+      description1: "ITCommunity est un projet de deux étudiants de l'IPSSI. Leur but ? Créer une plateforme communautaire entre passionné d'informatique et les mettre en relation avec des personnes ayant besoin de conseils !"
+      description2: "Si vous êtes un fan de l'informatique, vous allez pouvoir créer votre propre profil et ainsi accéder à un tableau de bord vous permettant de gérer/répondre aux questions d'utilisateurs anonyme, voir vos évaluations, inviter des personnes à rejoindre la plateforme et voir votre classement au sein de celle-ci.  "
+      description3: "Si vous avez besoin d'aide, de conseil sur l'informatique, vous n'avez qu'à consulter les profils présent sur la plateforme, sélectionner celui qui vous correspond le mieux et enfin prenez contact avec lui."
+      description4: "L'idée vous plaît ? Alors n'hésitez pas à partager ITCommunity envers vos proches, vos amis ou via les réseaux sociaux, cela nous ferait grandement plaisir, merci !"
     map:
       search:
         title: "Trouver un Utilisateur qui vous correspond"
@@ -111,6 +131,14 @@ page:
       image: "https://itcommunity.fr/assets/images/home.jpg"
     h1: "Titre de la Homepage"
   ambassador:
+    forgot_password:
+      title: "Mot de passe oublié ?"
+      description: "Veuillez renseigner votre mail ci-dessous, un mail vous sera envoyé avec un lien vers l'interface de modification de votre mot de passe"
+      form:
+        email:
+          label: "Adresse e-mail"
+          placeholder: "Adresse e-mail"
+        send_button: "Envoyer un lien de réinitialisation"
     pref:
       mail:
         title: 'Choisissez les messages que vous souhaitez recevoir'
