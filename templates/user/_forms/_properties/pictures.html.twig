@@ -79,7 +79,7 @@
 
                     <div class="image-editor"
                          data-src="{{ pictures[n] is defined ? asset(assets_url ~ 'uploads/' ~ pictures[n]['path']) : '' }}"
-                         data-id="{% if pictures %}{% for picture in pictures %}{% if picture['name'] == 'environment_'~n %}{{ picture['hash'] }}{% endif %}{% endfor %}{% endif %}"
+                         data-id="{% if pictures is defined %}{% for picture in pictures %}{% if picture['name'] == 'environment_'~n %}{{ picture['hash'] }}{% endif %}{% endfor %}{% endif %}"
                          data-type="environment_{{ n }}"
                          data-name="horizontal"
                          data-endpoint="{{ path('ambassador_picture_upload') }}"
@@ -150,7 +150,7 @@
 
                 <div class="image-editor"
                      data-src="{{ pictures[n] is defined ? asset(assets_url ~ 'uploads/' ~ pictures[n]['path']) : '' }}"
-                     data-id="{% if pictures %}{% for picture in pictures %}{% if picture['name'] == 'environment_'~n %}{{ picture['hash'] }}{% endif %}{% endfor %}{% endif %}"
+                     data-id="{% if pictures is defined %}{% for picture in pictures %}{% if picture['name'] == 'environment_'~n %}{{ picture['hash'] }}{% endif %}{% endfor %}{% endif %}"
                      data-type="environment_{{ n }}"
                      data-name="horizontal"
                      data-endpoint="{{ path('ambassador_picture_upload') }}"

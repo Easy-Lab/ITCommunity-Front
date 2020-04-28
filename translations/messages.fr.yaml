@@ -2,6 +2,17 @@ validator:
   message:
     fail: "Une erreur est survenue"
     custom:
+      request_password:
+        success: "Un mail vient de vous être envoyé !"
+        unknow: "Email inconnu"
+        failed: "Une erreur est survenue"
+      forgot_password:
+        success: "Votre mot de passe a bien été réinitialisé"
+        failed: "Une erreur est survenue"
+        errorPassword: "Les mots de passe ne sont pas identiques"
+      invitation:
+        send: "Votre invitation a bien été envoyée !"
+        failed: "Une erreur est survenu, cette personne à possiblement déjà reçu une invitation"
       form:
         success: "Votre message a bien été envoyé !"
         errorApi: "Une erreur est survenue durant l'envoie de votre message"
@@ -35,10 +46,19 @@ validator:
 global:
   site_name: "ITCommunity"
   fb_app_id: ""
-  images_url: 'http://localhost:8000/assets'
-  uploads_url: 'http://localhost:8000/uploads/'
+  images_url: 'https://itcommunity.fr/assets'
+  uploads_url: 'https://itcommunity.fr/uploads/'
+
+globals:
+  site_name: "ITCommunity"
+  fb_app_id: ""
 
 page:
+  _forgot_password:
+    title: "Réinitialiser mon mot de passe "
+    new_psw: "Nouveau mot de passe (6 caractères minimum)"
+    new_psw2: "Confirmer le nouveau mot de passe"
+    new_save: "Enregistrer"
   evaluation:
     button_avis: "Envoyez votre avis"
     hello: "Bonjour"
@@ -47,7 +67,14 @@ page:
     stars: "Cliquez sur le nombre d’étoiles correspondant à votre appréciation :"
   menu:
     tab: "Tableau de Bord"
+    search: "Trouver un Utilisateur"
+    discover: "Devenir un Utilisateur"
   _common:
+    404:
+      text: "Cette page n'existe pas"
+      link: "RETOUR À L'ACCUEIL"
+    500:
+      text: "Une erreur s'est produite."
     meta:
       title: "Devenir un Utilisateur"
     button:
@@ -61,6 +88,8 @@ page:
       missing_image_placeholder: "L'Utilisateur va bientôt charger une photo"
       body_class: "ITCommunity"
   name_page:
+    button:
+      data: "confirm"
     cgv: "Conditions de participation"
     cgu: "Mentions légales"
     personal_data: "Données personnelles"
@@ -68,6 +97,13 @@ page:
     sitemap: "Plan du site"
     contact: "Contact"
   home:
+    faq:
+      expand: "ITCommunity en bref"
+      title1: "Découvrez ITCommunity !"
+      description1: "ITCommunity est un projet de deux étudiants de l'IPSSI. Leur but ? Créer une plateforme communautaire entre passionné d'informatique et les mettre en relation avec des personnes ayant besoin de conseils !"
+      description2: "Si vous êtes un fan de l'informatique, vous allez pouvoir créer votre propre profil et ainsi accéder à un tableau de bord vous permettant de gérer/répondre aux questions d'utilisateurs anonyme, voir vos évaluations, inviter des personnes à rejoindre la plateforme et voir votre classement au sein de celle-ci.  "
+      description3: "Si vous avez besoin d'aide, de conseil sur l'informatique, vous n'avez qu'à consulter les profils présent sur la plateforme, sélectionner celui qui vous correspond le mieux et enfin prenez contact avec lui."
+      description4: "L'idée vous plaît ? Alors n'hésitez pas à partager ITCommunity envers vos proches, vos amis ou via les réseaux sociaux, cela nous ferait grandement plaisir, merci !"
     map:
       search:
         title: "Trouver un Utilisateur qui vous correspond"
@@ -81,7 +117,7 @@ page:
     gpu:
       title: 'Liste des GPU'
     promo:
-      jumb1: "Vous cherchez un renseignement sur un produit ?"
+      jumb1: "Vous cherchez un conseil, un renseignement en informatique ?"
       jumb2: "Ils sont la pour vous aider !"
     jumbotron:
       button: "Décrouvrir la carte"
@@ -92,9 +128,23 @@ page:
     meta:
       title: "ITCommunity"
       description: "Bienvenu sur la plateforme regroupant les plus grands fans de l'informatique !"
-      image: ""
+      image: "https://itcommunity.fr/assets/images/home.jpg"
     h1: "Titre de la Homepage"
   ambassador:
+    forgot_password:
+      title: "Mot de passe oublié ?"
+      description: "Veuillez renseigner votre mail ci-dessous, un mail vous sera envoyé avec un lien vers l'interface de modification de votre mot de passe"
+      form:
+        email:
+          label: "Adresse e-mail"
+          placeholder: "Adresse e-mail"
+        send_button: "Envoyer un lien de réinitialisation"
+    pref:
+      mail:
+        title: 'Choisissez les messages que vous souhaitez recevoir'
+        subtitle: "Pour modifier vos préférences des e-mails, veuillez renseigner les champs suivants :\t "
+        reasontitle2: 'Les e-mails d''information de la plateforme'
+        reason2: 'Ces e-mails ont pour but de vous informer des nouveautés du programme, de vous conseiller et d''avoir des tips. Pour ne plus les recevoir, cliquez sur la case correspondante.'
     update:
       layout:
         informations:
@@ -178,6 +228,7 @@ page:
                 cpu: "Mon avis sur mon CPU"
       evaluation:
         profile:
+          title: "MES EVALUATIONS"
           view_receive: "avis reçus"
           summary_view_receive: "synthèse des avis reçus"
           no_receive_again: "Vous n'avez pas encore reçu d'avis."
@@ -275,18 +326,14 @@ page:
             header:
               contact: "Contact"
               email: "Adresse E-mail"
-              phone: "Numéro de téléphone"
-              status: "Statut de l'invitation"
+              status: "Statut du contact"
               send: "Envoyer un Bon Plan"
               date: "Date d'envoi"
               action: "Gestion"
             content:
               status:
-                email_empty: "Envoi par email impossible"
-                not_sent: "Non envoyé"
-                used: "Utilisé"
-                expired: "Expiré"
-                usable: "Utilisable"
+                0: "Non inscrit"
+                1: "Inscrit"
               send_button: "Envoyer"
               resend_button: "Renvoyer"
               delete_button_confirm: "Êtes-vous sûr de vouloir supprimer ce contact ?"
@@ -352,6 +399,16 @@ page:
             event_description: "Vous avez <span>%nb_participations%</span> participation(s) en attente"
             answer_at: 'Répondu le '
             le: 'le'
+            password:
+              title: "Changement de mot de passe"
+              form:
+                current_password:
+                  label: "Mot de passe actuel"
+                new_password:
+                  label: "Nouveau mot de passe"
+                new_password_confirm:
+                  label: "Confirmez votre nouveau mot de passe"
+                update_button: "Mettre à jour mon mot de passe"
           navigation:
             voucher: "Invitez vos contacts"
             share: "Partagez votre contenu"
@@ -415,9 +472,9 @@ page:
         terms_of_service:
           label: "J’ai lu et j’accepte les <a href='%url%' target='_blank'>conditions de participation</a>"
           et: " et la "
-          politique: "<a href='%url%' target='_blank'>Politique de données personnelles</a>"
+          politique: "J’ai lu et j’accepte la <a href='%url%' target='_blank'>Politique de données personnelles</a>"
         informations_enabled:
-          label: "J'accepte de recevoir les notifications et informations du programme Ambassadeurs"
+          label: "J'accepte de recevoir les notifications et informations du programme"
         newsletter_enabled:
           label: "Je souhaite recevoir les informations et les nouveautés"
         birthdate:
@@ -466,12 +523,17 @@ page:
           nb: "25 à 45"
           pt: "points"
           description: "Recevez entre 25 et 45 points selon la note de l'évaluation laissé par le contact à la fin de votre échange"
+        invitation:
+          title: "Des points invitation"
+          nb: "50"
+          pt: "points"
+          description: "Recevez 50 points lorsqu'un contact aura rejoint la communauté grâce à votre invitation"
       sliderbecome:
         title: "Comment ça marche ?"
         picto1: "Inscrivez-vous en créant votre espace personnel"
         picto2: "Répondez aux questions des internautes"
         picto3: "Invitez vos amis à découvrir la plateforme"
-        picto4: "Recevez des points contacts (25 points) et des points évaluations (de 25 à 45)"
+        picto4: "Recevez des points contacts (25 points), des points évaluations (de 25 à 45) et des points invitation (50)"
         picto5: "Augmentez votre rang dans le classement général"
         picto6: "Quittez la plateforme à tout moment"
       section_register:

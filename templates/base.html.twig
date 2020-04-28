@@ -10,11 +10,11 @@
             "highPrivacy": false, /* désactiver le consentement implicite (en naviguant) ? */
             "orientation": "top", /* le bandeau doit être en haut (top) ou en bas (bottom) ? */
             "adblocker": false, /* Afficher un message si un adblocker est détecté */
-            "showAlertSmall": false, /* afficher le petit bandeau en bas à droite ? */
+            "showAlertSmall": true, /* afficher le petit bandeau en bas à droite ? */
             "cookieslist": true, /* Afficher la liste des cookies installés ? */
             "removeCredit": false, /* supprimer le lien vers la source ? */
             "handleBrowserDNTRequest": false, /* Deny everything if DNT is on */
-            //"cookieDomain": ".example.com" /* Nom de domaine sur lequel sera posé le cookie pour les sous-domaines */
+            "cookieDomain": "itcommunity.fr" /* Nom de domaine sur lequel sera posé le cookie pour les sous-domaines */
         });
     </script>
 
@@ -67,6 +67,7 @@
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
           integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="{{ asset(assets_url ~ 'build/css/app.css') }}">
     <link rel="stylesheet" href="{{ asset(assets_url ~ 'assets/css/bootstrap.min.css') }}">
 
@@ -139,17 +140,17 @@
                 <form action="{{ path('bug_report') }}" method="post">
                     <div class="form-group">
                         <label for="firstname">{{ 'page.contact_us.form.firstname.label'|trans }}</label>
-                        <input placeholder="{{ 'page.contact_us.form.firstname.placeholder'|trans }}" required class="form-control" type="text" name="firstname" value="{% if user %}{{ user['firstname'] }}{% endif %}"/>
+                        <input placeholder="{{ 'page.contact_us.form.firstname.placeholder'|trans }}" required class="form-control" type="text" name="firstname" value="{% if user['firstname'] is defined %}{{ user['firstname'] }}{% endif %}"/>
                     </div>
 
                     <div class="form-group">
                         <label for="lastname">{{ 'page.contact_us.form.lastname.label'|trans }}</label>
-                        <input placeholder="{{ 'page.contact_us.form.lastname.placeholder'|trans }}" required class="form-control" type="text" name="lastname" value="{% if user %}{{ user['lastname'] }}{% endif %}"/>
+                        <input placeholder="{{ 'page.contact_us.form.lastname.placeholder'|trans }}" required class="form-control" type="text" name="lastname" value="{% if user['lastname'] is defined %}{{ user['lastname'] }}{% endif %}"/>
                     </div>
 
                     <div class="form-group">
                         <label for="email">{{ 'page.contact_us.form.email.label'|trans }}</label>
-                        <input placeholder="{{ 'page.contact_us.form.email.placeholder'|trans }}" required class="form-control" type="text" name="email" value="{% if user %}{{ user['email'] }}{% endif %}"/>
+                        <input placeholder="{{ 'page.contact_us.form.email.placeholder'|trans }}" required class="form-control" type="text" name="email" value="{% if user['email'] is defined %}{{ user['email'] }}{% endif %}"/>
                     </div>
 
                     <div class="form-group">
@@ -178,9 +179,6 @@
         <footer class="footer app-footer">
             <div class="container-fluid">
                 <ul class="footer-links">
-
-                        <li><a href="{{ path('static_page', {'slug': 'cgv'}) }}">{{ ('page.name_page.cgv')|trans }}</a>
-                        </li>
 
                     <li><a href="{{ path('static_page', {'slug': 'cgu'}) }}">{{ ('page.name_page.cgu')|trans }}</a></li>
 
@@ -229,17 +227,20 @@
 </script>
 
 <script src="{{ asset(assets_url ~ 'assets/js/jquery.min.js') }}"></script>
-<script src="{{ asset(assets_url ~ 'assets/js/jquery.cropit.js') }}"></script>
-<script src="{{ asset(assets_url ~ 'assets/js/jquery.slick.js') }}"></script>
-<script src="{{ asset(assets_url ~ 'assets/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset(assets_url ~ 'assets/js/jquery.cropit.js') }}" defer></script>
+<script src="{{ asset(assets_url ~ 'assets/js/jquery.slick.js') }}" defer></script>
+<script src="{{ asset(assets_url ~ 'assets/js/bootstrap.min.js') }}" defer></script>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js" defer></script>
+<script src="{{ asset(assets_url ~ 'assets/js/jquery-ui.min.js') }}" defer></script>
 
-<script src="{{ asset(assets_url ~ 'build/js/app.js') }}"></script>
-<script src="{{ asset(assets_url ~ 'assets/js/amblab.js') }}"></script>
-<script src="{{ asset(assets_url ~ 'assets/js/validator.js') }}"></script>
-<script src="{{ asset(assets_url ~ 'assets/js/pictures.js') }}?1"></script>
-<script src="{{ asset(assets_url ~ 'assets/js/rating.js') }}"></script>
-<script src="{{ asset(assets_url ~ 'assets/js/maps.js') }}?2"></script>
-<script src="{{ asset(assets_url ~ 'assets/js/main.js') }}?1"></script>
+{#<script src="{{ asset(assets_url ~ 'build/js/app.js') }}" defer></script>#}
+<script src="{{ asset(assets_url ~ 'assets/js/amblab.js') }}" defer></script>
+<script src="{{ asset(assets_url ~ 'assets/js/validator.js') }}" defer></script>
+<script src="{{ asset(assets_url ~ 'assets/js/pictures.js') }}?1" defer></script>
+<script src="{{ asset(assets_url ~ 'assets/js/rating.js') }}" defer></script>
+<script src="{{ asset(assets_url ~ 'assets/js/maps.js') }}?2" defer></script>
+<script src="{{ asset(assets_url ~ 'assets/js/main.js') }}?1" defer></script>
 
 <script>
     $('#recipeCarousel').carousel({
@@ -305,10 +306,10 @@
 
 {% block javascripts %}
     <script type="text/javascript">
-        tarteaucitron.user.googlemapsKey = '{{ google_maps_frontend_api_key }}';
-         (tarteaucitron.job = tarteaucitron.job || []).push('googlemaps');
+        {#tarteaucitron.user.googlemapsKey = '{{ google_maps_frontend_api_key }}';#}
+        {# (tarteaucitron.job = tarteaucitron.job || []).push('googlemaps');#}
 
-        (tarteaucitron.job = tarteaucitron.job || []).push('jsapi');
+        // (tarteaucitron.job = tarteaucitron.job || []).push('jsapi');
 
         {#//tarteaucitron.job = tarteaucitron.job || []).push('googlemapssearch');#}
 
@@ -317,10 +318,10 @@
 
         {#(tarteaucitron.job = tarteaucitron.job || []).push('recaptcha');#}
 
-        {#tarteaucitron.user.analyticsUa = '{{ google_analytics_id }}';#}
-        {#// tarteaucitron.user.analyticsMore = function () { /* add here your optionnal ga.push() */#}
-        {#// };#}
-        {#(tarteaucitron.job = tarteaucitron.job || []).push('analytics');#}
+        tarteaucitron.user.analyticsUa = '{{ google_analytics_id }}';
+        tarteaucitron.user.analyticsMore = function () { /* add here your optionnal ga.push() */
+        };
+        (tarteaucitron.job = tarteaucitron.job || []).push('analytics');
 
         {# tarteaucitron.user.gajsUa = '{{ google_analytics_id }}';#}
         {# tarteaucitron.user.gajsMore = function () { /* add here your optionnal _ga.push() */ };#}

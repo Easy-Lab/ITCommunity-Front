@@ -1,42 +1,18 @@
 
-{% set footer_show_participation = true %}
-
 {% extends 'base.html.twig' %}
 
 {% block body %}
 <div class="discover-page">
-    <section class="promo-section" style="background-image:url({{ 'global.images_url'|trans ~ asset('images/jumbotron.jpeg') }})">
+    <section class="promo-section" style="background-image:url({{ 'global.images_url'|trans ~ asset('images/discover.jpg') }})">
         <div class="container container-fluid">
             <h1>
                 <span>{{ 'page.ambassador.discover.jumbotron.text1'|trans }}</span>
                 <span>{{ 'page.ambassador.discover.jumbotron.text2'|trans }}</span>
-               {# <span class="orange-color">REJOIGNEZ LA COMMUNAUTÉ DES <strong class="counter md">
-                    {% for count in n_ambassadors %}
-                        <em><i style="margin-top: -8px;">{{ count }}</i></em>
-                    {% endfor %}
-                </strong> AMBASSADEURS</span>#}
             </h1>
             <a href="{{ path('ambassador_register') }}" class="btn btn-theme" style="display: block;     color: #fff !important;
     background-color: #1E90FF !important;
     border-color: #1E90FF !important; border-radius: inherit !important;min-height: 35px !important;height: 40px !important;     padding: 8px 13px !important;
     width: 14%;    margin-top: 5px;" id="buttonInscri">{{ 'page.ambassador.discover.jumbotron.button'|trans }}<i class="fa fa-angle-right ml-2"></i></a>
-
-{#            <div class="sub-title-promo">#}
-{#                <div class="container-fluid">#}
-{#                    <div class="col-sm-12">#}
-{#                        <div class="text-holder" id="countDisc">#}
-{#                            <div class="counter-holder text-right">#}
-{#                                <strong class="counter md">#}
-{#                                    {% for count in n_ambassadors %}#}
-{#                                        <em><i style="margin-top: -8px;">{{ count }}</i></em>#}
-{#                                    {% endfor %}#}
-{#                                </strong>#}
-{#                            </div>#}
-{#                            <h3 class="text-left" style="font-size: 24px;">{{ 'page.home.promo.text2'|trans }}</h3>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                </div>#}
-{#            </div>#}
         </div>
         <a href="#benefits-section" class="bottom-link anchor"><i class="icon-down-open-big"></i></a>
     </section>
@@ -97,6 +73,13 @@
                 </div>
                 <p>{{ 'page.ambassador.discover.point.evaluation.description'|trans }}</p>
             </div>
+            <div class="point-box">
+                <h3>{{ 'page.ambassador.discover.point.invitation.title'|trans }}</h3>
+                <div class="amount">
+                    <strong>{{ 'page.ambassador.discover.point.invitation.nb'|trans }} <span>{{ 'page.ambassador.discover.point.invitation.pt'|trans }}</span></strong>
+                </div>
+                <p>{{ 'page.ambassador.discover.point.invitation.description'|trans }}</p>
+            </div>
         </div>
     </section>
 
@@ -151,7 +134,7 @@
                 <div>
                     <div class="inner-slide">
                         <div class="image-holder">
-                            <img src="{{ 'global.images_url'|trans ~ asset('images/step-05.png') }}">
+                            <img src="{{ 'global.images_url'|trans ~ asset('images/benefits-10.png') }}">
                         </div>
                         <div class="text-box">
                             <p>

@@ -1,49 +1,18 @@
-var ambassadors_map, home_ambassadors_map, dealers_map, fiche_amb;
+var ambassadors_map, home_ambassadors_map, dealers_map, fiche_amb, googleMapJSLoaded = !1, pageScrolled = !1,
+    mapInitialised = !1;
 
-
-///////// Début Gestion de l'inialisation de google map
-// Variables destinées à connaitre l'état du chargement du js de l'api google map google, du scroll et de la réalisation de l'initialisation de la map
-var googleMapJSLoaded = false;
-var pageScrolled = false;
-var mapInitialised = false;
-
-// Fonction appelé lors du chargement js de l'api google
 function googleMapLoaded() {
-    googleMapJSLoaded = true;
-    initialiseMap();
+    googleMapJSLoaded = !0, initialiseMap()
 }
 
-// Fonction lancée lorsque la page est scrollée
 function windowScrolled() {
-    pageScrolled = true;
-    initialiseMap();
+    pageScrolled = !0, initialiseMap()
 }
 
-// Fonction permettant d'initialiser google map quand toute les conditions sont remplies
 function initialiseMap() {
-    // initMaps sera uniquement lancé quand un scroll a eu lieu et que le script js est chargé ET que l'on n'a pas déjà initialisé la map
-    if (googleMapJSLoaded && !mapInitialised) {
-        if (pageScrolled || !window.amblab.features['map.load_on_scroll']) {
-            initMaps();
-            mapInitialised = true;
-        }
-    }
+    googleMapJSLoaded && !mapInitialised && (!pageScrolled && window.amblab.features["map.load_on_scroll"] || (initMaps(), mapInitialised = !0))
 }
 
-// Au chargement de la page ajout
-$(document).ready(function () {
-    // Ajout d'un évènement au scroll de la fenêtre (windowScrolled)
-    $(window).on('scroll', windowScrolled);
-    // Si l'utilisateur a déjà scrollé, on lance windowScrolled
-    if ($(document).scrollTop() > 1) {
-        windowScrolled();
-    }
-
-});
-///////// Fin Gestion de l'inialisation de google map
-
-
-// TODO : infinite scroll dashboard Dealers
 function initMaps() {
     window.mapStyles = [
         {
@@ -182,869 +151,255 @@ function initMaps() {
             ]
         }
     ];
-
-    $(document).ready(function () {
-        console.log('init maps...')
-
-        if ($('.js-home-ambassadors-map').length) {
-            if (typeof window.homeAmbassadorsMapCenter === 'undefined') window.homeAmbassadorsMapCenter = {
-                lat: 46.52863469527167,
-                lng: 2.43896484375
-            };
-            if (typeof window.homeAmbassadorsMapZoom === 'undefined') window.homeAmbassadorsMapZoom = 6;
-            if (typeof window.homeAmbassadorsMapCountry === 'undefined') window.homeAmbassadorsMapCountry = 'France';
-
-            //fiche_amb = new ficheAmb()
-            home_ambassadors_map = new HomeAmbassadorsMap()
-        }
-        if ($('.js-dealers-map').length) {
-            dealers_map = new DealersMap()
-        }
-        if ($('.js-ambassadors-map').length) {
-            ambassadors_map = new AmbassadorsMap()
-        }
-    })
-
-    if (typeof window.initCustomMaps !== 'undefined') {
-        window.initCustomMaps()
-    }
+    void 0 === window.mapStyles && (window.mapStyles = []), $(document).ready(function () {
+        console.log("init maps..."), $(".js-home-ambassadors-map").length && (void 0 === window.homeAmbassadorsMapCenter && (window.homeAmbassadorsMapCenter = {
+            lat: 46.52863469527167,
+            lng: 2.43896484375
+        }), void 0 === window.homeAmbassadorsMapZoom && (window.homeAmbassadorsMapZoom = 6), void 0 === window.homeAmbassadorsMapCountry && (window.homeAmbassadorsMapCountry = "France"), home_ambassadors_map = new HomeAmbassadorsMap), $(".js-dealers-map").length && (dealers_map = new DealersMap), $(".js-ambassadors-map").length && (ambassadors_map = new AmbassadorsMap)
+    }), void 0 !== window.initCustomMaps && window.initCustomMaps()
 }
 
+$(document).ready(function () {
+    $(window).on("scroll", windowScrolled), $(document).scrollTop() > 1 && windowScrolled()
+});
 var CustomMap = function () {
-    var self = this
-
-    this.element = null
-    this.map = null
-    this.markers = []
-    this.cluster = null
-    this.activeInfoWindow = null
-
-    this.init = function (element, zoom, center) {
-        if (typeof zoom === 'undefined') zoom = 6
-        if (typeof center === 'undefined') center = {lat: 46.52863469527167, lng: 2.43896484375}
-
-        self.element = element
-        var props = {
-            zoom: zoom,
+    var o = this;
+    this.element = null, this.map = null, this.markers = [], this.cluster = null, this.activeInfoWindow = null, this.init = function (a, e, s) {
+        void 0 === e && (e = 6), void 0 === s && (s = {lat: 46.52863469527167, lng: 2.43896484375}), o.element = a;
+        var t = {
+            zoom: e,
             maxZoom: 11,
-            center: center,
+            center: s,
             styles: window.mapStyles,
-            mapTypeControl: false,
-            streetViewControl: false,
-            rotateControl: false,
-            zoomControl: false,
+            mapTypeControl: !1,
+            streetViewControl: !1,
+            rotateControl: !1,
+            zoomControl: !1
+        };
+        void 0 !== window.homeAmbassadorsMapMaxZoom && (t.maxZoom = window.homeAmbassadorsMapMaxZoom), void 0 !== window.homeAmbassadorsMapMinZoom && (t.minZoom = window.homeAmbassadorsMapMinZoom), o.map = new google.maps.Map(a, t);
+        var n = document.createElement("div");
+        new o.zoomControl(n, o.map);
+        n.index = 1, o.map.controls[google.maps.ControlPosition.TOP_LEFT].push(n)
+    }, this.addMarker = function (a, e, s, t) {
+        var n = {lat: a.latitude, lng: a.longitude}, i = {map: o.map, position: n};
+        null !== s && (i.icon = s);
+        var l = new google.maps.Marker(i);
+        if (l.set("id", t), null !== e) {
+            var r = new google.maps.InfoWindow({content: e, maxWidth: 278});
+            l.addListener("click", function () {
+                null !== o.activeInfoWindow && o.activeInfoWindow.close(), r.open(o.map, l), o.activeInfoWindow = r, o.lazyLoad()
+            })
         }
-        if (typeof window.homeAmbassadorsMapMaxZoom !== 'undefined')
-            props['maxZoom'] = window.homeAmbassadorsMapMaxZoom
-        if (typeof window.homeAmbassadorsMapMinZoom !== 'undefined')
-            props['minZoom'] = window.homeAmbassadorsMapMinZoom
-        self.map = new google.maps.Map(element, props);
-
-        var zoomControlDiv = document.createElement('div');
-        var zoomControl = new self.zoomControl(zoomControlDiv, self.map);
-
-        zoomControlDiv.index = 1;
-        self.map.controls[google.maps.ControlPosition.TOP_LEFT].push(zoomControlDiv);
-    }
-
-    this.addMarker = function (center, popup, icon, id) {
-        var position = {lat: center.latitude, lng: center.longitude}
-        var props = {
-            map: self.map,
-            position: position
-        }
-
-        if (icon !== null) props.icon = icon
-
-        var marker = new google.maps.Marker(props);
-        marker.set("id",id)
-
-        if (popup !== null) {
-            var infoWindow = new google.maps.InfoWindow({
-                content: popup,
-                maxWidth: 278
+        l.addListener("click", function () {
+            null !== o.activeInfoWindow && o.activeInfoWindow.close(), $.ajax({
+                method: "post",
+                url: "/mapping/popup_amb",
+                data: {id: l.get("id")},
+                success: function (a) {
+                    var e = new google.maps.InfoWindow({content: a.popup, maxWidth: 278});
+                    e.open(o.map, l), o.activeInfoWindow = e, o.lazyLoad()
+                },
+                error: function (o) {
+                    console.log(o)
+                }
+            })
+        }), o.markers.push(l)
+    }, this.setMarkers = function (a) {
+        o.resetMarkers(), a.map(function (a) {
+            o.addMarker({
+                latitude: a.latitude,
+                longitude: a.longitude
+            }, void 0 !== a.popup ? a.popup : null, void 0 !== a.icon ? a.icon : null, void 0 !== a.id ? a.id : null)
+        }), o.makeCluster()
+    }, this.resetMarkers = function () {
+        o.markers.map(function (o) {
+            o.setMap(null)
+        }), o.markers = []
+    }, this.makeCluster = function () {
+        if (null !== o.cluster) o.cluster.clearMarkers(), o.cluster.addMarkers(o.markers); else {
+            for (var a = [], e = 1; e <= 5; e++) a.push({
+                width: 31,
+                height: 38,
+                url: void 0 !== window.mapClustererImage ? window.mapClustererImage : "https://itcommunity.fr/assets/images/clusterer.png",
+                textColor: "white",
+                textSize: 24,
+                anchor: [-5, 0]
             });
-
-            marker.addListener('click', function () {
-                if (self.activeInfoWindow !== null) {
-                    self.activeInfoWindow.close()
-                }
-                infoWindow.open(self.map, marker)
-                self.activeInfoWindow = infoWindow
-                self.lazyLoad()
+            o.cluster = new MarkerClusterer(o.map, o.markers, {
+                styles: a,
+                maxZoom: window.amblab.features["map.clusters.max_zoom"],
+                gridSize: window.amblab.features["map.clusters.grid_size"]
             })
         }
-        marker.addListener('click', function () {
-            if (self.activeInfoWindow !== null) {
-                self.activeInfoWindow.close()
+    }, this.focus = function (a, e, s) {
+        (new google.maps.Geocoder).geocode({address: a}, function (a, t) {
+            if (t == google.maps.GeocoderStatus.OK && t != google.maps.GeocoderStatus.ZERO_RESULTS) if (a && a[0] && a[0].geometry && a[0].geometry.viewport) {
+                var n = {geocode: null, distance: 0},
+                    i = new google.maps.LatLng(a[0].geometry.location.lat(), a[0].geometry.location.lng()),
+                    l = {lat: a[0].geometry.location.lat(), lng: a[0].geometry.location.lng()};
+                for (var r in s && s(l), e) {
+                    var c = new google.maps.LatLng(e[r].latitude, e[r].longitude),
+                        d = google.maps.geometry.spherical.computeDistanceBetween(c, i);
+                    (null == n.geocode || d < n.distance) && (n.geocode = c, n.distance = d)
+                }
+                var m = new google.maps.LatLngBounds;
+                if (m.extend(i), null != n.geocode) {
+                    var p = n.geocode.lat() - i.lat(), u = n.geocode.lng() - i.lng(),
+                        h = new google.maps.LatLng(i.lat() - p, i.lng() - u);
+                    m.extend(n.geocode), m.extend(h)
+                }
+                o.map.fitBounds(m), o.map.setZoom(14)
+            } else a && a[0] && a[0].geometry && a[0].geometry.bounds && o.map.fitBounds(a[0].geometry.bounds)
+        })
+    }, this.lazyLoad = function () {
+        $(o.element).find("img[data-src]").each(function () {
+            $(this).is(":visible") && $(this).attr("src", $(this).attr("data-src"))
+        })
+    }, this.zoomControl = function (o, a) {
+        var e = document.createElement("div");
+        e.className = "map-zoom", o.appendChild(e);
+        var s = document.createElement("button");
+        s.innerHTML = "+", e.appendChild(s);
+        var t = document.createElement("button");
+        t.innerHTML = "-", e.appendChild(t), s.addEventListener("click", function () {
+            a.setZoom(a.getZoom() + 1)
+        }), t.addEventListener("click", function () {
+            a.setZoom(a.getZoom() - 1)
+        })
+    }
+}, HomeAmbassadorsMap = function () {
+    var o = this;
+    o.$element = $(".js-home-ambassadors-map"), o.map = new CustomMap, o.map.init(o.$element.get(0), window.homeAmbassadorsMapZoom, window.homeAmbassadorsMapCenter), o.loading = !1, o.page = 1, o.geolocation = new CustomGeolocation, o.load = function (a, e) {
+        e = void 0 === e ? $(".js-map-search-submit").eq(0) : e;
+        console.log("HomeAmbassadorsMap load", a), o.loading = !0, o.page = a;
+        var s = {page: a};
+        e.parents(".home-map-search").find("input, select").each(function () {
+            if (void 0 !== $(this).attr("name") && !1 !== $(this).attr("name") && $(this).attr("name").length > 0) {
+                var o = $(this).val();
+                if ($(this).attr("pattern")) if (!new RegExp($(this).attr("pattern")).test(o)) return;
+                2 == o.length && "50" == o && (o += "000"), s[$(this).attr("name")] = o
             }
+        });
+        var t = function () {
             $.ajax({
-                method: 'post',
-                url: '/mapping/popup_amb',
-                data: {
-                    id: marker.get("id")
-                },
-                success: function (json) {
-                    console.log(json)
-                    var infoWindow = new google.maps.InfoWindow({
-                        content: json.popup,
-                        maxWidth: 278
-                    });
-                    infoWindow.open(self.map, marker)
-                    self.activeInfoWindow = infoWindow
-                    self.lazyLoad()
-
-                },
-                error: function (json) {
-                    console.log(json);
-                }
-
-            })
-        })
-
-        self.markers.push(marker)
-    }
-
-    this.setMarkers = function (markers) {
-        self.resetMarkers()
-        markers.map(function (marker) {
-            self.addMarker(
-                {
-                    latitude: marker.latitude,
-                    longitude: marker.longitude
-                },
-                typeof marker.popup !== 'undefined' ? marker.popup : null,
-                typeof marker.icon !== 'undefined' ? marker.icon : null,
-                typeof marker.id !== 'undefined' ? marker.id : null
-            )
-
-        })
-        self.makeCluster()
-    };
-
-    this.resetMarkers = function () {
-        self.markers.map(function (marker) {
-            marker.setMap(null);
-        })
-        self.markers = []
-    }
-
-    this.makeCluster = function () {
-        if (self.cluster !== null) {
-            self.cluster.clearMarkers()
-            self.cluster.addMarkers(self.markers)
-        } else {
-            var cluster_styles = [];
-            for (var i = 1; i <= 5; i++) {
-                cluster_styles.push({
-                    width: 31,
-                    height: 38,
-                    url: typeof window.mapClustererImage !== 'undefined' ? window.mapClustererImage : 'https://itcommunity.fr/public/assets/images/clusterer.png',
-                    textColor: 'white',
-                    textSize: 24,
-                    anchor: [-5, 0]
-                })
-            }
-
-            self.cluster = new MarkerClusterer(
-                self.map,
-                self.markers,
-                {
-                    styles: cluster_styles,
-                    maxZoom: window.amblab.features['map.clusters.max_zoom'],
-                    gridSize: window.amblab.features['map.clusters.grid_size']
-                    //imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
-                }
-            );
-        }
-    }
-
-    this.focus = function (address, markers, callback) {
-        var geocoder = new google.maps.Geocoder();
-
-        geocoder.geocode({'address': address}, function (results, status) {
-            if (status == google.maps.GeocoderStatus.OK) {
-                if (status != google.maps.GeocoderStatus.ZERO_RESULTS) {
-                    if (results && results[0] && results[0].geometry && results[0].geometry.viewport) {
-                        //self.map.fitBounds(results[0].geometry.viewport);
-
-                        var nearest_marker = {geocode: null, distance: 0};
-
-
-                        var base_geocode = new google.maps.LatLng(results[0].geometry.location.lat(), results[0].geometry.location.lng());
-
-
-                        //TODO reprendre ici
-                        var center = {
-                            lat: results[0].geometry.location.lat(),
-                            lng: results[0].geometry.location.lng()
-                        };
-
-                        //console.log(center);
-
-                        if (callback) {
-                            //console.log("CUSTOM MAP je vais appeller le callback");
-                            callback(center);
-                            //console.log("CUSTOM MAP callback appellé");
-                        }
-
-
-                        for (var marker in markers) {
-                            var marker_geocode = new google.maps.LatLng(markers[marker].latitude, markers[marker].longitude);
-                            var distance = google.maps.geometry.spherical.computeDistanceBetween(marker_geocode, base_geocode);
-                            if (nearest_marker.geocode == null || distance < nearest_marker.distance) {
-                                nearest_marker.geocode = marker_geocode;
-                                nearest_marker.distance = distance;
-                            }
-                        }
-
-                        var bounds = new google.maps.LatLngBounds();
-
-                        bounds.extend(base_geocode);
-
-                        if (nearest_marker.geocode != null) {
-                            var offset_lat = nearest_marker.geocode.lat() - base_geocode.lat();
-                            var offset_lng = nearest_marker.geocode.lng() - base_geocode.lng();
-                            var nearest_opposite = new google.maps.LatLng(base_geocode.lat() - offset_lat, base_geocode.lng() - offset_lng);
-
-                            bounds.extend(nearest_marker.geocode);
-                            bounds.extend(nearest_opposite);
-                        }
-
-                        self.map.fitBounds(bounds);
-                        self.map.setZoom(14);
-
-                        // self.map.setZoom(self.map.getZoom() + 1)
-                    } else if (results && results[0] && results[0].geometry && results[0].geometry.bounds) {
-                        self.map.fitBounds(results[0].geometry.bounds);
-                        // self.map.setZoom(self.map.getZoom() + 1)
-                    }
-                }
-            }
-        });
-
-    }
-
-    this.lazyLoad = function () {
-        $(self.element).find('img[data-src]').each(function () {
-            if ($(this).is(':visible')) {
-                $(this).attr('src', $(this).attr('data-src'))
-            }
-        })
-    }
-
-    this.zoomControl = function (controlDiv, map) {
-        // Container
-        var controlUI = document.createElement('div');
-        controlUI.className = 'map-zoom'
-        controlDiv.appendChild(controlUI);
-
-        // +
-        var controlZoomUp = document.createElement('button');
-        controlZoomUp.innerHTML = '+';
-        controlUI.appendChild(controlZoomUp);
-
-        // -
-        var controlZoomDown = document.createElement('button');
-        controlZoomDown.innerHTML = '-';
-        controlUI.appendChild(controlZoomDown);
-
-        controlZoomUp.addEventListener('click', function () {
-            map.setZoom(map.getZoom() + 1)
-        });
-
-        controlZoomDown.addEventListener('click', function () {
-            map.setZoom(map.getZoom() - 1)
-        });
-    }
-}
-
-var HomeAmbassadorsMap = function () {
-
-    var self = this
-
-    self.$element = $('.js-home-ambassadors-map')
-    self.map = new CustomMap()
-    self.map.init(self.$element.get(0), window.homeAmbassadorsMapZoom, window.homeAmbassadorsMapCenter)
-    self.loading = false
-    self.page = 1
-    self.geolocation = new CustomGeolocation()
-
-    self.load = function (page, zipCodeElement) {
-
-        var zipCodeElement = typeof zipCodeElement === 'undefined' ? $('.js-map-search-submit').eq(0) : zipCodeElement;
-        console.log('HomeAmbassadorsMap load', page);
-
-        self.loading = true
-        self.page = page
-        //var zipcode = $('.js-map-search-zipcode').val()
-
-        var form = {page: page}
-        var mapToInit = true;
-
-        zipCodeElement.parents('.home-map-search').find('input, select').each(function () {
-            if (typeof $(this).attr('name') !== typeof undefined && $(this).attr('name') !== false && $(this).attr('name').length > 0) {
-                var value = $(this).val();
-                if ($(this).attr('pattern')) {
-                    var pattern = new RegExp($(this).attr('pattern'));
-                    if (!pattern.test(value))
-                        return;
-                }
-                if (value.length == 2){
-                    if (value == '50'){
-                    value = value + "000";
-                    }
-                }
-                form[$(this).attr('name')] = value;
-            }
-        })
-
-
-        var appelAmbassador = function () {
-
-            console.log(self.$element.attr('data-endpoint'));
-            $.ajax({
-
-                method: 'post',
-                url: self.$element.attr('data-endpoint'),
-                data: form,
-                success: function (data) {
-                    self.loading = false
-
-                    if (self.page == 1) {
-
-                        console.log(data.results)
-
-                        if (data.results.length == 0) {
-                            $('.js-home-ambassadors-listing').addClass('empty-result')
-
-                            if (window.location.hostname === 'sebes.ambassadorslab.com') {
-                                $('.js-home-ambassadors-listing').html("<p>No hay un Embajador con los criterios solicitados. Modificar su búsqueda.</p>")
-                            } else if (window.location.hostname === 'embajadorescompanion.es') {
-                                $('.js-home-ambassadors-listing').html("<p>No hay un Embajador con los criterios solicitados. Modificar su búsqueda.</p>")
-                            } else if (window.location.hostname === 'www.embajadorescompanion.es') {
-                                $('.js-home-ambassadors-listing').html("<p>No hay un Embajador con los criterios solicitados. Modificar su búsqueda.</p>")
-                            } else if (window.location.hostname === 'sebit.ambassadorslab.com') {
-                                $('.js-home-ambassadors-listing').html("<p>Non ci sono ambassadors con i criteri richiesti. Modifica la tua ricerca</p>")
-                            } else if (window.location.hostname === 'ambassadorcompanion.it') {
-                                $('.js-home-ambassadors-listing').html("<p>Non ci sono ambassadors con i criteri richiesti. Modifica la tua ricerca</p>")
-                            } else if (window.location.hostname === 'www.ambassadorcompanion.it') {
-                                $('.js-home-ambassadors-listing').html("<p>Non ci sono ambassadors con i criteri richiesti. Modifica la tua ricerca</p>")
-                            } else if (window.location.hostname === 'sebde.ambassadorslab.com') {
-                                $('.js-home-ambassadors-listing').html("<p>Es gibt keinen Botschafter mit den geforderten Kriterien. Ändern Sie Ihre Suche.</p>")
-                            } else if (window.location.hostname === 'prep-and-cook-botschafter.de') {
-                                $('.js-home-ambassadors-listing').html("<p>Es gibt keinen Botschafter mit den geforderten Kriterien. Ändern Sie Ihre Suche.</p>")
-                            } else {
-
-                                $('.js-home-ambassadors-listing').html("<p>Il n'y a pas d'Ambassadeur avec les critères demandés. Modifiez votre recherche.</p>")
-                            }
-                        } else {
-                            $('.js-home-ambassadors-listing').removeClass('empty-result')
-                            $('.js-home-ambassadors-listing').html('')
-                        }
-
-
-                        // Si on est en phase d'initialisation on fait un appel Ajax et on initialise la map. Dans le cas contraire on focus et actualise l'affichage
+                method: "post", url: o.$element.attr("data-endpoint"), data: s, success: function (a) {
+                    if (o.loading = !1, 1 == o.page) {
+                        console.log(a.results), 0 == a.results.length ? ($(".js-home-ambassadors-listing").addClass("empty-result"), "sebes.ambassadorslab.com" === window.location.hostname ? $(".js-home-ambassadors-listing").html("<p>No hay un Embajador con los criterios solicitados. Modificar su búsqueda.</p>") : "embajadorescompanion.es" === window.location.hostname ? $(".js-home-ambassadors-listing").html("<p>No hay un Embajador con los criterios solicitados. Modificar su búsqueda.</p>") : "www.embajadorescompanion.es" === window.location.hostname ? $(".js-home-ambassadors-listing").html("<p>No hay un Embajador con los criterios solicitados. Modificar su búsqueda.</p>") : "sebit.ambassadorslab.com" === window.location.hostname ? $(".js-home-ambassadors-listing").html("<p>Non ci sono ambassadors con i criteri richiesti. Modifica la tua ricerca</p>") : "ambassadorcompanion.it" === window.location.hostname ? $(".js-home-ambassadors-listing").html("<p>Non ci sono ambassadors con i criteri richiesti. Modifica la tua ricerca</p>") : "www.ambassadorcompanion.it" === window.location.hostname ? $(".js-home-ambassadors-listing").html("<p>Non ci sono ambassadors con i criteri richiesti. Modifica la tua ricerca</p>") : "sebde.ambassadorslab.com" === window.location.hostname ? $(".js-home-ambassadors-listing").html("<p>Es gibt keinen Botschafter mit den geforderten Kriterien. Ändern Sie Ihre Suche.</p>") : "prep-and-cook-botschafter.de" === window.location.hostname ? $(".js-home-ambassadors-listing").html("<p>Es gibt keinen Botschafter mit den geforderten Kriterien. Ändern Sie Ihre Suche.</p>") : $(".js-home-ambassadors-listing").html("<p>Il n'y a pas d'Ambassadeur avec les critères demandés. Modifiez votre recherche.</p>")) : ($(".js-home-ambassadors-listing").removeClass("empty-result"), $(".js-home-ambassadors-listing").html(""));
                         try {
-                            self.map.setMarkers(data.markers)
-                            if (typeof form.zipcode !== 'undefined' && form.zipcode !== null && form.zipcode.length) {
-                                self.map.focus(form.zipcode + ', ' + homeAmbassadorsMapCountry, data.markers, function (center) {
-                                });
-                            }
-
-                        } catch (e) {
-                            console.log(e)
+                            o.map.setMarkers(a.markers), void 0 !== s.zipcode && null !== s.zipcode && s.zipcode.length && o.map.focus(s.zipcode + ", " + homeAmbassadorsMapCountry, a.markers, function (o) {
+                            })
+                        } catch (o) {
+                            console.log(o)
                         }
-                    } else console.log('not page 1')
-
-                    data.results.map(function (result) {
-                       $('.js-home-ambassadors-listing').append(result.html)
-                    })
-
-                    $(".homepage section.map a.profile-mapping-result-see-more").click(function () {
-                        var hidden_profile = $(".homepage section.map div.profile-holder-responsive");
-
-                        if (hidden_profile.length <= 10) {
-                            $(this).hide();
-                        }
-
-                        hidden_profile.each(function (idx) {
-                            if (idx < 10) {
-                                $(this).show();
-                            } else {
-                                return false;
-                            }
+                    } else console.log("not page 1");
+                    a.results.map(function (o) {
+                        $(".js-home-ambassadors-listing").append(o.html)
+                    }), $(".homepage section.map a.profile-mapping-result-see-more").click(function () {
+                        var o = $(".homepage section.map div.profile-holder-responsive");
+                        o.length <= 10 && $(this).hide(), o.each(function (o) {
+                            if (!(o < 10)) return !1;
+                            $(this).show()
                         })
-                    });
+                    })
                 }
             })
         };
-
-        // console.log(form.zipcode, form.zipcode.length)
-
-        // phase de recherche
-        if (typeof form.zipcode !== 'undefined' && form.zipcode !== null && form.zipcode.length) {
-            // Appel à google map pour avoir les coordonnées de la localisation demandée par l'utilisateur
-            try {
-                //TODO à lancer une fois que l'apel ajax vers ambassador est réalisé
-                //self.map.setMarkers(data.markers)
-                self.map.focus(form.zipcode + ', ' + homeAmbassadorsMapCountry, [] /*data.markers*/, function (center) {
-
-                    if (center && (center.lat) && (center.lng)) {
-                        form["latitude"] = center.lat;
-                        form["longitude"] = center.lng;
-                    } else {
-                        form["latitude"] = null;
-                        form["longitude"] = null;
-                    }
-
-                    console.log("Contenu du formulaire après update center : ", form);
-
-                    appelAmbassador(false);
-
-                });
-            } catch (e) {
-                console.log(e)
-            }
-        } else {
-            appelAmbassador();
-        }
-    }
-
-    self.load(1);
-
-    $('.js-map-search-submit').click(function () {
-        console.log('.js-map-search-submit click', 'disabled=', $(this).hasClass('disabled'));
-        if (!$(this).hasClass('disabled'))
-            self.load(1, $(this))
-    });
-
-    $('.js-map-search-zipcode').on('keyup', function (e) {
-        if (e.keyCode == 13)
-            $(this).parents('.home-map-search').find('.js-map-search-submit').click();
-    });
-
-    $('.js-home-map-search').on('change', 'select', function () {
-        console.log('.js-home-map-search select');
-        self.load(1)
-    })
-
-    $('.js-map-search-product').change(function () {
-        console.log('.js-map-search-product change');
-        self.updateLevels()
-    })
-
-    self.sublevels = $('.js-map-search-product-sublevel').html()
-
-    self.updateLevels = function () {
-        console.log('updateLevels ');
-        if ($('.js-map-search-product').val() == '_') {
-            $('.js-map-search-product-sublevel').parent().hide()
-        } else {
-            $('.js-map-search-product-sublevel').html(self.sublevels)
-            $('.js-map-search-product-sublevel option').each(function () {
-                if ($(this).attr('data-parent') != $('.js-map-search-product').val() && $(this).val() != '_')
-                    $(this).remove()
+        if (void 0 !== s.zipcode && null !== s.zipcode && s.zipcode.length) try {
+            o.map.focus(s.zipcode + ", " + homeAmbassadorsMapCountry, [], function (o) {
+                o && o.lat && o.lng ? (s.latitude = o.lat, s.longitude = o.lng) : (s.latitude = null, s.longitude = null), console.log("Contenu du formulaire après update center : ", s), t()
             })
-            $('.js-map-search-product-sublevel').parent().show()
-            window.updateCustomControls()
+        } catch (o) {
+            console.log(o)
+        } else t()
+    }, o.load(1), $(".js-map-search-submit").click(function () {
+        console.log(".js-map-search-submit click", "disabled=", $(this).hasClass("disabled")), $(this).hasClass("disabled") || o.load(1, $(this))
+    }), $(".js-map-search-zipcode").on("keyup", function (o) {
+        13 == o.keyCode && $(this).parents(".home-map-search").find(".js-map-search-submit").click()
+    }), $(".js-home-map-search").on("change", "select", function () {
+        console.log(".js-home-map-search select"), o.load(1)
+    }), $(".js-map-search-product").change(function () {
+        console.log(".js-map-search-product change"), o.updateLevels()
+    }), o.sublevels = $(".js-map-search-product-sublevel").html(), o.updateLevels = function () {
+        console.log("updateLevels "), "_" == $(".js-map-search-product").val() ? $(".js-map-search-product-sublevel").parent().hide() : ($(".js-map-search-product-sublevel").html(o.sublevels), $(".js-map-search-product-sublevel option").each(function () {
+            $(this).attr("data-parent") != $(".js-map-search-product").val() && "_" != $(this).val() && $(this).remove()
+        }), $(".js-map-search-product-sublevel").parent().show(), window.updateCustomControls())
+    }, o.updateLevels(), $("body").hasClass("TRYBA") && (o.levels = $(".js-map-search-product").html(), $(".js-map-search-environment_type").change(function () {
+        $(".js-map-search-product").html(o.levels), "appartment" == $(this).val() && $(".js-map-search-product").each(function () {
+            "_" != $(this).val() && -1 !== ["doors", "garage_doors"].indexOf($(this).attr("data-name")) && $(this).remove()
+        }), window.updateCustomControls(), o.updateLevels()
+    })), $("body").hasClass("SEB") && (o.products = $(".js-map-search-product").html(), $(".js-map-search-connected").change(function () {
+        if ($(".js-map-search-product").html(o.products), "_" != $(this).val()) {
+            var a = $(this).val().split(",");
+            $(".js-map-search-product option").each(function () {
+                "_" != $(this).val() && -1 === a.indexOf($(this).val()) && $(this).remove()
+            })
         }
-    }
-
-    self.updateLevels()
-
-    // Tryba only
-
-    if ($('body').hasClass('TRYBA')) {
-        self.levels = $('.js-map-search-product').html()
-
-        $('.js-map-search-environment_type').change(function () {
-            $('.js-map-search-product').html(self.levels)
-            if ($(this).val() == 'appartment') {
-                $('.js-map-search-product').each(function () {
-                    if ($(this).val() == '_') return;
-                    if (['doors', 'garage_doors'].indexOf($(this).attr('data-name')) !== -1) $(this).remove()
-                })
-            }
-            window.updateCustomControls()
-            self.updateLevels()
+        window.updateCustomControls(), o.load(1)
+    })), console.log(window.amblab.features["map.geoloc"]), window.amblab.features["map.geoloc"] && (console.log("Geolocation..."), o.geolocation.getCurrentPosition(!1, function (a, e) {
+        if (a) return $(".js-geolocation").removeClass("disabled"), !1;
+        console.log(e);
+        var s = new google.maps.LatLng(e.latitude, e.longitude);
+        (new google.maps.Geocoder).geocode({latLng: s}, function (a, e) {
+            var s = !1;
+            if (e == google.maps.GeocoderStatus.OK && a[0]) for (j = 0; j < a[0].address_components.length; j++) "postal_code" == a[0].address_components[j].types[0] && ($(".js-map-search-zipcode").val(a[0].address_components[j].short_name), o.load(1), s = !0);
+            s ? "embajadorescompanion.es" === window.location.hostname ? o.geolocation.notify("Posición detectada") : "sebes.ambassadorslab.com" === window.location.hostname ? o.geolocation.notify("Posición detectada") : "sebit.ambassadorslab.com" === window.location.hostname ? o.geolocation.notify("Posizione rilevata") : "ambassadorcompanion.it" === window.location.hostname ? o.geolocation.notify("Posizione rilevata") : "sebde.ambassadorslab.com" === window.location.hostname ? o.geolocation.notify("Position erkannt") : "prep-and-cook-botschafter.de" === window.location.hostname ? o.geolocation.notify("Position erkannt") : o.geolocation.notify("Position détectée") : "embajadorescompanion.es" === window.location.hostname ? o.geolocation.notify("Error al localizar") : "sebes.ambassadorslab.com" === window.location.hostname ? o.geolocation.notify("Error al localizar") : "sebit.ambassadorslab.com" === window.location.hostname ? o.geolocation.notify("Impossibile localizzare") : "ambassadorcompanion.it" === window.location.hostname ? o.geolocation.notify("Impossibile localizzare") : "sebde.ambassadorslab.com" === window.location.hostname ? o.geolocation.notify("Fehler beim Suchen") : "prep-and-cook-botschafter.de" === window.location.hostname ? o.geolocation.notify("Fehler beim Suchen") : o.geolocation.notify("Échec de la localisation"), $(".js-geolocation").removeClass("disabled")
         })
-    }
-
-    // SEB only
-
-    if ($('body').hasClass('SEB')) {
-        self.products = $('.js-map-search-product').html()
-
-        $('.js-map-search-connected').change(function () {
-            $('.js-map-search-product').html(self.products)
-
-            if ($(this).val() != '_') {
-                var ids = $(this).val().split(',')
-                $('.js-map-search-product option').each(function () {
-                    if ($(this).val() == '_') return;
-                    if (ids.indexOf($(this).val()) === -1) $(this).remove()
-                })
-            }
-
-            window.updateCustomControls()
-            self.load(1)
-        })
-    }
-
-    // Geoloc
-   // $('.js-geolocation').click(function () {
-        //if ($('.js-geolocation').hasClass('disabled')) return false;
-    console.log(window.amblab.features['map.geoloc']);
-   if (window.amblab.features['map.geoloc']){
-        console.log('Geolocation...')
-        //$('.js-geolocation').addClass('disabled')
-        self.geolocation.getCurrentPosition(false, function (error, position) {
-            if (error) {
-                $('.js-geolocation').removeClass('disabled')
-                return false;
-            }
-
-            console.log(position)
-
-            var latlng = new google.maps.LatLng(position.latitude, position.longitude);
-            var geocoder = new google.maps.Geocoder();
-
-            geocoder.geocode({'latLng': latlng}, function (results, status) {
-                var success = false
-                if (status == google.maps.GeocoderStatus.OK) {
-                    if (results[0]) {
-                        for (j = 0; j < results[0].address_components.length; j++) {
-                            if (results[0].address_components[j].types[0] == 'postal_code') {
-                                $('.js-map-search-zipcode').val(results[0].address_components[j].short_name)
-                                self.load(1)
-                                success = true
-                            }
-                        }
-                    }
-                }
-                if (success) {
-                    if (window.location.hostname === 'embajadorescompanion.es') {
-                        self.geolocation.notify('Posición detectada')
-                    }
-                    else if (window.location.hostname === 'sebes.ambassadorslab.com') {
-                        self.geolocation.notify('Posición detectada')
-                    }
-                    else if (window.location.hostname === 'sebit.ambassadorslab.com') {
-                        self.geolocation.notify('Posizione rilevata')
-                    }
-
-                    else if (window.location.hostname === 'ambassadorcompanion.it') {
-                        self.geolocation.notify('Posizione rilevata')
-                    }
-                    else if (window.location.hostname === 'sebde.ambassadorslab.com') {
-                        self.geolocation.notify('Position erkannt')
-
-                    }
-
-                    else if (window.location.hostname === 'prep-and-cook-botschafter.de') {
-                        self.geolocation.notify('Position erkannt')
-
-                    }
-
-                    else {
-                        self.geolocation.notify('Position détectée')
-                    }
-                }
-                else {
-                    if (window.location.hostname === 'embajadorescompanion.es') {
-                        self.geolocation.notify('Error al localizar')
-                    }
-                    else if (window.location.hostname === 'sebes.ambassadorslab.com') {
-                        self.geolocation.notify('Error al localizar')
-                    }
-                    else if (window.location.hostname === 'sebit.ambassadorslab.com') {
-                        self.geolocation.notify('Impossibile localizzare')
-                    }
-
-                    else if (window.location.hostname === 'ambassadorcompanion.it') {
-                        self.geolocation.notify('Impossibile localizzare')
-                    }
-                    else if (window.location.hostname === 'sebde.ambassadorslab.com') {
-                        self.geolocation.notify('Fehler beim Suchen')
-
-                    }
-
-                    else if (window.location.hostname === 'prep-and-cook-botschafter.de') {
-                        self.geolocation.notify('Fehler beim Suchen')
-
-                    }
-
-                    else {
-                        self.geolocation.notify('Échec de la localisation')
-                    }
-                }
-                $('.js-geolocation').removeClass('disabled')
-            });
-
-        })
-   }
-   // })
-
-    // Infinite scroll
-
-    $('.js-home-ambassadors-listing').scroll(function (e) {
-        var scrollY = $(this).get(0).scrollHeight - $(this).get(0).scrollTop;
-        var height = $(this).get(0).offsetHeight;
-        var offset = height - scrollY;
-
-        if (offset == 0 || offset == 1) {
-            if (!self.loading) self.load(self.page + 1)
-        }
+    })), $(".js-home-ambassadors-listing").scroll(function (a) {
+        var e = $(this).get(0).scrollHeight - $(this).get(0).scrollTop, s = $(this).get(0).offsetHeight - e;
+        0 != s && 1 != s || o.loading || o.load(o.page + 1)
     })
-}
-
-var DealersMap = function () {
-    var self = this
-
-    self.$element = $('.dealers-map')
-    self.map = new CustomMap()
-    self.map.init(self.$element.get(0))
-
-    self.load = function () {
-        var zipcode = $('.js-map-search-zipcode').val()
+}, DealersMap = function () {
+    var o = this;
+    o.$element = $(".dealers-map"), o.map = new CustomMap, o.map.init(o.$element.get(0)), o.load = function () {
+        var a = $(".js-map-search-zipcode").val();
         $.ajax({
-            method: 'post',
-            url: self.$element.attr('data-endpoint'),
-            data: {
-                zipcode: zipcode,
-            },
-            success: function (data) {
-                self.map.setMarkers(data.markers)
-
-                if (zipcode.length) {
-                    self.map.focus(zipcode + ', ' + homeAmbassadorsMapCountry, data.markers, null)
-                }
+            method: "post", url: o.$element.attr("data-endpoint"), data: {zipcode: a}, success: function (e) {
+                o.map.setMarkers(e.markers), a.length && o.map.focus(a + ", " + homeAmbassadorsMapCountry, e.markers, null)
             }
         })
-    }
-
-    self.load()
-
-    $('.js-map-search-submit').click(function () {
-        self.load()
+    }, o.load(), $(".js-map-search-submit").click(function () {
+        o.load()
     })
-}
-
-var AmbassadorsMap = function () {
-    var self = this
-
-    self.$element = $('.js-ambassadors-map')
-    self.map = new CustomMap()
-    self.map.init(self.$element.get(0))
-
-    self.page = 1
-    self.id = self.$element.attr('data-id')
-    var form = {page: self.page}
-
-    form['id'] = self.id;
-
-    self.load = function () {
-        console.log(form)
-        $.ajax({
-            method: 'post',
-            url: $('.js-ambassadors-map').attr('data-endpoint'),
-            data: form,
-            success: function (data) {
-
-                self.map.setMarkers(data.markers)
-                $('.js-ambassadors-listing').html('')
-
-                data.results.map(function (result) {
-                    $('.js-ambassadors-listing').append(result.html)
+}, AmbassadorsMap = function () {
+    var o = this;
+    o.$element = $(".js-ambassadors-map"), o.map = new CustomMap, o.map.init(o.$element.get(0)), o.page = 1, o.id = o.$element.attr("data-id");
+    var a = {page: o.page};
+    a.id = o.id, o.load = function () {
+        console.log(a), $.ajax({
+            method: "post",
+            url: $(".js-ambassadors-map").attr("data-endpoint"),
+            data: a,
+            success: function (a) {
+                o.map.setMarkers(a.markers), $(".js-ambassadors-listing").html(""), a.results.map(function (o) {
+                    $(".js-ambassadors-listing").append(o.html)
                 })
             }
         })
-    }
-
-    self.load(1)
-}
-
-//
-
-var CustomGeolocation = function () {
-    var self = this
-
-    if (!$('.js-geolocation-status').length) {
-        $('body').append('<div class="geolocation-status"><span class="js-geolocation-status"></span></div>')
-    }
-
-    self.$status = $('.js-geolocation-status')
-    self.statusTimeout = null
-
-    self.notify = function (message, keep) {
-        clearTimeout(self.statusTimeout)
-        self.$status.text(message)
-        self.$status.fadeIn()
-        if (!keep) {
-            self.statusTimeout = setTimeout(function () {
-                self.$status.fadeOut()
-            }, 3000)
-        }
-    }
-
-    self.check = function () {
-        if (!navigator.geolocation) {
-            self.notify('Votre navigateur ne dispose pas de cette fonctionnalité')
-            return false;
-        }
-        return true;
-    }
-
-    self.getCurrentPosition = function (notify, callback) {
-        if (!self.check()) return callback(true);
-
-        if (window.location.hostname === 'embajadorescompanion.es') {
-            self.notify('Ubicación...', true)
-        }
-        else if (window.location.hostname === 'sebes.ambassadorslab.com') {
-            self.notify('Ubicación...', true)
-        }
-        else if (window.location.hostname === 'sebit.ambassadorslab.com') {
-            self.notify('Posizione...', true)
-        }
-
-        else if (window.location.hostname === 'ambassadorcompanion.it') {
-            self.notify('Posizione...', true)
-        }
-        else if (window.location.hostname === 'sebde.ambassadorslab.com') {
-            self.notify('Lage...', true)
-
-        }
-
-        else if (window.location.hostname === 'prep-and-cook-botschafter.de') {
-            self.notify('Lage...', true)
-
-        }
-
-        else {
-            self.notify('Localisation...', true)
-        }
-
-        navigator.geolocation.getCurrentPosition(function (position) {
-            if (notify)
-            {
-                if (window.location.hostname === 'embajadorescompanion.es') {
-                    self.notify('Posición detectada')
-                }
-                else if (window.location.hostname === 'sebes.ambassadorslab.com') {
-                    self.notify('Posición detectada')
-                }
-                else if (window.location.hostname === 'sebit.ambassadorslab.com') {
-                    self.notify('Posizione rilevata')
-                }
-
-                else if (window.location.hostname === 'ambassadorcompanion.it') {
-                    self.notify('Posizione rilevata')
-                }
-                else if (window.location.hostname === 'sebde.ambassadorslab.com') {
-                    self.notify('Position erkannt')
-
-                }
-
-                else if (window.location.hostname === 'prep-and-cook-botschafter.de') {
-                    self.notify('Position erkannt')
-
-                }
-
-                else {
-                    self.notify('Position détectée')
-                }
-            }
-            callback(false, position.coords)
-        }, function (error) {
-            switch (error.code) {
-                case error.PERMISSION_DENIED:
-                    if (window.location.hostname === 'embajadorescompanion.es') {
-                        self.notify("Primero debes permitir el acceso a tu ubicación.")
-                    }
-                    else if (window.location.hostname === 'sebes.ambassadorslab.com') {
-                        self.notify("Primero debes permitir el acceso a tu ubicación.")
-                    }
-                    else if (window.location.hostname === 'sebit.ambassadorslab.com') {
-                        self.notify("Devi prima consentire l'accesso alla tua posizione")
-                    }
-
-                    else if (window.location.hostname === 'ambassadorcompanion.it') {
-                        self.notify("Devi prima consentire l'accesso alla tua posizione")
-                    }
-                    else if (window.location.hostname === 'sebde.ambassadorslab.com') {
-                        self.notify("Sie müssen zuerst den Zugriff auf Ihren Standort zulassen")
-
-                    }
-
-                    else if (window.location.hostname === 'prep-and-cook-botschafter.de') {
-                        self.notify("Sie müssen zuerst den Zugriff auf Ihren Standort zulassen")
-
-                    }
-
-                    else {
-                        self.notify("Vous devez d'abord autoriser l'accès à votre position")
-                    }
+    }, o.load(1)
+}, CustomGeolocation = function () {
+    var o = this;
+    $(".js-geolocation-status").length || $("body").append('<div class="geolocation-status"><span class="js-geolocation-status"></span></div>'), o.$status = $(".js-geolocation-status"), o.statusTimeout = null, o.notify = function (a, e) {
+        clearTimeout(o.statusTimeout), o.$status.text(a), o.$status.fadeIn(), e || (o.statusTimeout = setTimeout(function () {
+            o.$status.fadeOut()
+        }, 3e3))
+    }, o.check = function () {
+        return !!navigator.geolocation || (o.notify("Votre navigateur ne dispose pas de cette fonctionnalité"), !1)
+    }, o.getCurrentPosition = function (a, e) {
+        if (!o.check()) return e(!0);
+        "embajadorescompanion.es" === window.location.hostname ? o.notify("Ubicación...", !0) : "sebes.ambassadorslab.com" === window.location.hostname ? o.notify("Ubicación...", !0) : "sebit.ambassadorslab.com" === window.location.hostname ? o.notify("Posizione...", !0) : "ambassadorcompanion.it" === window.location.hostname ? o.notify("Posizione...", !0) : "sebde.ambassadorslab.com" === window.location.hostname ? o.notify("Lage...", !0) : "prep-and-cook-botschafter.de" === window.location.hostname ? o.notify("Lage...", !0) : o.notify("Localisation...", !0), navigator.geolocation.getCurrentPosition(function (s) {
+            a && ("embajadorescompanion.es" === window.location.hostname ? o.notify("Posición detectada") : "sebes.ambassadorslab.com" === window.location.hostname ? o.notify("Posición detectada") : "sebit.ambassadorslab.com" === window.location.hostname ? o.notify("Posizione rilevata") : "ambassadorcompanion.it" === window.location.hostname ? o.notify("Posizione rilevata") : "sebde.ambassadorslab.com" === window.location.hostname ? o.notify("Position erkannt") : "prep-and-cook-botschafter.de" === window.location.hostname ? o.notify("Position erkannt") : o.notify("Position détectée")), e(!1, s.coords)
+        }, function (a) {
+            switch (a.code) {
+                case a.PERMISSION_DENIED:
+                    "embajadorescompanion.es" === window.location.hostname ? o.notify("Primero debes permitir el acceso a tu ubicación.") : "sebes.ambassadorslab.com" === window.location.hostname ? o.notify("Primero debes permitir el acceso a tu ubicación.") : "sebit.ambassadorslab.com" === window.location.hostname ? o.notify("Devi prima consentire l'accesso alla tua posizione") : "ambassadorcompanion.it" === window.location.hostname ? o.notify("Devi prima consentire l'accesso alla tua posizione") : "sebde.ambassadorslab.com" === window.location.hostname ? o.notify("Sie müssen zuerst den Zugriff auf Ihren Standort zulassen") : "prep-and-cook-botschafter.de" === window.location.hostname ? o.notify("Sie müssen zuerst den Zugriff auf Ihren Standort zulassen") : o.notify("Vous devez d'abord autoriser l'accès à votre position");
                     break;
-                case error.POSITION_UNAVAILABLE:
-                    if (window.location.hostname === 'embajadorescompanion.es') {
-                        self.notify('Servicio de localización no disponible.')
-                    }
-                    else if (window.location.hostname === 'sebes.ambassadorslab.com') {
-                        self.notify('Servicio de localización no disponible.')
-                    }
-                    else if (window.location.hostname === 'sebit.ambassadorslab.com') {
-                        self.notify('Servizio di localizzazione non disponibile')
-                    }
-
-                    else if (window.location.hostname === 'ambassadorcompanion.it') {
-                        self.notify('Servizio di localizzazione non disponibile')
-                    }
-                    else if (window.location.hostname === 'sebde.ambassadorslab.com') {
-                        self.notify('Standortdienst nicht verfügbar')
-
-                    }
-
-                    else if (window.location.hostname === 'prep-and-cook-botschafter.de') {
-                        self.notify('Standortdienst nicht verfügbar')
-
-                    }
-
-                    else {
-                        self.notify('Service de localisation indisponible')
-                    }
+                case a.POSITION_UNAVAILABLE:
+                    "embajadorescompanion.es" === window.location.hostname ? o.notify("Servicio de localización no disponible.") : "sebes.ambassadorslab.com" === window.location.hostname ? o.notify("Servicio de localización no disponible.") : "sebit.ambassadorslab.com" === window.location.hostname ? o.notify("Servizio di localizzazione non disponibile") : "ambassadorcompanion.it" === window.location.hostname ? o.notify("Servizio di localizzazione non disponibile") : "sebde.ambassadorslab.com" === window.location.hostname ? o.notify("Standortdienst nicht verfügbar") : "prep-and-cook-botschafter.de" === window.location.hostname ? o.notify("Standortdienst nicht verfügbar") : o.notify("Service de localisation indisponible");
                     break;
                 default:
-                    if (window.location.hostname === 'embajadorescompanion.es') {
-                        self.notify('Error al localizar')
-                    }
-                    else if (window.location.hostname === 'sebes.ambassadorslab.com') {
-                        self.notify('Error al localizar')
-                    }
-                    else if (window.location.hostname === 'sebit.ambassadorslab.com') {
-                        self.notify('Impossibile localizzare')
-                    }
-
-                    else if (window.location.hostname === 'ambassadorcompanion.it') {
-                        self.notify('Impossibile localizzare')
-                    }
-                    else if (window.location.hostname === 'sebde.ambassadorslab.com') {
-                        self.notify('Fehler beim Suchen')
-
-                    }
-
-                    else if (window.location.hostname === 'prep-and-cook-botschafter.de') {
-                        self.notify('Fehler beim Suchen')
-
-                    }
-
-                    else {
-                        self.notify('Échec de la localisation')
-                    }
-                    break;
+                    "embajadorescompanion.es" === window.location.hostname ? o.notify("Error al localizar") : "sebes.ambassadorslab.com" === window.location.hostname ? o.notify("Error al localizar") : "sebit.ambassadorslab.com" === window.location.hostname ? o.notify("Impossibile localizzare") : "ambassadorcompanion.it" === window.location.hostname ? o.notify("Impossibile localizzare") : "sebde.ambassadorslab.com" === window.location.hostname ? o.notify("Fehler beim Suchen") : "prep-and-cook-botschafter.de" === window.location.hostname ? o.notify("Fehler beim Suchen") : o.notify("Échec de la localisation")
             }
-            callback(true)
-        });
+            e(!0)
+        })
     }
-}
+};

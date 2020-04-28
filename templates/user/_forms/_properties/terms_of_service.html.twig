@@ -2,7 +2,7 @@
     <label for="terms_of_service" data-error="{{ validator.error('terms_of_service') }}" class="d-flex">
         <input type="checkbox" name="terms_of_service" id="terms_of_service" data-checked="{{ validator.checked('terms_of_service') }}">
         <div class="pl-1 fl-1">
-            {{ 'page.ambassador._forms.terms_of_service.label'|trans({'%url%': path('static_page', {'slug': ('page.ambassador.register.step_0.cgv'|trans)})})|raw }} {{ 'page.ambassador._forms.terms_of_service.et'|trans }} {{ 'page.ambassador._forms.terms_of_service.politique'|trans({'%url%': path('static_page', {'slug': ('page.ambassador.register.step_0.lienPersonalData'|trans)})})| raw }}
+            {{ 'page.ambassador._forms.terms_of_service.politique'|trans({'%url%': path('static_page', {'slug': ('page.ambassador.register.step_0.lienPersonalData'|trans)})})| raw }}
         </div>
     </label>
 </div>

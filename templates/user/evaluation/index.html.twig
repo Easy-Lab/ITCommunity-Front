@@ -7,7 +7,7 @@
     {% endif %}
     <div class="row">
 
-        <div class="col-xs-12 col-md-12">
+        <div class="col-md-6 col-xs-12">
             <div class="row">
 
                 {% for i,row in evaluations %}
@@ -32,6 +32,13 @@
         {% if evaluations|length > 5 %}
             <button class="btn btn-theme text-uppercase font-weight-bold" id="evaluations-hidden-trigger">{{ 'page._common.button.see_more_button'|trans }}</button>
         {% endif %}
+        <div class="col-md-6 col-xs-12 d-none d-md-block">
+            <div class="image-holder">
+                <div class="image-frame">
+                    <img style="width: 100%;" src="{{ 'global.images_url'|trans ~ asset('images/evaluation.jpg') }}"/>
+                </div>
+            </div>
+        </div>
     </div>
 
 

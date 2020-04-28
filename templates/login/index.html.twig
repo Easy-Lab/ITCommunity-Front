@@ -1,80 +1,8 @@
 
-
-{% set footer_show_participation = true %}
-
 {% extends 'base.html.twig' %}
 
 {% block body %}
 
-
-    {#<!-- <div class="container mt-5 mb-4 auth" id="amba_login">
-
-        <h3>{{ 'page.ambassador.login.title'|trans }}</h3>
-
-        <div class="row">
-            <div class="col-md-5">
-                <header class="title">{{ 'page.ambassador.login.section.login.title'|trans }}</header>
-
-                <p>{{ 'page.ambassador.login.section.login.description'|trans }}</p>
-
-                {% if error %}
-                    <p class="alert alert-danger">{{ ('validator.message.custom.auth.' ~ error.message)|trans }}</p>
-                {% endif %}#}
-
-                {#
-
-                <div data-facebook-app-id="{{ facebook_app_id }}"
-                     data-endpoint="{{ path('ambassador_login_fb') }}"
-                     class="fb-login-button js-facebook-login"
-                     scope="email"
-                     data-max-rows="1"
-                     data-size="large"
-                     data-button-type="login_with"
-                     onlogin="checkFacebookLoginState()"
-                     data-show-faces="false"
-                     data-use-continue-as="false"></div>
-
-                #}{#
-
-                <form action="{{ path('ambassador_login') }}" method="post" class="mt-4">
-
-                    <div class="form-group">
-                        <label for="username">{{ 'page.ambassador.login.section.login.form.username.label'|trans }}</label>
-                        <input placeholder="{{ 'page.ambassador.login.section.login.form.username.placeholder'|trans }}" required class="form-control" type="text" id="username" name="_username" value="{{ last_username }}" />
-                    </div>
-
-                    <div class="form-group">
-                        <label for="password">{{ 'page.ambassador.login.section.login.form.password.label'|trans }}</label>
-                        <input placeholder="{{ 'page.ambassador.login.section.login.form.password.placeholder'|trans }}" required class="form-control" type="password" id="password" name="_password" />
-                    </div>
-
-                    <div class="form-group checkbox">
-                        <label for="remember_me">
-                            <input type="checkbox" id="remember_me" name="_remember_me"/>
-                            {{ 'page.ambassador.login.section.login.form.remember_me.label'|trans }}
-                        </label>
-                    </div>
-
-                    <input type="hidden" name="_target_path" value="{{ path('ambassador_dashboard') }}" />
-                    <button type="submit" class="btn btn-theme mb-2">{{ 'page.ambassador.login.section.login.form.login_button'|trans }}</button> <br>
-                    <a href="{{ path('user_request_password') }}"><u>{{ 'page.ambassador.login.section.login.form.forgot_password_link'|trans }}</u></a>
-                </form>
-            </div>
-            <div class="col-md-5 offset-1 ambassador-register">
-                <header class="title">{{ 'page.ambassador.login.section.register.title'|trans }}</header>
-
-                <p>{{ 'page.ambassador.login.section.register.description'|trans }}</p>
-
-                <p class="mt-5 mb-5">
-                    <a class="btn btn-theme mb-2" href="{{ path('ambassador_register') }}">{{ 'page.ambassador.login.section.register.register_button'|trans }}</a>
-                </p>
-
-                <img src="{{ asset(assets_url ~ 'images/connexion.png') }}" alt="">
-
-            </div>
-        </div>
-
-    </div> -->#}
 <div id="backgroundKrups">
     <div class="container mt-5 mb-4 auth" id="amba_login">
 
@@ -100,7 +28,7 @@
 
                     <input type="hidden" name="_target_path" value="" />
                     <button type="submit" class="btn btn-theme mb-2" id="heightButton">{{ 'page.ambassador.login.section.login.form.login_button'|trans }}</button> <br>
-                    <a href=""><u>{{ 'page.ambassador.login.section.login.form.forgot_password_link'|trans }}</u></a>
+                    <a href="{{ path('user_request_password') }}"><u>{{ 'page.ambassador.login.section.login.form.forgot_password_link'|trans }}</u></a>
                 </form>
             </div>
             <div class="col-md-5 offset-1 ambassador-register">
@@ -112,7 +40,7 @@
                     <a class="btn btn-theme mb-2" id="heightButton2" href="{{ path('ambassador_register') }}">{{ 'page.ambassador.login.section.register.register_button'|trans }}</a>
                 </p>
 
-                <img src="{{ asset(assets_url ~ 'images/connexion.png') }}" alt="">
+                <img src="{{ 'global.images_url'|trans ~ asset('images/login.jpg') }}" alt="login" style="width: 100%;">
 
             </div>
         </div>

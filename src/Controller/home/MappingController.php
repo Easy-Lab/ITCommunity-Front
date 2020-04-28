@@ -23,7 +23,7 @@ class MappingController extends AbstractController
 
         $pin = 'pin.png';
         return [
-            'icon' => $translator->trans("global.images_url").'/images/'.$pin,
+            'icon' => $translator->trans("global.images_url") . '/images/' . $pin,
             'latitude' => $user['latitude'],
             'longitude' => $user['longitude'],
             'id' => $user['username'],
@@ -36,27 +36,27 @@ class MappingController extends AbstractController
         $pin = 'pin.png';
 
         return [
-            'icon' => $translator->trans("global.images_url").'/images/'.$pin,
+            'icon' => $translator->trans("global.images_url") . '/images/' . $pin,
             'latitude' => $user['latitude'],
             'longitude' => $user['longitude'],
-            'id'=>$user['username'],
+            'id' => $user['username'],
             'popup' => $this->renderView('mapping/popup/user.html.twig', [
                 'user' => $user,
             ])
         ];
     }
 
-    protected function prepareResult(array $user, $idx=0)
+    protected function prepareResult(array $user, $idx = 0)
     {
 
-            return [
-                'html' => $this->renderView('mapping/result/user.html.twig', [
-                    'idx' => $idx,
-                    'user' => $user,
-                    'url'=>"https://test.com",
+        return [
+            'html' => $this->renderView('mapping/result/user.html.twig', [
+                'idx' => $idx,
+                'user' => $user,
+                'url' => "https://test.com",
 
-                ])
-            ];
+            ])
+        ];
     }
 
     /**
@@ -108,60 +108,28 @@ class MappingController extends AbstractController
 
                 }
             }
-            //}
-            // else{
-            /* foreach($ambassadors as $ambassador)
-             {
-                 $in_zone = true;
-
-                 if($features->get('dealer.zones.enabled') && count($zone) > 0) {
-
-                     if(!$features->get("dealer.concession.enabled")){
-                         $in_zone = in_array($ambassador->getZipcode(), $zone) || in_array(substr($ambassador->getZipcode(), 0, 2), $zone);
-                         if(!$in_zone && $features->get('dealer.zones.hide_outside')) {
-                             continue;
-                         }
-
-                     } else{
-                         //Les concessions sont activés...tryba
-                         //$concessionId (l'id de la concession au plein coeur de la recherche ???)
-                         if(!empty($ambassador->getDealer())){
-                             $in_zone = in_array($ambassador->getDealer()->getIdConcession(), $concessionIds);
-                         }
-                     }
-
-                 }
-                 $markers[] = $this->prepareMarker2($ambassador, 'ambassador', $in_zone);
-
-             }
-        // }*/
         }
 
 
         // Résultats de la recherche
         $results = [];
 
-        if (!is_null($page)) {
-            $response = $client->request('GET', getenv('API_URL') . '/users?expand=profile&user_filter[step]=3&limit=50'
-            );
-            $statusCode = $response->getStatusCode();
-            if ($statusCode == 200) {
-                $users = $response->toArray();
+        $response = $client->request('GET', getenv('API_URL') . '/users?expand=profile,reviews,pictures&user_filter[step]=3&limit=50'
+        );
+        $statusCode = $response->getStatusCode();
+        if ($statusCode == 200) {
+            $users = $response->toArray();
 
-            } else {
-                $users = null;
-            }
-            if ($users) {
-                foreach ($users['users'] as $idx => $user) {
+        } else {
+            $users = null;
+        }
+        if ($users) {
+            foreach ($users['users'] as $idx => $user) {
 
-                    $results[] = $this->prepareResult($user, $idx);
+                $results[] = $this->prepareResult($user, $idx);
 
-                }
             }
         }
-
-        //dump($markers);
-        //dump($results);
 
         return $this->json([
             'markers' => $markers,
@@ -177,7 +145,7 @@ class MappingController extends AbstractController
         $client = HttpClient::create(['headers' => [
             'Content-Type' => 'application/json',
         ]]);
-        $response = $client->request('GET', getenv('API_URL') . '/users?expand=profile&user_filter[username]='.$request->get('id')
+        $response = $client->request('GET', getenv('API_URL') . '/users?expand=profile,reviews,pictures&user_filter[username]=' . $request->get('id')
         );
         $statusCode = $response->getStatusCode();
         if ($statusCode == 200) {
