@@ -1,21 +1,26 @@
 <hr>
 <div class="form-group">
-        <label for="cgu">
+        <label for="cpu_company">
             {{ ('page.ambassador._forms.select.cpu.label')|trans }}
         </label>
-        <select name="cpu" id="cpu"
-                class="form-control"
-                data-error="{{ validator.error('cpu') }}"
-        required >
-        {% for option in elementCpu %}
-            {% if cpu is defined %}
-                {% if option.product_name == cpu['nameComponent'] %}
-                    <option value="{{ option.id }}" selected>{{ option.company }} {{ option.product_name }} {{ option.cores }} cores {{ option.clock }}</option>
-                {% endif %}
-            {% endif %}
-                <option value="{{ option.id }}">{{ option.company }} {{ option.product_name }} {{ option.cores }} cores {{ option.clock }}</option>
-        {% endfor %}
-        </select>
+{#        <select name="cpu" id="cpu"#}
+{#                class="form-control"#}
+{#                data-error="{{ validator.error('cpu') }}"#}
+{#        required >#}
+{#        {% for option in elementCpu %}#}
+{#            {% if cpu is defined %}#}
+{#                {% if option.product_name == cpu['nameComponent'] %}#}
+{#                    <option value="{{ option.id }}" selected>{{ option.company }} {{ option.product_name }} {{ option.cores }} cores {{ option.clock }}</option>#}
+{#                {% endif %}#}
+{#            {% endif %}#}
+{#                <option value="{{ option.id }}">{{ option.company }} {{ option.product_name }} {{ option.cores }} cores {{ option.clock }}</option>#}
+{#        {% endfor %}#}
+{#        </select>#}
+    <input type="text" placeholder="Ex : AMD" name="cpu_company" id="cpu_company" value="{% if cpu is defined %}{{ cpu['companyComponent'] }}{% endif %}" required>
+    <label for="cpu">
+        {{ ('page.ambassador._forms.select.cpu.label_2')|trans }}
+    </label>
+    <input type="text" placeholder="Ex : Ryzen 7 3800X" name="cpu" id="cpu" value="{% if cpu is defined %}{{ cpu['companyComponent'] }}{% endif %}" required>
 </div>
 
 <div class="form-group pt-3">

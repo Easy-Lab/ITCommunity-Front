@@ -1,20 +1,25 @@
 <div class="form-group">
-        <label for="cgu">
+        <label for="gpu_company">
             {{ ('page.ambassador._forms.select.gpu.label')|trans }}
         </label>
-        <select name="gpu" id="gpu"
-                class="form-control"
-                data-error="{{ validator.error('gpu') }}"
-        required >
-        {% for option in elementGpu %}
-            {% if gpu is defined %}
-                {% if option.product_name == gpu['nameComponent'] %}
-                    <option value="{{ option.id }}" selected>{{ option.company }} {{ option.product_name }} {{ option.gpu_clock }} {{ option.memory_clock }}</option>
-                {% endif %}
-            {% endif %}
-                <option value="{{ option.id }}">{{ option.company }} {{ option.product_name }} {{ option.gpu_clock }} {{ option.memory_clock }}</option>
-        {% endfor %}
-        </select>
+{#        <select name="gpu" id="gpu"#}
+{#                class="form-control"#}
+{#                data-error="{{ validator.error('gpu') }}"#}
+{#        required >#}
+{#        {% for option in elementGpu %}#}
+{#            {% if gpu is defined %}#}
+{#                {% if option.product_name == gpu['nameComponent'] %}#}
+{#                    <option value="{{ option.id }}" selected>{{ option.company }} {{ option.product_name }} {{ option.gpu_clock }} {{ option.memory_clock }}</option>#}
+{#                {% endif %}#}
+{#            {% endif %}#}
+{#                <option value="{{ option.id }}">{{ option.company }} {{ option.product_name }} {{ option.gpu_clock }} {{ option.memory_clock }}</option>#}
+{#        {% endfor %}#}
+{#        </select>#}
+    <input type="text" placeholder="Ex : MSI" name="gpu_company" id="gpu_company" value="{% if gpu is defined %}{{ gpu['companyComponent'] }}{% endif %}" required>
+    <label for="gpu">
+        {{ ('page.ambassador._forms.select.gpu.label_2')|trans }}
+    </label>
+    <input type="text" placeholder="Ex : GeForce RTX 2080" name="gpu" id="gpu" value="{% if gpu is defined %}{{ gpu['nameComponent'] }}{% endif %}" required>
 </div>
 
 <div class="form-group pt-3">

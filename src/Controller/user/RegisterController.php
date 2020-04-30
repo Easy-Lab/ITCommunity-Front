@@ -133,26 +133,26 @@ class RegisterController extends AbstractController
 
             $actual_route = $request->get('actual_route', 'register_step_2');
 
-            $client = HttpClient::create();
-            $responseGpu = $client->request('GET', 'http://gpu-cpu-api.atcreative.fr/api/gpu');
-            $statusCodeGpu = $responseGpu->getStatusCode();
-            if ($statusCodeGpu == 200) {
-                $contentGpu = $responseGpu->toArray();
-            } else {
-                $contentGpu = null;
-            }
-
-            $responseCpu = $client->request('GET', 'http://gpu-cpu-api.atcreative.fr/api/cpu');
-            $statusCodeCpu = $responseCpu->getStatusCode();
-            if ($statusCodeCpu == 200) {
-                $contentCpu = $responseCpu->toArray();
-            } else {
-                $contentCpu = null;
-            }
+//            $client = HttpClient::create();
+//            $responseGpu = $client->request('GET', 'http://gpu-cpu-api.atcreative.fr/api/gpu');
+//            $statusCodeGpu = $responseGpu->getStatusCode();
+//            if ($statusCodeGpu == 200) {
+//                $contentGpu = $responseGpu->toArray();
+//            } else {
+//                $contentGpu = null;
+//            }
+//
+//            $responseCpu = $client->request('GET', 'http://gpu-cpu-api.atcreative.fr/api/cpu');
+//            $statusCodeCpu = $responseCpu->getStatusCode();
+//            if ($statusCodeCpu == 200) {
+//                $contentCpu = $responseCpu->toArray();
+//            } else {
+//                $contentCpu = null;
+//            }
 
             if ($validator->post()) {
 
-                $validator->required('gpu', 'gpu_rating', 'gpu_feedback', 'cpu', 'cpu_rating', 'cpu_feedback');
+                $validator->required('gpu', 'gpu_rating', 'gpu_feedback', 'cpu', 'cpu_rating', 'cpu_feedback', 'cpu_company', 'gpu_company');
 
                 if ($validator->get('gpu') == null) {
                     $validator->error('gpu', 'required');
@@ -179,43 +179,43 @@ class RegisterController extends AbstractController
                 }
 
                 if ($validator->check()) {
-                    $urlGpu = 'http://gpu-cpu-api.atcreative.fr/api/gpu/' . $validator->get('gpu');
-                    $infoGpu = $client->request('GET', $urlGpu);
-                    $httpCodeGpu = $infoGpu->getStatusCode();
-                    if ($httpCodeGpu == 200) {
-                        $contentInfoGpu = $infoGpu->toArray();
-                    } else {
-                        $validator->keep()->fail();
-                        return $this->redirectToRoute('register_step_2');
-                    }
+//                    $urlGpu = 'http://gpu-cpu-api.atcreative.fr/api/gpu/' . $validator->get('gpu');
+//                    $infoGpu = $client->request('GET', $urlGpu);
+//                    $httpCodeGpu = $infoGpu->getStatusCode();
+//                    if ($httpCodeGpu == 200) {
+//                        $contentInfoGpu = $infoGpu->toArray();
+//                    } else {
+//                        $validator->keep()->fail();
+//                        return $this->redirectToRoute('register_step_2');
+//                    }
                     $dataGpu =
                         [
                             'body' => $validator->get('gpu_feedback'),
                             'rating' => (int)$validator->get('gpu_rating'),
                             'type' => 'gpu',
-                            'name_component' => $contentInfoGpu['product_name'],
-                            'company_component' => $contentInfoGpu['company'],
-                            'other_information_component' => $contentInfoGpu['gpu_clock']
+                            'name_component' => $validator->get('gpu'),
+                            'company_component' => $validator->get('gpu_company'),
+                            'other_information_component' => null
                         ];
 
-                    $urlCpu = 'http://gpu-cpu-api.atcreative.fr/api/cpu/' . $validator->get('cpu');
-                    $infoCpu = $client->request('GET', $urlCpu);
-                    $httpCodeCpu = $infoCpu->getStatusCode();
-                    if ($httpCodeCpu == 200) {
-                        $contentInfoCpu = $infoCpu->toArray();
-                    } else {
-                        $validator->keep()->fail();
-                        return $this->redirectToRoute('register_step_2');
-                    }
+//                    $urlCpu = 'http://gpu-cpu-api.atcreative.fr/api/cpu/' . $validator->get('cpu');
+//                    $infoCpu = $client->request('GET', $urlCpu);
+//                    $httpCodeCpu = $infoCpu->getStatusCode();
+//                    if ($httpCodeCpu == 200) {
+//                        $contentInfoCpu = $infoCpu->toArray();
+//                    } else {
+//                        $validator->keep()->fail();
+//                        return $this->redirectToRoute('register_step_2');
+//                    }
 
                     $dataCpu =
                         [
                             'body' => $validator->get('cpu_feedback'),
                             'rating' => (int)$validator->get('cpu_rating'),
                             'type' => 'cpu',
-                            'name_component' => $contentInfoCpu['product_name'],
-                            'company_component' => $contentInfoCpu['company'],
-                            'other_information_component' => $contentInfoCpu['cores'] . ' cores, ' . $contentInfoCpu['clock'] . ', ' . $contentInfoCpu['socket']
+                            'name_component' => $validator->get('cpu'),
+                            'company_component' => $validator->get('cpu_company'),
+                            'other_information_component' => null
                         ];
                     $clientPostGpu = HttpClient::create(['headers' => [
                         'Content-Type' => 'application/json',
@@ -245,8 +245,8 @@ class RegisterController extends AbstractController
                 'features' => $features,
                 'actual_route' => $actual_route,
                 'form_properties' => $form,
-                'elementGpu' => array_reverse($contentGpu),
-                'elementCpu' => array_reverse($contentCpu),
+//                'elementGpu' => array_reverse($contentGpu),
+//                'elementCpu' => array_reverse($contentCpu),
                 'user' => $userService->getUser(),
                 'google_analytics_id' => getenv("ANALYTICS_KEY"),
             ]);

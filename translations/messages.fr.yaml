@@ -456,9 +456,11 @@ page:
             label: "Votre avis :"
         select:
           gpu:
-            label: "Votre carte graphique"
+            label: "Marque de votre carte graphique"
+            label_2: "Libellé de votre carte graphique"
           cpu:
-            label: "Votre processeur"
+            label: "Marque de votre processeur"
+            label_2: "Libellé de votre processeur"
         step2:
           title: "Vos composants"
         username:
