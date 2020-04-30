@@ -28,7 +28,7 @@
             {{ ('page.ambassador._forms.select.cpu.label_2')|trans }}
         </label>
         <input type="text" class="form-control" placeholder="Ex : Ryzen 7 3800X" name="cpu" id="cpu"
-               value="{% if cpu is defined %}{{ cpu['companyComponent'] }}{% endif %}" required>
+               value="{% if cpu is defined %}{{ cpu['nameComponent'] }}{% endif %}" required>
     </div>
 </div>
 
