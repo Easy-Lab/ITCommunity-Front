@@ -5,6 +5,7 @@ namespace App\Controller\bug;
 
 
 use App\Utils\Validator;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,7 +15,7 @@ class BugReportController extends AbstractController
     /**
      * @Route("/bugreport", name="bug_report")
      */
-    public function index(Validator $validator)
+    public function index(Validator $validator, LoggerInterface $logger)
     {
         if ($validator->post()) {
             $validator->required('firstname', 'lastname', 'email', 'reason', 'message');
@@ -38,9 +39,11 @@ class BugReportController extends AbstractController
                     'body' => json_encode($dataReport)
                 ]);
                 if ($responseBug->getStatusCode() == 201 || $responseBug->getStatusCode() == 200) {
+                    $logger->info('Form BugReport envoyé ! Identité : '.$validator->get('firstname').' '.$validator->get('lastname'));
                     $validator->success('bug.success_send');
                     return $this->redirectToRoute('home');
                 }
+                $logger->error('Form BugReport non envoyé ! code '.$responseBug->getStatusCode());
                 $validator->keep()->fail();
                 return $this->redirectToRoute('home');
             }

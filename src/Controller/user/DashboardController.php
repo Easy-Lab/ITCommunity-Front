@@ -7,6 +7,7 @@ namespace App\Controller\user;
 use App\Service\UserService;
 use App\Utils\Features;
 use App\Utils\Validator;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,7 +31,7 @@ class DashboardController extends AbstractController
     /**
      * @Route("/dashboard/invitation", name="user_dashboard_invitation")
      */
-    public function index(Request $request, Validator $validator, UserService $userService)
+    public function index(Request $request, Validator $validator, UserService $userService, LoggerInterface $logger)
     {
         if ($request->hasSession() && $this->session) {
             $user = $userService->getUser();
@@ -53,10 +54,12 @@ class DashboardController extends AbstractController
                             'body' => json_encode($datainvitation)
                         ]);
                         if ($responseInvitation->getStatusCode() == 201) {
+                            $logger->info('Invitation envoyé à : ' . $validator->get('firstname') . ' ' . $validator->get('lastname'));
                             $validator->success('invitation.send');
                             return $this->redirectToRoute("user_dashboard_invitation");
                         }
                         $validator->fail('invitation.failed');
+                        $logger->error("Erreur dans l'invitation : code " . $responseInvitation->getStatusCode());
                         return $this->redirectToRoute("user_dashboard_invitation");
                     }
                 }
@@ -243,7 +246,7 @@ class DashboardController extends AbstractController
     /**
      * @Route("/dashboard/profile/preference", name="user_dashboard_preference")
      */
-    public function preference(Request $request, Validator $validator, UserService $userService, Features $features)
+    public function preference(Request $request, Validator $validator, UserService $userService, Features $features, LoggerInterface $logger)
     {
         if ($request->hasSession() && $this->session) {
             $user = $userService->getUser();
@@ -277,11 +280,12 @@ class DashboardController extends AbstractController
                 $statusCode = $response->getStatusCode();
                 if ($statusCode == 200) {
                     $validator->success('update.success');
+                    $logger->info('Préférence changé ! : informationsEnabled = ' . $informations);
                     return $this->redirectToRoute('user_dashboard_profile');
-                } else {
-                    $validator->keep()->fail();
-                    return $this->redirectToRoute('user_dashboard_preference');
                 }
+                $validator->keep()->fail();
+                $logger->error('Erreur dans le changement de préférence ! : code ' . $response->getStatusCode());
+                return $this->redirectToRoute('user_dashboard_preference');
             }
             $actual_route = $request->get('actual_route', 'user_dashboard_preference');
             return $this->render('user/dashboard/profile/mails.html.twig', [
@@ -299,7 +303,7 @@ class DashboardController extends AbstractController
     /**
      * @Route("/dashboard/profile/password", name="user_dashboard_password")
      */
-    public function password(Request $request, Validator $validator, UserService $userService, Features $features)
+    public function password(Request $request, Validator $validator, UserService $userService, Features $features, LoggerInterface $logger)
     {
         if ($request->hasSession() && $this->session) {
             $user = $userService->getUser();
@@ -331,12 +335,13 @@ class DashboardController extends AbstractController
                         $statusCode = $response->getStatusCode();
                         if ($statusCode == 200) {
                             $request->getSession()->invalidate();
+                            $logger->info('Mot de passe changé ! : username = ' . $user['username']);
                             $validator->success('update.success');
                             return $this->redirectToRoute('login');
-                        } else {
-                            $validator->keep()->fail();
-                            return $this->redirectToRoute('user_dashboard_password');
                         }
+                        $validator->keep()->fail();
+                        $logger->error('Erreur dans le changement de mot de passe ! : code ' . $response->getStatusCode());
+                        return $this->redirectToRoute('user_dashboard_password');
                     }
                 }
             }
@@ -356,7 +361,7 @@ class DashboardController extends AbstractController
     /**
      * @Route("/dashboard/profile/informations", name="user_dashboard_informations")
      */
-    public function informations(Request $request, Validator $validator, UserService $userService, Features $features)
+    public function informations(Request $request, Validator $validator, UserService $userService, Features $features, LoggerInterface $logger)
     {
         if ($request->hasSession() && $this->session) {
             $user = $userService->getUser();
@@ -398,12 +403,13 @@ class DashboardController extends AbstractController
                     $statusCode = $response->getStatusCode();
                     if ($statusCode == 200) {
                         $request->getSession()->invalidate();
+                        $logger->info('Données personnelles changées ! : username = ' . $validator->get('username'));
                         $validator->success('update.success');
                         return $this->redirectToRoute('login');
-                    } else {
-                        $validator->keep()->fail();
-                        return $this->redirectToRoute('user_dashboard_informations');
                     }
+                        $validator->keep()->fail();
+                        $logger->info('Erreur dans le changement des données personnelles ! : code ' . $response->getStatusCode());
+                        return $this->redirectToRoute('user_dashboard_informations');
                 }
             }
             return $this->render('user/dashboard/profile/informations.html.twig', [
@@ -422,7 +428,7 @@ class DashboardController extends AbstractController
     /**
      * @Route("/dashboard/profile/products", name="user_dashboard_products")
      */
-    public function products(Request $request, Validator $validator, UserService $userService, Features $features)
+    public function products(Request $request, Validator $validator, UserService $userService, Features $features, LoggerInterface $logger)
     {
         if ($request->hasSession() && $this->session) {
             $user = $userService->getUser();
@@ -463,7 +469,7 @@ class DashboardController extends AbstractController
 
             $actual_route = $request->get('actual_route', 'user_dashboard_products');
             if ($validator->post()) {
-                $validator->required('gpu', 'gpu_rating', 'gpu_feedback', 'cpu', 'cpu_rating', 'cpu_feedback', 'cpu_company','gpu_company');
+                $validator->required('gpu', 'gpu_rating', 'gpu_feedback', 'cpu', 'cpu_rating', 'cpu_feedback', 'cpu_company', 'gpu_company');
 
                 if ($validator->get('gpu') == null) {
                     $validator->error('gpu', 'required');
@@ -544,9 +550,12 @@ class DashboardController extends AbstractController
                         'body' => json_encode($dataCpu)
                     ]);
                     if ($responseGpu->getStatusCode() == 200 && $responseCpu->getStatusCode() == 200) {
+                        $logger->info('Produits changés ! : username = ' . $user['username']);
                         $validator->success('reviews.success_update');
                         return $this->redirectToRoute('user_dashboard_profile');
                     }
+                    $logger->error('Erreur dans le changement de produits ! : code Gpu ' . $responseGpu->getStatusCode().' - code Cpu '.$responseCpu->getStatusCode());
+
                 }
                 $validator->keep()->fail();
                 return $this->redirectToRoute('user_dashboard_products');

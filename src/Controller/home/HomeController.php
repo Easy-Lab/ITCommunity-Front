@@ -6,6 +6,7 @@ namespace App\Controller\home;
 use App\Service\UserService;
 use App\Utils\Features;
 use App\Utils\Validator;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -84,7 +85,7 @@ class HomeController extends AbstractController
     /**
      * @Route("/contact-us", name="contact_us")
      */
-    public function contactUs(Validator $validator, Request $request, UserService $userService)
+    public function contactUs(Validator $validator, Request $request, UserService $userService, LoggerInterface $logger)
     {
         if ($validator->post()) {
 
@@ -147,10 +148,12 @@ class HomeController extends AbstractController
                     'headers' => ['content_type' => 'application/json'],
                     'body' => json_encode($dataContact)
                 ]);
-                if ($responseContact->getStatusCode() == 200 || $responseContact->getStatusCode() == 201) {
+                if ($responseContact->getStatusCode() == 201) {
+                    $logger->info('Form ContactUs envoyé ! Identité : '.$validator->get('firstname').' '.$validator->get('lastname'));
                     $validator->success('form.success');
                     return $this->redirectToRoute('contact_us');
                 }
+                $logger->info('Form ContactUs non envoyé ! code '.$responseContact->getStatusCode());
                 $validator->keep()->fail('form.errorApi');
                 return $this->redirectToRoute('contact_us');
             }

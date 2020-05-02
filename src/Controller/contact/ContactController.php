@@ -5,6 +5,7 @@ namespace App\Controller\contact;
 
 
 use App\Utils\Validator;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,7 +15,7 @@ class ContactController extends AbstractController
     /**
      * @Route("/user/contact-conseil/{username}", name="user_contact_conseil")
      */
-    public function contactConseil($username, Validator $validator)
+    public function contactConseil($username, Validator $validator, LoggerInterface $logger)
     {
         if ($validator->post()) {
             if ($validator->get('texte') != "") {
@@ -34,24 +35,28 @@ class ContactController extends AbstractController
                         if ($validator->DatacheckSpam($validator->get('firstname')) != null) {
                             $error = $validator->DatacheckSpam($validator->get('firstname'));
                             $validator->keep()->fail('form.' . $error);
+                            $logger->error('Bot repéré ? : '.$error);
                             return $this->redirectToRoute('user_unknow_profile', array('username' => $username));
 
                         }
                         if ($validator->DatacheckSpam($validator->get('lastname')) != null) {
                             $error = $validator->DatacheckSpam($validator->get('lastname'));
                             $validator->keep()->fail('form.' . $error);
+                            $logger->error('Bot repéré ? : '.$error);
                             return $this->redirectToRoute('user_unknow_profile', array('username' => $username));
 
                         }
                         if ($validator->DatacheckSpam($validator->get('emailConseil')) != null) {
                             $error = $validator->DatacheckSpam($validator->get('emailConseil'));
                             $validator->keep()->fail('form.' . $error);
+                            $logger->error('Bot repéré ? : '.$error);
                             return $this->redirectToRoute('user_unknow_profile', array('username' => $username));
 
                         }
                         if ($validator->DatacheckSpam($validator->get('message')) != null) {
                             $error = $validator->DatacheckSpam($validator->get('message'));
                             $validator->keep()->fail('form.' . $error);
+                            $logger->error('Bot repéré ? : '.$error);
                             return $this->redirectToRoute('user_unknow_profile', array('username' => $username));
 
                         }
@@ -66,6 +71,7 @@ class ContactController extends AbstractController
                             'body' => json_encode($dataContact)
                         ]);
                         if ($responseContact->getStatusCode() == 200 || $responseContact->getStatusCode() == 201) {
+                            $logger->info('Contact créer : '.$validator->get('firstname').' '.$validator->get('lastname'));
                             $dataMessage = [
                                 'email' => $validator->get('emailConseil'),
                                 'username' => $username,
@@ -78,24 +84,34 @@ class ContactController extends AbstractController
                             ]);
                             if ($responseMessage->getStatusCode() == 200 || $responseMessage->getStatusCode() == 201) {
                                 $validator->success('contact.mail.success_send');
+                                $logger->info('Message envoyé à : '.$username);
                                 return $this->redirectToRoute('user_unknow_profile', array('username' => $username));
                             }
+                            $validator->keep()->fail();
+                            $logger->error('Erreur dans la création du message : code '.$responseMessage->getStatusCode());
+                            return $this->redirectToRoute('user_unknow_profile', array('username' => $username));
                         }
+                        $validator->keep()->fail();
+                        $logger->error('Erreur dans la création du contact : code '.$responseContact->getStatusCode());
+                        return $this->redirectToRoute('user_unknow_profile', array('username' => $username));
                     }
                     if ($validator->get('emailConseil') === '' && $validator->get('emailConseilOnly')) {
                         if (!filter_var($validator->get('emailConseilOnly'), FILTER_VALIDATE_EMAIL)) {
                             $validator->keep()->fail();
+                            $logger->error('Bot repéré ? : '.$error);
                             return $this->redirectToRoute('user_unknow_profile', array('username' => $username));
                         }
                         if ($validator->DatacheckSpam($validator->get('emailConseilOnly')) != null) {
                             $error = $validator->DatacheckSpam($validator->get('emailConseilOnly'));
                             $validator->keep()->fail('form.' . $error);
+                            $logger->error('Bot repéré ? : '.$error);
                             return $this->redirectToRoute('user_unknow_profile', array('username' => $username));
 
                         }
                         if ($validator->DatacheckSpam($validator->get('message')) != null) {
                             $error = $validator->DatacheckSpam($validator->get('message'));
                             $validator->keep()->fail('form.' . $error);
+                            $logger->error('Bot repéré ? : '.$error);
                             return $this->redirectToRoute('user_unknow_profile', array('username' => $username));
 
                         }
@@ -113,8 +129,12 @@ class ContactController extends AbstractController
                         ]);
                         if ($responseMessage->getStatusCode() == 200 || $responseMessage->getStatusCode() == 201) {
                             $validator->success('contact.mail.success_send');
+                            $logger->info('Message envoyé à : '.$username);
                             return $this->redirectToRoute('user_unknow_profile', array('username' => $username));
                         }
+                        $validator->keep()->fail();
+                        $logger->error('Erreur dans la création du message : code '.$responseMessage->getStatusCode());
+                        return $this->redirectToRoute('user_unknow_profile', array('username' => $username));
                     }
                     $validator->keep()->fail();
                     return $this->redirectToRoute('user_unknow_profile', array('username' => $username));
@@ -132,7 +152,7 @@ class ContactController extends AbstractController
     /**
      * @Route("/user/contact-demo/{username}", name="user_contact_demo")
      */
-    public function contactDemo($username, Validator $validator)
+    public function contactDemo($username, Validator $validator, LoggerInterface $logger)
     {
         if ($validator->post()) {
             if ($validator->get('texte') != "") {
@@ -152,24 +172,28 @@ class ContactController extends AbstractController
                         if ($validator->DatacheckSpam($validator->get('firstname')) != null) {
                             $error = $validator->DatacheckSpam($validator->get('firstname'));
                             $validator->keep()->fail('form.' . $error);
+                            $logger->error('Bot repéré ? : '.$error);
                             return $this->redirectToRoute('user_unknow_profile', array('username' => $username));
 
                         }
                         if ($validator->DatacheckSpam($validator->get('lastname')) != null) {
                             $error = $validator->DatacheckSpam($validator->get('lastname'));
                             $validator->keep()->fail('form.' . $error);
+                            $logger->error('Bot repéré ? : '.$error);
                             return $this->redirectToRoute('user_unknow_profile', array('username' => $username));
 
                         }
                         if ($validator->DatacheckSpam($validator->get('emailDemo')) != null) {
                             $error = $validator->DatacheckSpam($validator->get('emailDemo'));
                             $validator->keep()->fail('form.' . $error);
+                            $logger->error('Bot repéré ? : '.$error);
                             return $this->redirectToRoute('user_unknow_profile', array('username' => $username));
 
                         }
                         if ($validator->DatacheckSpam($validator->get('message')) != null) {
                             $error = $validator->DatacheckSpam($validator->get('message'));
                             $validator->keep()->fail('form.' . $error);
+                            $logger->error('Bot repéré ? : '.$error);
                             return $this->redirectToRoute('user_unknow_profile', array('username' => $username));
 
                         }
@@ -184,6 +208,7 @@ class ContactController extends AbstractController
                             'body' => json_encode($dataContact)
                         ]);
                         if ($responseContact->getStatusCode() == 200 || $responseContact->getStatusCode() == 201) {
+                            $logger->info('Contact créer : '.$validator->get('firstname').' '.$validator->get('lastname'));
                             $dataMessage = [
                                 'email' => $validator->get('emailDemo'),
                                 'username' => $username,
@@ -196,9 +221,16 @@ class ContactController extends AbstractController
                             ]);
                             if ($responseMessage->getStatusCode() == 200 || $responseMessage->getStatusCode() == 201) {
                                 $validator->success('contact.mail.success_send');
+                                $logger->info('Message envoyé à : '.$username);
                                 return $this->redirectToRoute('user_unknow_profile', array('username' => $username));
                             }
+                            $validator->keep()->fail();
+                            $logger->error('Erreur dans la création du message : code '.$responseMessage->getStatusCode());
+                            return $this->redirectToRoute('user_unknow_profile', array('username' => $username));
                         }
+                        $validator->keep()->fail();
+                        $logger->error('Erreur dans la création du contact : code '.$responseContact->getStatusCode());
+                        return $this->redirectToRoute('user_unknow_profile', array('username' => $username));
                     }
                     if ($validator->get('emailDemo') === '' && $validator->get('emailDemoOnly')) {
                         if (!filter_var($validator->get('emailDemoOnly'), FILTER_VALIDATE_EMAIL)) {
@@ -208,12 +240,14 @@ class ContactController extends AbstractController
                         if ($validator->DatacheckSpam($validator->get('emailDemoOnly')) != null) {
                             $error = $validator->DatacheckSpam($validator->get('emailDemoOnly'));
                             $validator->keep()->fail('form.' . $error);
+                            $logger->error('Bot repéré ? : '.$error);
                             return $this->redirectToRoute('user_unknow_profile', array('username' => $username));
 
                         }
                         if ($validator->DatacheckSpam($validator->get('message')) != null) {
                             $error = $validator->DatacheckSpam($validator->get('message'));
                             $validator->keep()->fail('form.' . $error);
+                            $logger->error('Bot repéré ? : '.$error);
                             return $this->redirectToRoute('user_unknow_profile', array('username' => $username));
 
                         }
@@ -229,6 +263,7 @@ class ContactController extends AbstractController
                             'body' => json_encode($dataMessage)
                         ]);
                         if ($responseMessage->getStatusCode() == 200 || $responseMessage->getStatusCode() == 201) {
+                            $logger->info('Message envoyé à : '.$username);
                             $validator->success('contact.mail.success_send');
                             return $this->redirectToRoute('user_unknow_profile', array('username' => $username));
                         }

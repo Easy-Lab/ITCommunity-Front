@@ -6,6 +6,7 @@ use App\Service\LoginService;
 use App\Service\UserService;
 use App\Utils\Features;
 use App\Utils\Validator;
+use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpClient\HttpClient;
@@ -32,9 +33,9 @@ class RegisterController extends AbstractController
     }
 
     /**
-     * @Route("/step-1/{hash}", name="ambassador_register")
+     * @Route("/step-1", name="ambassador_register")
      */
-    public function index($hash = null, Validator $validator, Features $features, Request $request, LoginService $loginService, UserService $userService)
+    public function index(Validator $validator, Features $features, Request $request, LoginService $loginService, UserService $userService, LoggerInterface $logger)
     {
 
         $form = [];
@@ -94,12 +95,16 @@ class RegisterController extends AbstractController
                         'password' => $validator->get('password')
                     ];
                 if ($response->getStatusCode() == 201) {
+                    $logger->info('Première étape éffectué ! : username = ' . $validator->get('pseudo'));
                     $token = $loginService->getToken($dataLogin);
                     if ($token) {
+                        $logger->info('Token récupéré, création de la session ! : username = ' . $validator->get('pseudo'));
                         $loginService->createSession($data, $token['token'], $request);
                     }
+                    $logger->error('Erreur récupération du token ! : username = ' . $validator->get('pseudo'));
                     return $this->redirectToRoute('register_step_2');
                 }
+                $logger->error('Erreur première étape ! : code ' . $response->getStatusCode());
                 $validator->keep()->fail();
                 return $this->redirectToRoute('ambassador_register');
             }
@@ -110,7 +115,6 @@ class RegisterController extends AbstractController
             'actual_route' => $actual_route,
             'form_properties' => $form,
             'user' => $userService->getUser(),
-            'hash' => $hash,
             'google_analytics_id' => getenv("ANALYTICS_KEY"),
         ]);
     }
@@ -118,11 +122,12 @@ class RegisterController extends AbstractController
     /**
      * @Route("/step-2", name="register_step_2")
      */
-    public function step2(Request $request, Features $features, Validator $validator, UserService $userService)
+    public function step2(Request $request, Features $features, Validator $validator, UserService $userService, LoggerInterface $logger)
     {
         if ($request->hasSession() && $this->session) {
 
             $form = [];
+            $user = $userService->getUser();
 
             $properties = $features->get("forms.register.step_2");
             if (is_array($properties)) {
@@ -230,10 +235,24 @@ class RegisterController extends AbstractController
                     $responseGpu = $clientPostGpu->request('POST', getenv('API_URL') . '/reviews', [
                         'body' => json_encode($dataGpu)
                     ]);
+                    if ($responseGpu->getStatusCode() == 201){
+                        $logger->info('Produit GPU enregistré ! : username = ' . $user['username']);
+                    }else{
+                        $logger->error('Produit GPU non enregistré ! : code ' . $responseGpu->getStatusCode());
+                        return $this->redirectToRoute('register_step_2');
+                    }
 
                     $responseCpu = $clientPostCpu->request('POST', getenv('API_URL') . '/reviews', [
                         'body' => json_encode($dataCpu)
                     ]);
+
+                    if ($responseGpu->getStatusCode() == 201){
+                        $logger->info('Produit CPU enregistré ! : username = ' . $user['username']);
+                    }else{
+                        $logger->error('Produit CPU non enregistré ! : code ' . $responseCpu->getStatusCode());
+                        return $this->redirectToRoute('register_step_2');
+                    }
+
                     $userService->addStep(2);
                     return $this->redirectToRoute('register_step_3');
 
@@ -247,7 +266,7 @@ class RegisterController extends AbstractController
                 'form_properties' => $form,
 //                'elementGpu' => array_reverse($contentGpu),
 //                'elementCpu' => array_reverse($contentCpu),
-                'user' => $userService->getUser(),
+                'user' => $user,
                 'google_analytics_id' => getenv("ANALYTICS_KEY"),
             ]);
         }
@@ -259,17 +278,19 @@ class RegisterController extends AbstractController
     /**
      * @Route("/step-3", name="register_step_3")
      */
-    public function step3(Features $features, Request $request, Validator $validator, UserService $userService)
+    public function step3(Features $features, Request $request, Validator $validator, UserService $userService, LoggerInterface $logger)
     {
         $profilePicture = null;
         $environmentPictures = null;
+        $user = $userService->getUser();
+
         if ($request->hasSession() && $this->session) {
             if ($validator->post()) {
                 $userService->addStep(3);
+                $logger->info('Inscription terminé ! username = '.$user['username']);
                 return $this->redirectToRoute('user_dashboard_invitation');
             }
 
-            $user = $userService->getUser();
             if ($user) {
                 $profilePicture = $userService->getProfilePicture();
                 $environmentPictures = $userService->getEnvironmentPictures();

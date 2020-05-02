@@ -7,6 +7,7 @@ namespace App\Controller\user;
 use App\Service\UserService;
 use App\Utils\Features;
 use App\Utils\Validator;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpFoundation\Request;
@@ -70,7 +71,7 @@ class QuestionController extends AbstractController
     /**
      * @Route("/user/message/edit/{hash}", name="user_message_edit")
      */
-    public function edit($hash, Validator $validator, Request $request, UserService $userService)
+    public function edit($hash, Validator $validator, Request $request, UserService $userService, LoggerInterface $logger)
     {
         if ($request->hasSession() && $this->session) {
             $user= $userService->getUser();
@@ -98,8 +99,10 @@ class QuestionController extends AbstractController
                     $statusCode = $response->getStatusCode();
                     if ($statusCode == 200) {
                         $validator->success('ambassador.message.success_create');
+                        $logger->info('Question répondue ! : username = ' . $user['username']);
                     } else {
                         $validator->keep()->fail();
+                        $logger->error('Erreur pour répondre à une question ! : code ' . $response->getStatusCode());
                     }
                     return $this->redirectToRoute('user_dashboard_question');
                 }

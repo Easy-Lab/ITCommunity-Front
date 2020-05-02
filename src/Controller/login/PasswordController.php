@@ -4,6 +4,7 @@
 namespace App\Controller\login;
 
 use App\Utils\Validator;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,7 +15,7 @@ class PasswordController extends AbstractController
     /**
      * @Route("/user/request-password", name="user_request_password")
      */
-    public function index(Request $request, Validator $validator)
+    public function index(Request $request, Validator $validator, LoggerInterface $logger)
     {
         if ($validator->post()) {
             $validator->required('email');
@@ -23,10 +24,12 @@ class PasswordController extends AbstractController
                 $response = $client->request('GET', getenv('API_URL') . '/users/request_password/' . $validator->get('email'));
                 if ($response->getStatusCode() == 200) {
                     $validator->success('request_password.success');
+                    $logger->info('Lien de reinitialisation du mot de passe envoyé à : '.$validator->get('email'));
                     return $this->redirectToRoute('home');
                 }
                 if ($response->getStatusCode() == 404) {
                     $validator->keep()->fail('request_password.unknow');
+                    $logger->error('Email inconnu pour reinitialiser le mot de passe : '.$validator->get('email'));
                     return $this->redirectToRoute('user_request_password');
                 }
                 $validator->keep()->fail('request_password.failed');
@@ -46,7 +49,7 @@ class PasswordController extends AbstractController
     /**
      * @Route("/user/forgot_password/{hash}", name="user_forgot_password")
      */
-    public function forgotPassword($hash, Request $request, Validator $validator)
+    public function forgotPassword($hash, Request $request, Validator $validator, LoggerInterface $logger)
     {
         if ($hash) {
             if ($validator->post()) {
@@ -66,6 +69,7 @@ class PasswordController extends AbstractController
                     ]);
                     if ($response->getStatusCode() == 200) {
                         $validator->success('forgot_password.success');
+                        $logger->info('Mot de passe reinitialiser pour le hash : '.$hash);
                         return $this->redirectToRoute('login');
                     }
                     $validator->keep()->fail('forgot_password.failed');
