@@ -25,18 +25,6 @@ var Box = function (e, t, n) {
     }
 };
 
-function updatePhoneInputVisibility() {
-    $("#is_reachable_by_phone").is(":checked") || $("#is_reachable_by_sms").is(":checked") ? $("#phoneInput").show() : $("#phoneInput").hide()
-}
-
-function updatetextPhoneInputVisibility() {
-    $("#is_reachable_by_phone").is(":checked") || $("#is_reachable_by_sms").is(":checked") ? $("#phoneTextInput").show() : $("#phoneTextInput").hide()
-}
-
-function updateFbUrlVisibility() {
-    $("#is_reachable_by_messenger").is(":checked") ? $("#facebook_url").show() : $("#facebook_url").hide()
-}
-
 function hideAllPopupStatus() {
     $("#contact-mail-popup, #contact-phone-popup, #contact-sms-popup, #contact-messenger-popup, #contact-conseil-popup, #contact-demo-popup").hide(), $("#contact-mail, #contact-phone, #contact-sms, #contact-messenger, #contact-conseil, #contact-demo").removeClass("contact-btn-selected")
 }
@@ -94,132 +82,19 @@ window.updateControls = function () {
         e.prop("checked", !0);
         var t = e.parent("span.jcf-checkbox");
         t.removeClass("jcf-unchecked"), t.hasClass("jcf-checked") || t.addClass("jcf-checked")
-    }), $("#contact-conseil").click(function () {
+    }),$("#contact-conseil").click(function () {
         console.log($("#contact-conseil-popup").toggle()), $("#contact-conseil-popup").toggle();
         var e = $("#contact-conseil-popup input[name=is_public_message]");
         e.prop("checked", !0);
         var t = e.parent("span.jcf-checkbox");
         t.removeClass("jcf-unchecked"), t.hasClass("jcf-checked") || t.addClass("jcf-checked")
-    }), $(".event-register").click(function () {
-        $(this).next("div.event-register-popup").toggle()
-    }), $(".register-popup-close").click(function () {
-        $(this).find("div.event-register-popup").toggle()
-    }), $(".js-facebook-url").keyup(function () {
-        $(this).val().length > 0 ? $("#is_reachable_by_messenger").prop("checked", !0) : $("#is_reachable_by_messenger").prop("checked", !1)
-    }), $(".js-facebook-login").length) {
-        window.fbAsyncInit = function () {
-            FB.init({
-                appId: $(".js-facebook-login").attr("data-facebook-app-id"),
-                cookie: !0,
-                xfbml: !0,
-                version: "v2.12"
-            }), FB.AppEvents.logPageView()
-        }, e = document, t = "script", n = "facebook-jssdk", a = e.getElementsByTagName(t)[0], e.getElementById(n) || ((o = e.createElement(t)).id = n, o.src = "https://connect.facebook.net/en_US/sdk.js", a.parentNode.insertBefore(o, a))
-    }
+    }))
 
     function l(e, t) {
         e.parent().find(".slider-label").html(t), e.parent().trigger("slide", [t])
     }
 
-    $("[data-background-url]").each(function () {
-        $(this).css("background-image", "url(" + $(this).attr("data-background-url") + ")")
-    }), $(".js-serial-number-container").length && function (e) {
-        var t = e(".js-serial-number-container");
-
-        function n() {
-            t.html("")
-        }
-
-        function o(o) {
-            t.text("Chargement..."), e.getJSON(t.attr("data-endpoint"), {
-                family: o,
-                serial: t.attr("data-serial")
-            }, function (e) {
-                e.success ? (t.html(e.html), window.updateCustomControls(), t.attr("data-serial", "")) : n()
-            })
-        }
-
-        e(document).on("change", ".js-product-family", function () {
-            n(), 1 == e(this).find("option:selected").attr("data-registrable") && o(e(this).val())
-        }), 1 == e(".js-product-family").last().find("option:selected").attr("data-registrable") && o(e(".js-product-family").last().val())
-    }(jQuery), $(".js-product-families").length && function (e) {
-        var t = e(".js-product-families");
-
-        function n(o) {
-            t.find("select").removeAttr("name"), t.find("select").last().attr("name", "product_family");
-            var a = o.find("option:selected"), i = a.length && 1 == a.attr("data-registrable");
-            !i && null != o.val() && e.ajax({
-                type: "POST",
-                url: t.attr("data-endpoint"),
-                data: {id: o.val()},
-                dataType: "json",
-                success: function (e) {
-                    !function (e, o) {
-                        t.append('<div class="form-group"><select class="js-product-family form-control custom-control" data-level="' + e + '"></select></div>');
-                        var a = t.find(".js-product-family").last();
-                        a.append("<option disabled>Choisir</option>"), o.map(function (e) {
-                            a.append('<option value="' + e.id + '" data-registrable="' + (e.registrable ? 1 : 0) + '">' + e.label + "</option>")
-                        }), window.updateCustomControls(), n(t.find("select").last())
-                    }(parseInt(o.attr("data-level")) + 1, e)
-                }
-            }), i ? e(".js-product-family-submit").prop("disabled", !1) : e(".js-product-family-submit").prop("disabled", !0)
-        }
-
-        1 == t.attr("data-multiple") && (e(".js-product-family-submit").prop("disabled", !0), e(document).on("change", ".js-product-family", function () {
-            var o = e(this).attr("data-level");
-            t.find("[data-level]").each(function () {
-                e(this).attr("data-level") > o && e(this).closest(".form-group").remove()
-            }), n(e(this))
-        }))
-    }(jQuery), $(".js-dealer-selector").length && function (e) {
-        var t = e(".js-dealer-selector");
-
-        function n() {
-            t.find(".js-dealer-zipcode-selector").length && ("_custom" == t.find(".js-dealer").val() ? t.find(".js-dealer-zipcode-selector").length && t.find(".js-dealer-zipcode-selector").show() : (t.find(".js-dealer-zipcode-selector").length && t.find(".js-dealer-zipcode-selector").hide(), t.find(".js-custom-dealer-selector").hide())), t.find(".js-commercial").length || e(".js-require-dealer").prop("disabled", !1), a()
-        }
-
-        function o() {
-            if (!t.find(".js-dealer-zipcode-selector").length) return !1;
-            t.find(".js-custom-dealer-selector").hide(), t.find(".js-commercial-selector").length && t.find(".js-commercial-selector").hide();
-            var n = t.find(".js-dealer-zipcode").val();
-            e.post(t.find(".js-dealer-zipcode-selector").attr("data-endpoint"), {zipcode: n}, function (n) {
-                n.success && (t.find(".js-custom-dealer option:not(:first-child)").remove(), n.dealers.map(function (e) {
-                    t.find(".js-custom-dealer").append('<option value="' + e.id + '">' + e.pseudo + " - " + e.city + "</option>")
-                }), t.find(".js-custom-dealer-selector").show(), window.updateCustomControls(), t.find(".js-commercial").length ? a() : e(".js-require-dealer").prop("disabled", !e(".js-custom-dealer").val()))
-            })
-        }
-
-        function a() {
-            if (!t.find(".js-commercial-selector").length) return !1;
-            e(".js-require-dealer").prop("disabled", !1), t.find(".js-commercial-selector").hide();
-            var n = "_custom" == t.find(".js-dealer").val() ? t.find(".js-custom-dealer").val() : t.find(".js-dealer").val();
-            if (null === n || !n.length) return !1;
-            console.log(t.find(".js-commercial-selector").attr("data-endpoint"), {dealer: n}), e.post(t.find(".js-commercial-selector").attr("data-endpoint"), {dealer: n}, function (n) {
-                if (console.log(n), n.success) {
-                    t.find(".js-commercial").find("option:not(:first-child)").remove();
-                    var o, a, i, s = n.commercials.length, c = 0;
-                    n.commercials.map(function (e) {
-                        c += 1, "autre" == e.firstname || "autre" == e.lastname || "Autre" == e.firstname || "Autre" == e.lastname ? (o = e.id, a = e.firstname, i = e.lastname) : t.find(".js-commercial").append('<option value="' + e.id + '">' + e.firstname + " " + e.lastname + "</option>"), c == s && t.find(".js-commercial").append('<option value="' + o + '">' + a + " " + i + "</option>")
-                    }), 0 == n.commercials.length ? (t.find(".js-commercial-selector").hide(), e(".js-require-dealer").prop("disabled", !1)) : (window.updateCustomControls(), t.find(".js-commercial-selector").show(), t.find(".js-commercial").val(t.find(".js-commercial").attr("data-selected")), window.updateCustomControls(), t.find(".js-commercial").val() && e(".js-require-dealer").prop("disabled", !1))
-                }
-            })
-        }
-
-        t.find(".js-dealer").change(function () {
-            n()
-        }), t.find(".js-dealer-zipcode").length && (t.find(".js-dealer-zipcode").keydown(function (e) {
-            if (13 == e.keyCode) return e.preventDefault(), o(), !1;
-            t.find(".js-custom-dealer-selector").hide(), t.find(".js-commercial-selector").hide()
-        }), t.find(".js-dealer-search").click(function (e) {
-            return e.preventDefault(), o(), !1
-        }), t.find(".js-custom-dealer-selector").hide()), t.find(".js-commercial").length ? (t.find(".js-commercial").change(function () {
-            e(".js-require-dealer").prop("disabled", !e(this).val())
-        }), t.find(".js-custom-dealer").change(function () {
-            a()
-        })) : t.find(".js-custom-dealer").change(function () {
-            e(".js-require-dealer").prop("disabled", !e(this).val())
-        }), t.find(".js-dealer").val() && "_custom" != t.find(".js-dealer").val() && (t.find(".js-commercial").length && !t.find(".js-commercial").val() || e(".js-require-dealer").prop("disabled", !1)), a(), n()
-    }(jQuery), $(document).ready(function () {
+        (jQuery), $(document).ready(function () {
         $(".add-product-serial-number").trigger("click")
     }), $(".add-product-serial-number").click(function () {
         var e = $(this).attr("data-id");
@@ -244,32 +119,7 @@ window.updateControls = function () {
             l(e, this.value)
         }), l(e, e.val())
     })
-}), $(document).ready(function () {
-    var e, t, n = [];
-    $("._marquee").length && (e = function () {
-        var e = $("._marquee").attr("delay"), t = $("._marquee").attr("speed");
-        !function e(t, o, a) {
-            var i = $("._marquee-content-holder"), s = i.offset().left;
-            i.offset({left: s - o});
-            var c = $("._marquee").width(), l = $("._marquee-content").last();
-            $("._marquee-content").each(function () {
-                var e = $(this).offset().left - a;
-                if ($(this).offset().left > l.offset().left && (l = $(this)), e <= 0 && ($(this).is(":first-child") && (0 == n.length ? (n.push(s), $("._marquee-content").each(function () {
-                    n.push($(this).offset().left)
-                })) : s < 0 && e > -o && (i.offset({left: n[0]}), $("._marquee-content").each(function (e) {
-                    $(this).offset({left: n[e + 1]})
-                }))), e <= -$(this).width())) {
-                    var t = l.offset().left < c ? c : l.offset().left + l.width() + parseInt(l.css("marginRight")) + parseInt($(this).css("marginRight"));
-                    $(this).offset({left: t})
-                }
-            }), setTimeout(function () {
-                e(t, o, a)
-            }, t)
-        }(void 0 !== e && !1 !== e ? e : 30, void 0 !== t && !1 !== t ? t : 10, $("._marquee-content-holder").offset().left)
-    }, t = $("._marquee-label").length ? $("._marquee-label").width() + parseInt($("._marquee-label").css("marginRight")) + parseInt($("._marquee-content-holder").css("paddingLeft")) : 0, console.log("init_marquee::offset => " + t), $("._marquee-content").each(function () {
-        t += parseInt($(this).css("marginLeft")), $(this).offset({left: t}), t += $(this).width() + parseInt($(this).css("marginRight")), console.log("init_marquee::element_offset => " + $(this).offset().left)
-    }), e && e())
-}), $(document).ready(function () {
+}),  $(document).ready(function () {
     (window.navigator.userAgent.indexOf("MSIE") > 0 || navigator.userAgent.match(/Trident.*rv\:11\./)) && $("input[type='date']").datepicker()
 }), $(document).ready(function () {
     function e(e, t, n) {
@@ -370,47 +220,4 @@ window.updateControls = function () {
             }($(this), "form.ajax-contact-data-form", ".contact-data-form-holder", !0, null), console.log($(this).attr("action")), !1)
         })
     }
-
-    function n(e) {
-        var t = !0;
-        return e.find(".js-ambassador-contact-check-email").each(function () {
-            var e = $(this).val();
-            $(this).parent().find(".alert-danger").remove();
-            /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(String(e).toLowerCase()) || (t = !1, "embajadorescompanion.es" === window.location.hostname ? $(this).parent().append('<p class="alert alert-danger mt-1">Esta dirección de correo electrónico no es válida</p>') : "sebes.ambassadorslab.com" === window.location.hostname ? $(this).parent().append('<p class="alert alert-danger mt-1">Esta dirección de correo electrónico no es válida</p>') : "sebit.ambassadorslab.com" === window.location.hostname ? 11 === e.match(/\d/g).length && 11 === e.length || (t = !1, $(this).parent().append('<p class="alert alert-danger mt-1">Questo indirizzo e-mail non è valido</p>')) : "ambassadorcompanion.it" === window.location.hostname ? 11 === e.match(/\d/g).length && 11 === e.length || (t = !1, $(this).parent().append('<p class="alert alert-danger mt-1">Questo indirizzo e-mail non è valido</p>')) : $(this).parent().append('<p class="alert alert-danger mt-1">Adresse e-mail invalide</p>'))
-        }), e.find(".js-ambassador-contact-check-phone").each(function () {
-            var e = $(this).val();
-            $(this).parent().find(".alert-danger").remove(), "sebes.ambassadorslab.com" === window.location.hostname ? 9 === e.match(/\d/g).length && 9 === e.length || (t = !1, $(this).parent().append('<p class="alert alert-danger mt-1">El número de teléfono debe comenzar por 6 o 7 y debe contener 9 cifras</p>')) : "embajadorescompanion.es" === window.location.hostname ? 9 === e.match(/\d/g).length && 9 === e.length || (t = !1, $(this).parent().append('<p class="alert alert-danger mt-1">El número de teléfono debe comenzar por 6 o 7 y debe contener 9 cifras</p>')) : "sebit.ambassadorslab.com" === window.location.hostname ? 11 === e.match(/\d/g).length && 11 === e.length || (t = !1, $(this).parent().append('<p class="alert alert-danger mt-1">Il numero di telefono deve iniziare con 03 e deve includere 11 cifre</p>')) : "ambassadorcompanion.it" === window.location.hostname ? 11 === e.match(/\d/g).length && 11 === e.length || (t = !1, $(this).parent().append('<p class="alert alert-danger mt-1">Il numero di telefono deve iniziare con 03 e deve includere 11 cifre</p>')) : "sebde.ambassadorslab.com" === window.location.hostname ? 13 === e.match(/\d/g).length && 13 === e.length || (t = !1, $(this).parent().append('<p class="alert alert-danger mt-1">Die Telefonnummer muss mit 01 beginnen und 13 Ziffern enthalten</p>')) : "prep-and-cook-botschafter.de" === window.location.hostname ? (e.match(/\d/g).length > 13 || e.length < 11) && (t = !1, $(this).parent().append('<p class="alert alert-danger mt-1">Die Telefonnummer muss mit 01 beginnen und 13 Ziffern enthalten</p>')) : 10 === e.match(/\d/g).length && 10 === e.length || (t = !1, $(this).parent().append('<p class="alert alert-danger mt-1">Numéro de téléphone invalide</p>'))
-        }), e.find(".js-ambassador-contact-check-zipcode").each(function () {
-            var e = $(this).val(),
-                n = void 0 === window.ambassadorContactZipcodesAllowed || -1 !== window.ambassadorContactZipcodesAllowed.indexOf(e) || -1 !== window.ambassadorContactZipcodesAllowed.indexOf(e.substr(0, 2));
-            console.log(n, window.ambassadorContactZipcodesAllowed), $(this).parent().find(".alert-danger").remove();
-            5 === e.length && /^([0-9]{5})$/.test(String(e)) ? n || (t = !1, $(this).parent().append('<p class="alert alert-danger mt-1">Code postal hors zone (' + window.ambassadorContactZipcodesAllowed.join(", ") + ")</p>")) : (t = !1, $(this).parent().append('<p class="alert alert-danger mt-1">Code postal invalide</p>'))
-        }), t
-    }
-
-    $(".js-ambassador-contact-check-form").each(function () {
-        var e = $(this);
-        e.submit(function (t) {
-            if (t.preventDefault(), !n(e)) return !1;
-            t.target.submit()
-        })
-    })
-});
-var userAgent = window.navigator.userAgent;
-(userAgent.match(/iPad/i) || userAgent.match(/iPhone/i)) && $("body").addClass("ios-device"), $(document).ready(function () {
-    $("#profile-product-js")[0] && (console.log("test"), "_custom" == $(".js-dealer-selector").find(".js-dealer").val() && $(".js-dealer-selector").find(".js-dealer-zipcode-selector").length && $(".js-dealer-selector").find(".js-custom-dealer-selector").show())
-}), $(document).ready(function () {
-    console.log($("[data-confirm]")), $("[data-confirm]").each(function (e) {
-        var t = $(this);
-        t.click(function (e) {
-            if ("1" === t.attr("data-confirming")) return t.attr("data-confirming", "0"), console.log("confirmed, trigger"), !0;
-            console.log("not confirmed"), e.preventDefault(), t.attr("data-confirming", "1");
-            var n = new Box("confirm", t.attr("data-confirm"));
-            return n.onConfirm(function (e) {
-                e.hide(), console.log("confirm"), t.get(0).click()
-            }), n.onCancel(function (e) {
-                e.hide(), console.log("cancel"), t.attr("data-confirming", "0")
-            }), n.show(), !1
-        })
-    })
 });

@@ -348,35 +348,7 @@ var CustomMap = function () {
         var e = $(this).get(0).scrollHeight - $(this).get(0).scrollTop, s = $(this).get(0).offsetHeight - e;
         0 != s && 1 != s || o.loading || o.load(o.page + 1)
     })
-}, DealersMap = function () {
-    var o = this;
-    o.$element = $(".dealers-map"), o.map = new CustomMap, o.map.init(o.$element.get(0)), o.load = function () {
-        var a = $(".js-map-search-zipcode").val();
-        $.ajax({
-            method: "post", url: o.$element.attr("data-endpoint"), data: {zipcode: a}, success: function (e) {
-                o.map.setMarkers(e.markers), a.length && o.map.focus(a + ", " + homeAmbassadorsMapCountry, e.markers, null)
-            }
-        })
-    }, o.load(), $(".js-map-search-submit").click(function () {
-        o.load()
-    })
-}, AmbassadorsMap = function () {
-    var o = this;
-    o.$element = $(".js-ambassadors-map"), o.map = new CustomMap, o.map.init(o.$element.get(0)), o.page = 1, o.id = o.$element.attr("data-id");
-    var a = {page: o.page};
-    a.id = o.id, o.load = function () {
-        console.log(a), $.ajax({
-            method: "post",
-            url: $(".js-ambassadors-map").attr("data-endpoint"),
-            data: a,
-            success: function (a) {
-                o.map.setMarkers(a.markers), $(".js-ambassadors-listing").html(""), a.results.map(function (o) {
-                    $(".js-ambassadors-listing").append(o.html)
-                })
-            }
-        })
-    }, o.load(1)
-}, CustomGeolocation = function () {
+},  CustomGeolocation = function () {
     var o = this;
     $(".js-geolocation-status").length || $("body").append('<div class="geolocation-status"><span class="js-geolocation-status"></span></div>'), o.$status = $(".js-geolocation-status"), o.statusTimeout = null, o.notify = function (a, e) {
         clearTimeout(o.statusTimeout), o.$status.text(a), o.$status.fadeIn(), e || (o.statusTimeout = setTimeout(function () {
