@@ -53,9 +53,12 @@ class HomeController extends AbstractController
      */
     public function sitemap(Request $request, Validator $validator)
     {
+        $actual_route = $request->get('actual_route', 'sitemap');
         return $this->render('main/sitemap.html.twig', [
             'validator' => $validator,
             'meta_key' => 'page.sitemap',
+            'actual_route'=>$actual_route,
+            'google_analytics_id' => getenv("ANALYTICS_KEY"),
         ]);
     }
 

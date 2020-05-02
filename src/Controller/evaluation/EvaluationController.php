@@ -20,7 +20,7 @@ class EvaluationController extends AbstractController
     {
         $actual_route = $request->get('actual_route', 'evaluation');
         $client = HttpClient::create();
-        $responseMessage = $client->request('GET', getenv('API_URL') . '/messages/' . $hash);
+        $responseMessage = $client->request('GET', getenv('API_URL') . '/messages/' . $hash.'?expand=contact,user');
         $statusCode = $responseMessage->getStatusCode();
         if ($statusCode == 200) {
             $message = $responseMessage->toArray();

@@ -29,7 +29,8 @@ class BugReportController extends AbstractController
                         'lastname' => $validator->get('lastname'),
                         'email' => $validator->get('email'),
                         'subject' => $validator->get('reason'),
-                        'body' => $validator->get('message')
+                        'body' => $validator->get('message'),
+                        'solved'=>false
                     ];
                 $client = HttpClient::create();
                 $responseBug = $client->request('POST', getenv('API_URL') . '/bugrepports', [
