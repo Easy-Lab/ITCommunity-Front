@@ -132,6 +132,8 @@ page:
     h1: "Titre de la Homepage"
   ambassador:
     forgot_password:
+      meta:
+        title: "Mot de passe oublié"
       title: "Mot de passe oublié ?"
       description: "Veuillez renseigner votre mail ci-dessous, un mail vous sera envoyé avec un lien vers l'interface de modification de votre mot de passe"
       form:
@@ -140,12 +142,16 @@ page:
           placeholder: "Adresse e-mail"
         send_button: "Envoyer un lien de réinitialisation"
     pref:
+      meta:
+        title: "Mes préférences"
       mail:
         title: 'Choisissez les messages que vous souhaitez recevoir'
         subtitle: "Pour modifier vos préférences des e-mails, veuillez renseigner les champs suivants :\t "
         reasontitle2: 'Les e-mails d''information de la plateforme'
         reason2: 'Ces e-mails ont pour but de vous informer des nouveautés du programme, de vous conseiller et d''avoir des tips. Pour ne plus les recevoir, cliquez sur la case correspondante.'
     update:
+      meta:
+        title: "Mes informations personnelles"
       layout:
         informations:
           title: "Mes informations personnelles"
@@ -164,6 +170,8 @@ page:
       notification_email: "Message privé"
       sent: "Envoyer"
     unsubscribe:
+      meta:
+        title: "Désinscription"
       form:
         reason_type:
           options:
@@ -182,6 +190,8 @@ page:
         feedback: "Commentaire :"
       title: 'Merci de nous faire part des raisons de votre départ'
     profile:
+      meta:
+        title: "Mon profil"
       message:
         placeholder: "Message"
       contact:
@@ -194,6 +204,8 @@ page:
             title: "Ma note de mon CPU"
     dashboard:
       ranking:
+        meta:
+          title: "Classement général"
         title: "Classement général (Top 10)"
       message:
         profile:
@@ -255,69 +267,27 @@ page:
           edit_unsubscribe: "Vous pouvez quitter la plateforme quand vous le souhaitez."
           button_edit_unsubscribe: "Désinscription"
       voucher:
-        hardbounce: "Email invalide"
-        show_1: "Veuillez sélectionner un Espace conseil en "
-        link: "cliquant ici"
-        show_visi: "Cet ambassadeur n'a pas choisis d'Espace Conseil"
-        nb_voucher: "chèques cadeaux Automower® disponibles en France en 2018."
-        contact_amount: "5 pts"
-        contact_text: "= Un contact de votre réseau qui vous a évalué"
-        voucher_amount: "100 pts"
-        voucher_text: "= 1 chèque cadeau automower® transformé en achat"
         meta:
-          title: "Envoyer un Bon Plan"
+          title: "Envoyer une invitation"
         section:
-          kpis:
-            usable_voucher_description: "Bon plans envoyés et en cours de validité"
-            burned_voucher_description: "Bon plans utilisés par vos contacts"
-            burned_voucher: "Ventes enregistrées présentent dans votre fichier"
-            burned: "Ventes viennent d'être enregistrées"
-          benefits:
-            nb_voucher_available: "Bons Plans disponibles en France en 2018."
-            5_pts:
-              label: "5 %span_start%pts%span_end%"
-              description: "à chaque fois qu'un de vos contacts vous a évalué"
-            50_200_pts:
-              label: "De 50 à 200 %span_start%pts%span_end%"
-              description: "à chaque commande de l'un de vos contacts supérieure à 1 000 € TTC"
-            50_pts:
-              label: "50 %span_start%pts%span_end%"
-              description: "à chaque commande de l'un de vos contacts entre 1 000 et 2 000 € TTC"
-            100_pts:
-              label: "100 %span_start%pts%span_end%"
-              description: "à chaque commande de l'un de vos contacts entre 2 001 et 6 000 € TTC"
-            150_pts:
-              label: "150 %span_start%pts%span_end%"
-              description: "à chaque commande de l'un de vos contacts entre 6 001 et 10 000 € TTC"
-            200_pts:
-              label: "200 %span_start%pts%span_end%"
-              description: "à chaque commande de l'un de vos contacts supérieur à 10 000 € TTC"
           voucher:
             rules: "Une fois l'invitation acceptée et l'inscription terminée, vous recevrez des points de classement."
-            send: "Confirmez l'envoi du Bon Plan ?"
-            resend: 'Envoyer de nouveau le Bon Plan ?'
+            send: "Confirmez l'envoi ?"
+            resend: 'Envoyer de nouveau ?'
             title: "Invitez vos amis afin de rejoindre la communauté !"
-            no_serial_number: "Vous devez d'abord enregistrer l'identifiant d'un produit. %link_start%'Cliquez ici'%link_end% pour en enregistrer un."
             form:
               object:
                 label: "Objet"
               message:
                 label: "Message"
-              voucher:
-                label: "Joindre un Bon Plan ?"
-                yes: "Oui"
-                no: "Non"
               firstname:
                 label: "Prénom"
               lastname:
                 label: "Nom"
               email:
                 label: "Adresse E-mail"
-              get_copy:
-                label: "Recevoir une copie par E-mail"
               send_button: "Envoyer"
           information:
-            voucher: "Voir le Bon Plan"
             description: ""
             description2: ""
           table_voucher:
@@ -424,13 +394,19 @@ page:
           step_2: "Vos composants"
           step_3: "Vos photos"
       step_0:
+        meta:
+          title: "Etape 1"
         cgv: "cgv"
         lienPersonalData: "personal_data"
         submit_button: "Suivant"
         introduction: "Les informations de cette page sont indispensables à votre inscription.<br />Elles ne seront pas visibles sur le site."
       step_2:
+        meta:
+          title: "Etape 2"
         submit_button: "Suivant"
       step_3:
+        meta:
+          title: "Etape 3"
         submit_button: "Finir l'inscription"
     _forms:
         pictures:
@@ -456,10 +432,14 @@ page:
             label: "Votre avis :"
         select:
           gpu:
-            label: "Votre carte graphique"
+            label: "Marque de votre carte graphique"
+            label_2: "Libellé de votre carte graphique"
           cpu:
-            label: "Votre processeur"
+            label: "Marque de votre processeur"
+            label_2: "Libellé de votre processeur"
         step2:
+          meta:
+            title: "Etape 2"
           title: "Vos composants"
         username:
           label: Email
@@ -541,6 +521,8 @@ page:
         faq: "Voir les FAQ"
         button: "Je m'inscris"
     login:
+      meta:
+        title: "Se connecter"
       title: "Bienvenue sur votre espace personnel"
       section:
         login:

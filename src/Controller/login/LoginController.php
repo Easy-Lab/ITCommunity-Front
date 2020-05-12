@@ -6,6 +6,7 @@ namespace App\Controller\login;
 use App\Service\LoginService;
 use App\Service\UserService;
 use App\Utils\Validator;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,7 +17,7 @@ class LoginController extends AbstractController
     /**
      * @Route("/se-connecter", name="login")
      */
-    public function index(Request $request, Validator $validator, LoginService $loginService, UserService $userService)
+    public function index(Request $request, Validator $validator, LoginService $loginService, UserService $userService, LoggerInterface $logger)
     {
         $actual_route = $request->get('actual_route', 'login');
         if ($validator->post()) {
@@ -45,13 +46,16 @@ class LoginController extends AbstractController
                                 return $this->redirectToRoute('register_step_3');
                             }
                             $validator->success('login_success');
+                            $logger->info($validator->get('username').' connecté !');
                             return $this->redirectToRoute('user_dashboard_invitation');
                         }
                         $validator->fail('login_failed');
+                        $logger->error('Erreur dans getUser() !');
                         return $this->redirectToRoute('login');
                     }
                 }
                 $validator->fail('login_failed');
+                $logger->error('Erreur dans la récupération du token !');
                 return $this->redirectToRoute('login');
 
             }
@@ -69,9 +73,10 @@ class LoginController extends AbstractController
     /**
      * @Route("/logout", name="user_logout")
      */
-    public function logout(Request $request)
+    public function logout(Request $request, LoggerInterface $logger)
     {
         $request->getSession()->invalidate();
+        $logger->info('Utilisateur déconnecté !');
         return $this->redirectToRoute('home');
     }
 
