@@ -5,15 +5,16 @@ namespace App\Tests\Controller\login;
 
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpClient\HttpClient;
 
 class LoginControllerTest extends WebTestCase
 {
     public function testIndex()
     {
-        $client = static::createClient();
+        $client = HttpClient::create();
 
         $crawler = $client->request('GET', 'https://preprod.itcommunity.fr/se-connecter');
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $crawler->getStatusCode());
     }
 }
