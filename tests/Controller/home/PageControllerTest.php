@@ -4,34 +4,35 @@
 namespace App\Tests\Controller\home;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpClient\HttpClient;
 
 class PageControllerTest extends WebTestCase
 {
     public function testCookie()
     {
-        $clientCookie = static::createClient();
+        $client = HttpClient::create();
 
-        $crawlerCookie = $clientCookie->request('GET', 'https://preprod.itcommunity.fr/page/cookie');
+        $crawlerCookie = $client->request('GET', 'https://preprod.itcommunity.fr/page/cookie');
 
-        $this->assertEquals(200, $clientCookie->getResponse()->getStatusCode());
+        $this->assertEquals(200, $crawlerCookie->getStatusCode());
     }
 
     public function testCgu()
     {
-        $clientCgu = static::createClient();
+        $client = HttpClient::create();
 
-        $crawlerCgu = $clientCgu->request('GET', 'https://preprod.itcommunity.fr/page/cgu');
+        $crawlerCgu = $client->request('GET', 'https://preprod.itcommunity.fr/page/cgu');
 
-        $this->assertEquals(200, $clientCgu->getResponse()->getStatusCode());
+        $this->assertEquals(200, $crawlerCgu->getStatusCode());
     }
 
     public function testPersonalData()
     {
-        $clientData = static::createClient();
+        $client = HttpClient::create();
 
-        $crawlerData = $clientData->request('GET', 'https://preprod.itcommunity.fr/page/personal_data');
+        $crawlerData = $client->request('GET', 'https://preprod.itcommunity.fr/page/personal_data');
 
-        $this->assertEquals(200, $clientData->getResponse()->getStatusCode());
+        $this->assertEquals(200, $crawlerData->getStatusCode());
     }
 
 }

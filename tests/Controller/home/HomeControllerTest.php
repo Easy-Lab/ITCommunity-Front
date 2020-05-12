@@ -10,38 +10,38 @@ class HomeControllerTest extends WebTestCase
 {
     public function testIndex()
     {
-        $client = static::createClient();
+        $client = HttpClient::create();
 
         $crawler = $client->request('GET', 'https://preprod.itcommunity.fr');
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $crawler->getStatusCode());
     }
 
     public function testSiteMap()
     {
-        $client = static::createClient();
+        $client = HttpClient::create();
 
         $crawler = $client->request('GET', 'https://preprod.itcommunity.fr/sitemap');
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $crawler->getStatusCode());
     }
 
     public function testSiteMapXml()
     {
-        $client = static::createClient();
+        $client = HttpClient::create();
 
         $crawler = $client->request('GET', 'https://preprod.itcommunity.fr/sitemap.xml');
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $crawler->getStatusCode());
     }
 
     public function testContactUs()
     {
-        $client = static::createClient();
+        $client = HttpClient::create();
 
         $crawler = $client->request('GET', 'https://preprod.itcommunity.fr/contact-us');
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $crawler->getStatusCode());
     }
 
     public function testContactUsForm()
