@@ -2,6 +2,9 @@ validator:
   message:
     fail: "Une erreur est survenue"
     custom:
+      account:
+        deleted: "Votre compte a été supprimé, merci et bonne continuation !"
+        deleted_error: "Une erreur s'est produite lors de votre désinscription"
       request_password:
         success: "Un mail vient de vous être envoyé !"
         unknow: "Email inconnu"
@@ -265,7 +268,7 @@ page:
           button_edit_subscription: "Modifier mes abonnements"
           title_edit_unsubscribe: "DÉSINSCRIPTION"
           edit_unsubscribe: "Vous pouvez quitter la plateforme quand vous le souhaitez."
-          button_edit_unsubscribe: "Désinscription"
+          button_edit_unsubscribe: "Se désinscrire"
       voucher:
         meta:
           title: "Envoyer une invitation"
