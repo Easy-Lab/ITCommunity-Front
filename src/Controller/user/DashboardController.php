@@ -217,26 +217,25 @@ class DashboardController extends AbstractController
     /**
      * @Route("/dashboard/profile/unsubscribe", name="user_dashboard_unsubscribe")
      */
-    public function unsub(Request $request, Validator $validator, UserService $userService, Features $features)
+    public function unsub(Request $request, Validator $validator, UserService $userService, Features $features, LoggerInterface $logger)
     {
         if ($request->hasSession() && $this->session) {
             $user = $userService->getUser();
-            $profilePicture = null;
-            $myPoints = 0;
             if ($user) {
-                $profilePicture = $userService->getProfilePicture();
-                $myPoints = $userService->getMyPoints();
-
-                $actual_route = $request->get('actual_route', 'user_dashboard_unsubscribe');
-                return $this->render('user/dashboard/profile/unsubscribe.html.twig', [
-                    'validator' => $validator,
-                    'actual_route' => $actual_route,
-                    'profilePicture' => $profilePicture,
-                    'user' => $user,
-                    'reasons' => $features->get('account.deletion.reasons'),
-                    'myPoints' => $myPoints,
-                    'google_analytics_id' => getenv("ANALYTICS_KEY"),
-                ]);
+                $client = HttpClient::create(['headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => 'Bearer ' . $this->session->get('token')
+                ]]);
+                $response = $client->request('DELETE', getenv('API_URL') . '/users/' . $user['hash']);
+                if ($response->getStatusCode() == 200) {
+                    $logger->info('Utilisateur désinscrit !');
+                    $validator->success('account.deleted');
+                    $request->getSession()->invalidate();
+                    return $this->redirectToRoute('home');
+                }
+                $validator->error('account.deleted_error');
+                $logger->error('Utilisateur non désinscrit !');
+                return $this->redirectToRoute('user_dashboard_profile');
             }
             return $this->redirectToRoute('login');
         }
@@ -327,7 +326,7 @@ class DashboardController extends AbstractController
                             [
                                 'plainPassword' => $validator->get('password')
                             ];
-                        $response = $client->request('PATCH', getenv('API_URL') . '/users/' . $this->session->get('username')
+                        $response = $client->request('PATCH', getenv('API_URL') . '/users/forgot_password/' . $user['hash']
                             , [
                                 'headers' => ['content_type' => 'application/json'],
                                 'body' => json_encode($data)
@@ -407,9 +406,9 @@ class DashboardController extends AbstractController
                         $validator->success('update.success');
                         return $this->redirectToRoute('login');
                     }
-                        $validator->keep()->fail();
-                        $logger->info('Erreur dans le changement des données personnelles ! : code ' . $response->getStatusCode());
-                        return $this->redirectToRoute('user_dashboard_informations');
+                    $validator->keep()->fail();
+                    $logger->info('Erreur dans le changement des données personnelles ! : code ' . $response->getStatusCode());
+                    return $this->redirectToRoute('user_dashboard_informations');
                 }
             }
             return $this->render('user/dashboard/profile/informations.html.twig', [
@@ -554,7 +553,7 @@ class DashboardController extends AbstractController
                         $validator->success('reviews.success_update');
                         return $this->redirectToRoute('user_dashboard_profile');
                     }
-                    $logger->error('Erreur dans le changement de produits ! : code Gpu ' . $responseGpu->getStatusCode().' - code Cpu '.$responseCpu->getStatusCode());
+                    $logger->error('Erreur dans le changement de produits ! : code Gpu ' . $responseGpu->getStatusCode() . ' - code Cpu ' . $responseCpu->getStatusCode());
 
                 }
                 $validator->keep()->fail();
