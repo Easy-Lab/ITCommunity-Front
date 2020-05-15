@@ -21,7 +21,7 @@ class BugReportControllerTest extends WebTestCase
                 'solved'=>false
             ];
         $client = HttpClient::create();
-        $responseBug = $client->request('POST', 'https://preprod.api.itcommunity.fr/bugrepports', [
+        $responseBug = $client->request('POST', 'https://preprod.api.itcommunity.fr/bugreports', [
             'headers' => ['content_type' => 'application/json'],
             'body' => json_encode($dataReport)
         ]);
