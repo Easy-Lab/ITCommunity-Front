@@ -34,7 +34,7 @@ class BugReportController extends AbstractController
                         'solved'=>false
                     ];
                 $client = HttpClient::create();
-                $responseBug = $client->request('POST', getenv('API_URL') . '/bugrepports', [
+                $responseBug = $client->request('POST', getenv('API_URL') . '/bugreports', [
                     'headers' => ['content_type' => 'application/json'],
                     'body' => json_encode($dataReport)
                 ]);
