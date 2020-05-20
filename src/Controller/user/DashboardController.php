@@ -84,7 +84,7 @@ class DashboardController extends AbstractController
                     'user' => $user,
                     'myPoints' => $myPoints,
                     'messages' => $messages,
-                    'invitations' => $invitations['affiliates'],
+                    'invitations' => $invitations,
                     'google_analytics_id' => getenv("ANALYTICS_KEY"),
                     'nbQuestions'=>$nbQuestions
                 ]);
