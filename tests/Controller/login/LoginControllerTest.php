@@ -13,7 +13,7 @@ class LoginControllerTest extends WebTestCase
     {
         $client = HttpClient::create();
 
-        $crawler = $client->request('GET', 'https://preprod.itcommunity.fr/se-connecter');
+        $crawler = $client->request('GET', 'https://itcommunity.fr/se-connecter');
 
         $this->assertEquals(200, $crawler->getStatusCode());
     }

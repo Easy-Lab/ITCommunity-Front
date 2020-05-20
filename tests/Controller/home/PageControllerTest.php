@@ -12,7 +12,7 @@ class PageControllerTest extends WebTestCase
     {
         $client = HttpClient::create();
 
-        $crawlerCookie = $client->request('GET', 'https://preprod.itcommunity.fr/page/cookie');
+        $crawlerCookie = $client->request('GET', 'https://itcommunity.fr/page/cookie');
 
         $this->assertEquals(200, $crawlerCookie->getStatusCode());
     }
@@ -21,7 +21,7 @@ class PageControllerTest extends WebTestCase
     {
         $client = HttpClient::create();
 
-        $crawlerCgu = $client->request('GET', 'https://preprod.itcommunity.fr/page/cgu');
+        $crawlerCgu = $client->request('GET', 'https://itcommunity.fr/page/cgu');
 
         $this->assertEquals(200, $crawlerCgu->getStatusCode());
     }
@@ -30,7 +30,7 @@ class PageControllerTest extends WebTestCase
     {
         $client = HttpClient::create();
 
-        $crawlerData = $client->request('GET', 'https://preprod.itcommunity.fr/page/personal_data');
+        $crawlerData = $client->request('GET', 'https://itcommunity.fr/page/personal_data');
 
         $this->assertEquals(200, $crawlerData->getStatusCode());
     }

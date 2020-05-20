@@ -27,10 +27,10 @@ class UserService
     public function getUser($token = null, $username = null)
     {
         if ($this->session) {
-            if (!$token){
+            if (!$token) {
                 $token = $this->session->get('token');
             }
-            if (!$username){
+            if (!$username) {
                 $username = $this->session->get('username');
             }
             $client = HttpClient::create(['headers' => [
@@ -42,11 +42,9 @@ class UserService
             $statusCode = $response->getStatusCode();
             if ($statusCode == 200) {
                 $data = $response->toArray();
-                if (array_key_exists('firstname',$data))
-                {
+                if (array_key_exists('firstname', $data)) {
                     return $data;
-                }else
-                    {
+                } else {
                     return null;
                 }
 
@@ -143,9 +141,10 @@ class UserService
         return null;
     }
 
-    public function getMessages(string $username=null){
+    public function getMessages(string $username = null)
+    {
         if ($this->session) {
-            if ($username){
+            if ($username) {
                 $client = HttpClient::create(['headers' => [
                     'Content-Type' => 'application/json',
                 ]]);
@@ -176,9 +175,36 @@ class UserService
         return null;
     }
 
-    public function getEvaluations(string $username=null){
+    public function getUnansweredMessages()
+    {
         if ($this->session) {
-            if ($username){
+            $client = HttpClient::create(['headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . $this->session->get('token')
+            ]]);
+            $response = $client->request('GET', getenv('API_URL') . '/users/' . $this->session->get('username') . '/messages?expand=contact'
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode == 200) {
+                $cpt = 0;
+                $messages = $response->toArray();
+                foreach ($messages as $message){
+                    if (!array_key_exists('answer',$message)){
+                        $cpt++;
+                    }
+                }
+                return $cpt;
+            } else {
+                return null;
+            }
+        }
+        return null;
+    }
+
+    public function getEvaluations(string $username = null)
+    {
+        if ($this->session) {
+            if ($username) {
                 $client = HttpClient::create(['headers' => [
                     'Content-Type' => 'application/json',
                 ]]);
@@ -209,7 +235,8 @@ class UserService
         return null;
     }
 
-    public function getRanking(){
+    public function getRanking()
+    {
         if ($this->session) {
             $client = HttpClient::create(['headers' => [
                 'Content-Type' => 'application/json',
@@ -228,7 +255,8 @@ class UserService
         return null;
     }
 
-    public function getMyPoints(){
+    public function getMyPoints()
+    {
         if ($this->session) {
             $client = HttpClient::create(['headers' => [
                 'Content-Type' => 'application/json',
@@ -266,8 +294,8 @@ class UserService
         $pictures = $this->getPictures();
         $environment = [];
         if ($pictures && !empty($pictures)) {
-            foreach ($pictures as $picture){
-                if ($picture['name'] != 'profile_picture' && $picture['name'] != 'share_picture'){
+            foreach ($pictures as $picture) {
+                if ($picture['name'] != 'profile_picture' && $picture['name'] != 'share_picture') {
                     $environment[] = $picture;
                 }
             }
@@ -280,8 +308,8 @@ class UserService
     {
         $pictures = $this->getPictures();
         if ($pictures && !empty($pictures)) {
-            foreach ($pictures as $picture){
-                if ($picture['name'] == 'environment_0'){
+            foreach ($pictures as $picture) {
+                if ($picture['name'] == 'environment_0') {
                     return $picture;
                 }
             }
@@ -294,8 +322,8 @@ class UserService
     {
         $pictures = $this->getPictures();
         if ($pictures && !empty($pictures)) {
-            foreach ($pictures as $picture){
-                if ($picture['name'] == 'environment_1'){
+            foreach ($pictures as $picture) {
+                if ($picture['name'] == 'environment_1') {
                     return $picture;
                 }
             }
@@ -308,8 +336,8 @@ class UserService
     {
         $pictures = $this->getPictures();
         if ($pictures && !empty($pictures)) {
-            foreach ($pictures as $picture){
-                if ($picture['name'] == 'environment_2'){
+            foreach ($pictures as $picture) {
+                if ($picture['name'] == 'environment_2') {
                     return $picture;
                 }
             }
@@ -346,7 +374,8 @@ class UserService
         return null;
     }
 
-    public function getStructure(){
+    public function getStructure()
+    {
         $structure = [
             'header' => [
                 'columns' => []
