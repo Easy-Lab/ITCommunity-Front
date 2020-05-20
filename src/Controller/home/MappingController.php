@@ -133,7 +133,7 @@ class MappingController extends AbstractController
 
         return $this->json([
             'markers' => $markers,
-            'results' => $results,
+            'results' => array_reverse($results),
         ]);
     }
 
