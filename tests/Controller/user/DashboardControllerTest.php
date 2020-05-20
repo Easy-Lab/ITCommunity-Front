@@ -14,7 +14,7 @@ class DashboardControllerTest extends WebTestCase
 //    public function testIndex()
 //    {
 //        self::bootKernel();
-//        $container = self::$kernel->getContainer();
+////        $container = self::$kernel->getContainer();
 //        $container = self::$container;
 //        $loginService = $container->get(LoginService::class);
 //        $dataLogin =
@@ -32,7 +32,7 @@ class DashboardControllerTest extends WebTestCase
 //
 //        $client = static::createClient();
 //
-//        $crawler = $client->request('GET', '/user/dashboard/invitation');
+//        $crawler = $client->request('GET', 'https://preprod.api.itcommunity.fr/user/dashboard/invitation');
 //        $this->assertEquals(200, $client->getResponse()->getStatusCode());
 //    }
 }
