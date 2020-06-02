@@ -102,7 +102,7 @@ class PictureController extends AbstractController
                                         'path' => "$target_dir/$target_filename"
                                     ];
 
-                                    $responsePictureProfile = $clientProfilePicture->request('POST', getenv('API_URL') . '/picture', [
+                                    $responsePictureProfile = $clientProfilePicture->request('POST', getenv('API_URL') . '/pictures', [
                                         'body' => json_encode($dataProfilePicture)
                                     ]);
                                     $statusCodeResponsePictureProfile = $responsePictureProfile->getStatusCode();
@@ -139,7 +139,7 @@ class PictureController extends AbstractController
                                         'path' => "$target_dir/$target_filename"
                                     ];
 
-                                    $responsePictureEnvironment = $clientEnvironmentPicture->request('POST', getenv('API_URL') . '/picture', [
+                                    $responsePictureEnvironment = $clientEnvironmentPicture->request('POST', getenv('API_URL') . '/pictures', [
                                         'body' => json_encode($dataEnvironmentPicture)
                                     ]);
                                     $statusCodeResponsePictureEnvironment = $responsePictureEnvironment->getStatusCode();
@@ -185,7 +185,7 @@ class PictureController extends AbstractController
                 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . $this->session->get('token')
             ]]);
-            $responsePicture = $clientPicture->request('GET', getenv('API_URL') . '/picture/' . $id);
+            $responsePicture = $clientPicture->request('GET', getenv('API_URL') . '/pictures/' . $id);
             if ($responsePicture->getStatusCode() == 200) {
                 $data = $responsePicture->toArray();
                 if ($data['path']) {
@@ -198,7 +198,7 @@ class PictureController extends AbstractController
                     if (file_exists($filepathThumb)) {
                         @unlink($filepathThumb);
                     }
-                    $deletePicture = $clientPicture->request('DELETE', getenv('API_URL') . '/picture/' . $id);
+                    $deletePicture = $clientPicture->request('DELETE', getenv('API_URL') . '/pictures/' . $id);
                     return $this->json(['success' => 'Delete']);
                 }
                 return $this->json(['failed' => $data]);

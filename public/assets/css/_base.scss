@@ -360,3 +360,28 @@ header{
 .user-picture-missing{
   position: relative !important;
 }
+
+.nbNotif{
+  width: 25px;
+  height: 25px;
+  color: white;
+  background-color: red;
+  border-radius: 150px;
+  display: inline-block;
+  text-align: center;
+  //float: right;
+  p{
+    margin-bottom: 0 !important;
+    padding: 6px 0px 0px 0px;;
+  }
+}
+
+.notification-icon {
+  color: red;
+  display: inline-block;
+  font-size: 20px;
+  transform-origin: 50% 50%;
+  animation: shake 1.5s infinite;
+  transition-property: box-shadow;
+  transition-duration: .25s;
+}

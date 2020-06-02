@@ -33,11 +33,12 @@ class QuestionController extends AbstractController
         if ($request->hasSession() && $this->session) {
             $user = $userService->getUser();
             $profilePicture = null;
+            $nbQuestions = null;
             $myPoints = 0;
             if ($user) {
                 $profilePicture = $userService->getProfilePicture();
                 $myPoints = $userService->getMyPoints();
-
+                $nbQuestions = $userService->getUnansweredMessages();
                 $actual_route = $request->get('actual_route', 'user_dashboard_question');
                 $messages = $userService->getMessages();
                 $unanswered = [];
@@ -61,6 +62,7 @@ class QuestionController extends AbstractController
                     'unanswered' => $unanswered,
                     'myPoints' => $myPoints,
                     'google_analytics_id' => getenv("ANALYTICS_KEY"),
+                    'nbQuestions'=>$nbQuestions
                 ]);
             }
             return $this->redirectToRoute('login');

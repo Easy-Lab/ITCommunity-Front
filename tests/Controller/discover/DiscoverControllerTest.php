@@ -13,7 +13,7 @@ class DiscoverControllerTest extends WebTestCase
     {
         $client = HttpClient::create();
 
-        $crawler = $client->request('GET', 'https://preprod.itcommunity.fr/devenir-un-utilisateur');
+        $crawler = $client->request('GET', 'https://itcommunity.fr/devenir-un-utilisateur');
 
         $this->assertEquals(200, $crawler->getStatusCode());
     }

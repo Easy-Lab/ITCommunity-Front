@@ -54,7 +54,15 @@
 {#                    </a>#}
                     <a class="nav-link {{ actual_route in ['user_dashboard_question'] ? 'active' }}"
                        href="{{ path('user_dashboard_question') }}">
-                        {{ 'page.ambassador.dashboard.layout.section.navigation.question'|trans }}
+                        <p style="display: inline-block;margin-bottom: 0px;padding-top: 5px;">{{ 'page.ambassador.dashboard.layout.section.navigation.question'|trans }}</p>
+                        {% if nbQuestions is defined and nbQuestions > 0 %}
+                            <div style="display: inline-block; float: right;">
+                                <div style="display: inline-block;">
+                                    <i class="far fa-bell notification-icon"></i>
+                                </div>
+                                <div class="nbNotif"><p>{{ nbQuestions }}</p></div>
+                            </div>
+                        {% endif %}
                     </a>
                     <a class="nav-link {{ actual_route in ['user_dashboard_evaluation'] ? 'active' }}"
                        href="{{ path('user_dashboard_evaluation') }}">

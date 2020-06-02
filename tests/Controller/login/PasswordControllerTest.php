@@ -13,17 +13,17 @@ class PasswordControllerTest extends WebTestCase
     {
         $client = HttpClient::create();
 
-        $crawler = $client->request('GET', 'https://preprod.itcommunity.fr/user/request-password');
+        $crawler = $client->request('GET', 'https://itcommunity.fr/user/request-password');
 
         $this->assertEquals(200, $crawler->getStatusCode());
     }
 
-    public function testForgotPassword()
-    {
-        $client = HttpClient::create();
-
-        $crawler = $client->request('GET', 'https://preprod.itcommunity.fr/user/forgot_password/123456789');
-
-        $this->assertEquals(200, $crawler->getStatusCode());
-    }
+//    public function testForgotPassword()
+//    {
+//        $client = HttpClient::create();
+//
+//        $crawler = $client->request('GET', 'https://preprod.itcommunity.fr/user/forgot_password/123456789');
+//
+//        $this->assertEquals(200, $crawler->getStatusCode());
+//    }
 }

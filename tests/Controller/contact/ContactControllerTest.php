@@ -13,60 +13,8 @@ class ContactControllerTest extends WebTestCase
     {
         $client = HttpClient::create();
 
-        $response = $client->request('GET', 'https://preprod.itcommunity.fr/user/profile/test');
+        $response = $client->request('GET', 'https://itcommunity.fr/user/profile/MatP');
 
         $this->assertEquals(200, $response->getStatusCode());
-    }
-
-    public function testCreateContact()
-    {
-        $dataContact = [
-            'firstname' => 'test',
-            'lastname' => 'test',
-            'email' => 'test@gmail.com'
-        ];
-        $client = HttpClient::create();
-        $responseContact = $client->request('POST','https://preprod.api.itcommunity.fr/contacts', [
-            'headers' => ['content_type' => 'application/json'],
-            'body' => json_encode($dataContact)
-        ]);
-
-        $this->assertEquals(409, $responseContact->getStatusCode());
-    }
-
-    public function testConseil()
-    {
-        $client = HttpClient::create();
-
-        $dataMessage = [
-            'email' => 'test@gmail.com',
-            'username' => 'test',
-            'type' => 'conseil',
-            'question' => 'test'
-        ];
-        $responseMessage = $client->request('POST','https://preprod.api.itcommunity.fr/messages', [
-            'headers' => ['content_type' => 'application/json'],
-            'body' => json_encode($dataMessage)
-        ]);
-
-        $this->assertEquals(201, $responseMessage->getStatusCode());
-    }
-
-    public function testDemo()
-    {
-        $client = HttpClient::create();
-
-        $dataMessage = [
-            'email' => 'test@gmail.com',
-            'username' => 'test',
-            'type' => 'demo',
-            'question' => 'test'
-        ];
-        $responseMessage = $client->request('POST','https://preprod.api.itcommunity.fr/messages', [
-            'headers' => ['content_type' => 'application/json'],
-            'body' => json_encode($dataMessage)
-        ]);
-
-        $this->assertEquals(201, $responseMessage->getStatusCode());
     }
 }

@@ -12,7 +12,7 @@ class HomeControllerTest extends WebTestCase
     {
         $client = HttpClient::create();
 
-        $crawler = $client->request('GET', 'https://preprod.itcommunity.fr');
+        $crawler = $client->request('GET', 'https://itcommunity.fr');
 
         $this->assertEquals(200, $crawler->getStatusCode());
     }
@@ -21,7 +21,7 @@ class HomeControllerTest extends WebTestCase
     {
         $client = HttpClient::create();
 
-        $crawler = $client->request('GET', 'https://preprod.itcommunity.fr/sitemap');
+        $crawler = $client->request('GET', 'https://itcommunity.fr/sitemap');
 
         $this->assertEquals(200, $crawler->getStatusCode());
     }
@@ -30,7 +30,7 @@ class HomeControllerTest extends WebTestCase
     {
         $client = HttpClient::create();
 
-        $crawler = $client->request('GET', 'https://preprod.itcommunity.fr/sitemap.xml');
+        $crawler = $client->request('GET', 'https://itcommunity.fr/sitemap.xml');
 
         $this->assertEquals(200, $crawler->getStatusCode());
     }
@@ -39,29 +39,29 @@ class HomeControllerTest extends WebTestCase
     {
         $client = HttpClient::create();
 
-        $crawler = $client->request('GET', 'https://preprod.itcommunity.fr/contact-us');
+        $crawler = $client->request('GET', 'https://itcommunity.fr/contact-us');
 
         $this->assertEquals(200, $crawler->getStatusCode());
     }
 
-    public function testContactUsForm()
-    {
-        $dataContact =
-            [
-                'firstname' => 'test',
-                'lastname' => 'test',
-                'email' => 'test@gmail.com',
-                'phone' => '0600000000',
-                'subject' => 'test',
-                'body' => 'test'
-            ];
-        $client = HttpClient::create();
-        $responseContact = $client->request('POST',  'https://preprod.api.itcommunity.fr/contactforms', [
-            'headers' => ['content_type' => 'application/json'],
-            'body' => json_encode($dataContact)
-        ]);
-
-        $this->assertEquals(201, $responseContact->getStatusCode());
-
-    }
+//    public function testContactUsForm()
+//    {
+//        $dataContact =
+//            [
+//                'firstname' => 'test',
+//                'lastname' => 'test',
+//                'email' => 'test@gmail.com',
+//                'phone' => '0600000000',
+//                'subject' => 'test',
+//                'body' => 'test'
+//            ];
+//        $client = HttpClient::create();
+//        $responseContact = $client->request('POST',  'https://preprod.api.itcommunity.fr/contactforms', [
+//            'headers' => ['content_type' => 'application/json'],
+//            'body' => json_encode($dataContact)
+//        ]);
+//
+//        $this->assertEquals(201, $responseContact->getStatusCode());
+//
+//    }
 }

@@ -10,12 +10,16 @@
                 {% endif %}
             {% endfor %}
             {% if profilePicture is not null %}
+
                 <div class="profile-preview-picture-holder"
-                     style="background-image: url('{{ 'global.uploads_url'|trans ~ profilePicture['path'] }}');">
+                     style="background-image: url('{{ 'global.uploads_url'|trans ~ profilePicture['path'] }}');max-width: 100%; min-width: auto;">
                 </div>
             {% else %}
-                <div class="user-picture-missing">
-                    <div class="missing-message">{{ ('page._common.global.missing_image_placeholder'|trans) |raw }}</div>
+                <div class="profile-preview-picture-holder"
+                     style="background-image: url('{{ 'global.images_url'|trans ~ asset('images/img-1.jpg') }}');max-width: 100%; min-width: auto;">
+                    <div class="user-picture-missing">
+                        <div class="missing-message">{{ ('page._common.global.missing_image_placeholder'|trans) |raw }}</div>
+                    </div>
                 </div>
             {% endif %}
         </div>

@@ -32,10 +32,11 @@ class RankingController extends AbstractController
             $user = $userService->getUser();
             $profilePicture = null;
             $myPoints = 0;
+            $nbQuestions=null;
             if ($user) {
                 $profilePicture = $userService->getProfilePicture();
                 $myPoints = $userService->getMyPoints();
-
+                $nbQuestions = $userService->getUnansweredMessages();
                 $ranking = $userService->getRanking();
                 $actual_route = $request->get('actual_route', 'user_dashboard_ranking');
 
@@ -47,6 +48,7 @@ class RankingController extends AbstractController
                     'profilePicture' => $profilePicture,
                     'myPoints' => $myPoints,
                     'google_analytics_id' => getenv("ANALYTICS_KEY"),
+                    'nbQuestions'=>$nbQuestions
                 ]);
             }
             return $this->redirectToRoute('login');

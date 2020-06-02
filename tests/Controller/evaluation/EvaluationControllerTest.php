@@ -17,22 +17,4 @@ class EvaluationControllerTest extends WebTestCase
 //
 //        $this->assertEquals(200, $client->getResponse()->getStatusCode());
 //    }
-
-    public function testForm()
-    {
-        $client = HttpClient::create();
-
-        $dataEvaluation =
-            [
-                'hash' => '209aa5ed9df573304761a4c7c3198bd78f2b86fe',
-                'rating' => 5,
-                'feedback' => 'test',
-            ];
-        $responseEvaluation = $client->request('POST','https://preprod.api.itcommunity.fr/evaluations', [
-            'headers' => ['content_type' => 'application/json'],
-            'body' => json_encode($dataEvaluation)
-        ]);
-
-        $this->assertEquals(409, $responseEvaluation->getStatusCode());
-    }
 }

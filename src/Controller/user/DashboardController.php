@@ -68,11 +68,13 @@ class DashboardController extends AbstractController
                 $myPoints = 0;
                 $messages = null;
                 $invitations = null;
+                $nbQuestions = null;
                 if ($user) {
                     $profilePicture = $userService->getProfilePicture();
                     $myPoints = $userService->getMyPoints();
                     $messages = $userService->getMessages();
                     $invitations = $userService->getInvitations();
+                    $nbQuestions = $userService->getUnansweredMessages();
                 }
                 $actual_route = $request->get('actual_route', 'user_dashboard_invitation');
                 return $this->render('user/dashboard/invitation/index.html.twig', [
@@ -82,8 +84,9 @@ class DashboardController extends AbstractController
                     'user' => $user,
                     'myPoints' => $myPoints,
                     'messages' => $messages,
-                    'invitations' => $invitations['affiliates'],
+                    'invitations' => $invitations,
                     'google_analytics_id' => getenv("ANALYTICS_KEY"),
+                    'nbQuestions'=>$nbQuestions
                 ]);
             }
             return $this->redirectToRoute('login');
