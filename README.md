@@ -22,6 +22,7 @@ HTTPS: `git clone https://github.com/Easy-Lab/ITCommunity-Front.git`
 
 ```
 LOCALE= #Language of your translation file
+ASSETS_URL= #URL of your assets (css,js,...)
 GOOGLE_MAPS_FRONTEND_API_KEY= #Google Maps API Public Key
 API_URL= #Url of your API
 FRONT_URL= #Url of your Front
