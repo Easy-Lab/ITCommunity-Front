@@ -1,6 +1,6 @@
 # Travis CI
 
-[![Build Status](https://travis-ci.org/Easy-Lab/ITCommunity-Front.svg?branch=develop)](https://travis-ci.org/Easy-Lab/ITCommunity-Front)
+[![Build Status](https://travis-ci.org/Easy-Lab/ITCommunity-Front.svg?branch=master)](https://travis-ci.org/Easy-Lab/ITCommunity-Front)
 
 # Installation
 
