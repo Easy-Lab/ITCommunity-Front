@@ -1,0 +1,20 @@
+sudo: required
+
+language: php
+
+php :
+    - '7.3'
+
+before_install:
+    - sudo add-apt-repository ppa:ondrej/php -y
+    - sudo apt-get update -q
+    - sudo apt-get install libsodium-dev
+    - pecl install libsodium
+    - cp .env.dist .env
+    - composer install
+
+#    - php bin/console doctrine:database:create
+#    - php bin/console d:s:u --force
+
+script:
+    - php bin/phpunit

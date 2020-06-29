@@ -1,0 +1,270 @@
+<h1 class="section-divider"> {{ 'page.ambassador._forms.pictures.label'|trans }}</h1>
+<hr>
+
+<section>
+    <h1 class=""
+        style="font-size: 24px; font-weight: bold; text-transform: uppercase;"> {{ 'page.ambassador._forms.profile_picture.label'|trans }} </h1>
+    <p>{{ 'page.ambassador._forms.profile_picture.helper'|trans }}</p>
+
+    <div class="image-editor"
+         data-src="{% if user is defined %}{{ profilePicture is not null ? asset(assets_url ~ 'uploads/' ~ profilePicture['path']) : user is defined and profilePicture is not null ? asset(assets_url ~ 'uploads/' ~ profilePicture['path']) : '' }}{% endif %}"
+         data-id="{% if profilePicture is defined %}{% if profilePicture %}{{ profilePicture['hash'] }}{% endif %}{% endif %}"
+         data-type="profile_picture"
+         data-endpoint="{{ path('ambassador_picture_upload') }}"
+         data-delete="{{ path('ambassador_picture_delete') }}"
+         data-user="{% if user %}{{ user['username'] }}{% endif %}"
+    >
+
+        <div class="cropit-editor clearfix">
+            <div class="cropit-preview"></div>
+
+            <div class="text-center pt-2 pb-2 cropit-edit-bar">
+                <div class="d-inline-block pt-2 mr-4">
+                    <small><i class="fas fa-image cropit-control"></i></small>
+                    <input type="range" class="cropit-image-zoom-input cropit-control">
+                    <i class="fas fa-image cropit-control"></i>
+                </div>
+
+                <button class="btn btn-secondary rotate-ccw cropit-control"><i class="fas fa-undo"></i></button>
+                <button class="btn btn-secondary rotate-cw cropit-control"><i class="fas fa-redo"></i></button>
+            </div>
+        </div>
+
+        <menu>
+            <input type="file" class="cropit-image-input hidden">
+            <div class="row">
+                <div class="col-xs-12 col">
+                    <button class="btn btn-primary cropit-image-input-button cropit-control"
+                            style="width: 70%;">{{ "page.ambassador.dashboard.layout.section.profile.select_img"|trans }}</button>
+                </div>
+                <div class="col-xs-12 col text-right register-button">
+                    <button class="btn btn-secondary cropit-image-remove"
+                            style="width: 71%;">{{ "page.ambassador.dashboard.layout.section.profile.delete_img"|trans }}</button>
+                    <button class="btn btn-theme cropit-image-upload"
+                            style="width: 71%;">{{ "page.ambassador.dashboard.layout.section.profile.enr_img"|trans }}</button>
+                    <button class="btn btn-theme cropit-image-update"
+                            style="width: 71%;">{{ "page.ambassador.dashboard.layout.section.profile.update_img"|trans }}</button>
+                </div>
+            </div>
+        </menu>
+
+        <p class="text-center cropit-image-uploading">{{ "page.ambassador.dashboard.layout.section.profile.chargement"|trans }}
+            <span></span></p>
+        <p class="text-center cropit-image-removing">{{ "page.ambassador.dashboard.layout.section.profile.patient"|trans }}</p>
+    </div>
+    {{ 'page.ambassador._forms.pictures.accept'|trans }}
+    </p>
+</section>
+<hr>
+<br>
+
+<section>
+    <h1 class=""
+        style="font-size: 24px; font-weight: bold; text-transform: uppercase;"> {{ 'page.ambassador._forms.environment_pictures.label'|trans }} </h1>
+    <p>{{ 'page.ambassador._forms.environment_pictures.helper'|trans }}</p>
+    {% for n in range(0, pictures_count - 1) %}
+        {% set environment_key = "page.ambassador._forms.pictures.label_" ~ (n + 1) %}
+        {% set label  = environment_key | trans %}
+
+
+        {% if n > 2 %}
+            {% if n == 3 %}
+
+            {% endif %}
+            <section id="showMorePictures{{ n }}" style="display: none;">
+
+                <div class="picture-holder">
+                    {#            <p>{{ label }}</p>#}
+
+
+                    <div class="image-editor"
+                         data-src="{{ pictures[n] is defined ? asset(assets_url ~ 'uploads/' ~ pictures[n]['path']) : '' }}"
+                         data-id="{% if pictures is defined %}{% for picture in pictures %}{% if picture['name'] == 'environment_'~n %}{{ picture['hash'] }}{% endif %}{% endfor %}{% endif %}"
+                         data-type="environment_{{ n }}"
+                         data-name="horizontal"
+                         data-endpoint="{{ path('ambassador_picture_upload') }}"
+                         data-delete="{{ path('ambassador_picture_delete') }}"
+                         data-user="{% if user is defined %}{{ user['username'] }}{% endif %}"
+                         id="image-editor-{{ n }}" style="margin-bottom: 100px">
+
+                        <div class="cropit-editor clearfix">
+                            <div class="cropit-preview cropit-preview-big" id="img-load{{ n }}"></div>
+
+                            <div class="text-center pt-2 pb-2 cropit-edit-bar">
+                                <div class="d-inline-block pt-2 mr-4">
+                                    <small><i class="fas fa-image cropit-control"></i></small>
+                                    <input type="range" class="cropit-image-zoom-input cropit-control">
+                                    <i class="fas fa-image cropit-control"></i>
+                                </div>
+
+                                <button class="btn btn-secondary rotate-ccw cropit-control"><i class="fas fa-undo"></i>
+                                </button>
+                                <button class="btn btn-secondary rotate-cw cropit-control"><i class="fas fa-redo"></i>
+                                </button>
+                                {#<button class="btn btn-secondary cropit-control changeOrientation" onclick="changeOrientationVertical(this.id)" id="{{ n }}"><i class="fas fa-file-image"></i></button>
+                                <button class="btn btn-secondary cropit-control changeOrientation" onclick="changeOrientationHorizontal(this.id)" id="{{ n }}"><i class="fas fa-image"></i></button>#}
+
+                            </div>
+                        </div>
+
+                        <menu>
+                            <input type="file" class="cropit-image-input hidden">
+                            <div class="row">
+                                <div class="col-xs-12 col">
+                                    <button class="btn btn-primary cropit-image-input-button cropit-control"
+                                            style="width: 70%;"
+                                            id="selectImg{{ n }}">{{ "page.ambassador.dashboard.layout.section.profile.select_img"|trans }}</button>
+                                </div>
+                                <div class="col-xs-12 col text-right register-button">
+                                    <button class="btn btn-theme cropit-image-upload"
+                                            style="width: 71%;">{{ "page.ambassador.dashboard.layout.section.profile.enr_img"|trans }}</button>
+                                    <button class="btn btn-theme cropit-image-update"
+                                            style="width: 71%;">{{ "page.ambassador.dashboard.layout.section.profile.update_img"|trans }}</button>
+                                    <button class="btn btn-secondary cropit-image-remove"
+                                            style="width: 71%;">{{ "page.ambassador.dashboard.layout.section.profile.delete_img"|trans }}</button>
+                                </div>
+                            </div>
+                        </menu>
+
+                        <p class="cropit-image-uploading text-center">{{ "page.ambassador.dashboard.layout.section.profile.chargement"|trans }}
+                            <span></span></p>
+                        <p class="cropit-image-removing text-center">{{ "page.ambassador.dashboard.layout.section.profile.patient"|trans }}</p>
+                    </div>
+                </div> <!-- end_picture_holder -->
+                {% if n >= 3 %}
+
+                    {% if n < pictures_count - 1 %}
+                        <a class="" onclick="morePictures()" style="cursor: pointer; margin-bottom: 30px !important;"
+                           id="more-{{ n }}">
+
+                            <img style="width: 25px;" src="{{ asset(assets_url ~ 'images/plus.png') }}">
+                            {{ 'page.ambassador._forms.pictures.btn_more' | trans }}
+                        </a>
+                    {% endif %}
+                {% endif %}
+            </section>
+        {% else %}
+            <div class="picture-holder">
+                {#            <p>{{ label }}</p>#}
+
+
+                <div class="image-editor"
+                     data-src="{{ pictures[n] is defined ? asset(assets_url ~ 'uploads/' ~ pictures[n]['path']) : '' }}"
+                     data-id="{% if pictures is defined %}{% for picture in pictures %}{% if picture['name'] == 'environment_'~n %}{{ picture['hash'] }}{% endif %}{% endfor %}{% endif %}"
+                     data-type="environment_{{ n }}"
+                     data-name="horizontal"
+                     data-endpoint="{{ path('ambassador_picture_upload') }}"
+                     data-delete="{{ path('ambassador_picture_delete') }}"
+                     data-user="{% if user is defined %}{{ user['username'] }}{% endif %}"
+                     id="image-editor-{{ n }}" style="margin-bottom: 100px">
+
+                    <div class="cropit-editor clearfix">
+                        <div class="cropit-preview cropit-preview-big"></div>
+
+                        <div class="text-center pt-2 pb-2 cropit-edit-bar">
+                            <div class="d-inline-block pt-2 mr-4">
+                                <small><i class="fas fa-image cropit-control"></i></small>
+                                <input type="range" class="cropit-image-zoom-input cropit-control">
+                                <i class="fas fa-image cropit-control"></i>
+                            </div>
+
+                            <button class="btn btn-secondary rotate-ccw cropit-control"><i class="fas fa-undo"></i>
+                            </button>
+                            <button class="btn btn-secondary rotate-cw cropit-control"><i class="fas fa-redo"></i>
+                            </button>
+                            {#<button class="btn btn-secondary cropit-control changeOrientation" onclick="changeOrientationVertical(this.id)" id="{{ n }}"><i class="fas fa-file-image"></i></button>
+                            <button class="btn btn-secondary cropit-control changeOrientation" onclick="changeOrientationHorizontal(this.id)" id="{{ n }}"><i class="fas fa-image"></i></button>#}
+
+                        </div>
+                    </div>
+
+                    <menu>
+                        <input type="file" class="cropit-image-input hidden">
+                        <div class="row">
+                            <div class="col-xs-12 col">
+                                <button class="btn btn-primary cropit-image-input-button cropit-control"
+                                        style="width: 70%;">{{ "page.ambassador.dashboard.layout.section.profile.select_img"|trans }}</button>
+                            </div>
+                            <div class="col-xs-12 col text-right register-button">
+                                <button class="btn btn-theme cropit-image-upload"
+                                        style="width: 71%;">{{ "page.ambassador.dashboard.layout.section.profile.enr_img"|trans }}</button>
+                                <button class="btn btn-theme cropit-image-update"
+                                        style="width: 71%;">{{ "page.ambassador.dashboard.layout.section.profile.update_img"|trans }}</button>
+                                <button class="btn btn-secondary cropit-image-remove"
+                                        style="width: 71%;">{{ "page.ambassador.dashboard.layout.section.profile.delete_img"|trans }}</button>
+                            </div>
+                        </div>
+                    </menu>
+
+                    <p class="cropit-image-uploading text-center">{{ "page.ambassador.dashboard.layout.section.profile.chargement"|trans }}
+                        <span></span></p>
+                    <p class="cropit-image-removing text-center">{{ "page.ambassador.dashboard.layout.section.profile.patient"|trans }}</p>
+                </div>
+            </div> <!-- end_picture_holder -->
+            {% if n >= 2 %}
+                {% if pictures_count > 3 %}
+                    <div style="    margin-top: -5%;
+    margin-bottom: 5%;">
+                        <a class="" onclick="morePictures()" style="cursor: pointer; margin-bottom: 30px !important;"
+                           id="buttonOne">
+                            <img style="width: 25px;" src="{{ 'global.images_url'|trans ~ asset('images/plus.png') }}">
+                            {{ 'page.ambassador._forms.pictures.btn_more' | trans }}
+                        </a>
+                    </div>
+                {% endif %}
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+</section>
+
+<script>
+    var compteur = 3;
+
+    function morePictures() {
+        var displayConditions = document.getElementById("showMorePictures" + compteur);
+        console.log(compteur);
+        if (displayConditions.style.display == "none") {
+            $('#showMorePictures' + compteur).fadeIn();
+            if (compteur == 3) {
+                document.getElementById("buttonOne").style.display = "none";
+            } else {
+                document.getElementById("more-" + (compteur - 1)).style.display = "none";
+            }
+            $('#selectImg' + compteur - 1).attr("disabled", false);
+            compteur = compteur + 1;
+        } else {
+            document.getElementById("showMorePictures" + compteur).style.display = "none";
+
+        }
+    }
+
+    function changeOrientationVertical(id) {
+        var someimage = document.getElementById('img-load' + id);
+        var mydiv = someimage.getElementsByTagName('div')[0];
+        var myimg = mydiv.getElementsByTagName('img')[0];
+        var width = myimg.width;
+        var height = myimg.height;
+        if (height >= width) {
+            // myimg.style.transform ="translate(0px, -117.67px) scale(0.18)";
+            someimage.style.width = "100%";
+            someimage.style.height = "600px";
+            $('#image-editor-' + id).attr('data-name', 'vertical');
+
+        }
+    }
+
+    function changeOrientationHorizontal(id) {
+        var someimage = document.getElementById('img-load' + id);
+        var mydiv = someimage.getElementsByTagName('div')[0];
+        var myimg = mydiv.getElementsByTagName('img')[0];
+        var width = myimg.width;
+        var height = myimg.height;
+        if (height >= width) {
+            someimage.style.width = "646px";
+            someimage.style.height = "430.667px";
+            myimg.style.marginTop = "0%";
+            $('#image-editor-' + id).attr('data-name', 'horizontal');
+
+        }
+    }
+</script>

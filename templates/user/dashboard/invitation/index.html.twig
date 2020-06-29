@@ -1,0 +1,94 @@
+
+{% extends 'user/layout.html.twig' %}
+
+{% block content %}
+    <header class="title">{{ 'page.ambassador.dashboard.voucher.section.voucher.title'|trans }}</header>
+
+    <div class="row">
+        <p style="margin-left: 2%; margin-right: 2%;">{{ 'page.ambassador.dashboard.voucher.section.voucher.rules'|trans }}</p>
+        <div class="col-md-6">
+            <form action="{{ path('user_dashboard_invitation') }}" method="post" id="ambassador_voucher_send_form">
+                <div class="form-group">
+                    <label for="firstname">{{ 'page.ambassador.dashboard.voucher.section.voucher.form.firstname.label'|trans }}</label>
+                    <input required type="text" class="form-control" id="firstname" name="firstname"
+                           value="{{ validator.value('firstname') }}" data-error="{{ validator.error('firstname') }}">
+                </div>
+                <div class="form-group">
+                    <label for="lastname">{{ 'page.ambassador.dashboard.voucher.section.voucher.form.lastname.label'|trans }}</label>
+                    <input required type="text" class="form-control" id="lastname" name="lastname"
+                           value="{{ validator.value('lastname') }}" data-error="{{ validator.error('lastname') }}">
+                </div>
+                <div class="form-group">
+                    <label for="email">{{ 'page.ambassador.dashboard.voucher.section.voucher.form.email.label'|trans }}</label>
+                    <input required type="email" class="form-control" id="email" name="email"
+                           value="{{ validator.value('email') }}" data-error="{{ validator.error('email') }}">
+                    <input required type="hidden" name="voucher_send" value="1">
+
+                </div>
+                    <div class="form-group">
+                        <label for="message"> {{ 'page.ambassador.dashboard.voucher.section.voucher.form.message.label'|trans }}</label>
+                        <textarea class="form-control text-field" name="message" id="message" maxlength="1000"
+                                  data-error="{{ validator.error('message') }}">{{ validator.value('message') }}</textarea>
+                    </div>
+                <div class="col text-right">
+                    <button class="btn btn-theme">{{ 'page.ambassador.dashboard.voucher.section.voucher.form.send_button'|trans }}</button>
+                </div>
+
+            </form>
+        </div>
+        <div class="col-md-4 offset-md-1">
+
+            <img class="d-block mt-4" id="img_coupon" style="width: 360px;" src="{{ 'global.images_url'|trans ~ asset('images/invitation.jpg') }}"/>
+
+            <p class="mt-2"
+               id="p_img_coupon">{{ 'page.ambassador.dashboard.voucher.section.information.description'|trans|raw }}</p>
+
+        </div>
+    </div>
+
+    <header class="title mt-4">{{ 'page.ambassador.dashboard.voucher.section.table_voucher.title'|trans }}</header>
+
+        <div class="scrollable-table">
+            <table class="table table-striped table-bordered" id="dataTable">
+                <thead>
+                <tr>
+                    <th>{{ 'page.ambassador.dashboard.voucher.section.table_voucher.header.contact'|trans }}</th>
+                    <th>{{ 'page.ambassador.dashboard.voucher.section.table_voucher.header.email'|trans }}</th>
+                    <th>{{ 'page.ambassador.dashboard.voucher.section.table_voucher.header.status'|trans }}</th>
+{#                    <th>{{ 'page.ambassador.dashboard.voucher.section.table_voucher.header.date'|trans }}</th>#}
+                </tr>
+                </thead>
+                <tbody>
+                {% if invitations is not empty %}
+                    {% for invitation in invitations %}
+                        <tr>
+                            <td>{{ invitation['firstname']}} {{ invitation['lastname']|first|capitalize }}</td>
+                            <td>{{ invitation['email'] }}</td>
+                            <td>{% if invitation['status'] == false%}{{ 'page.ambassador.dashboard.voucher.section.table_voucher.content.status.0'|trans }}{% endif %}{% if invitation['status'] == true %}{{ 'page.ambassador.dashboard.voucher.section.table_voucher.content.status.1'|trans }}{% endif %}</td>
+{#                            <td>{{ invitation['created']|format('d-m-Y') }}</td>#}
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+                </tbody>
+            </table>
+        </div>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#dataTable').DataTable({
+                responsive: true,
+                "pageLength": 5,
+                "lengthMenu": [[5, 10, 15, 20,25,30, -1], [5, 10, 15, 20,25,30, "Tout"]],
+                "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/1.10.20/i18n/French.json"
+                },
+                // "order": [[ 3, "desc" ]],
+            });
+        } );
+    </script>
+
+
+
+{% endblock %}
+
+

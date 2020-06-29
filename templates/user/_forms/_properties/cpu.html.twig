@@ -1,0 +1,73 @@
+<hr>
+<div class="col-xs-12 col">
+    <div class="form-group">
+        <label for="cpu_company">
+            {{ ('page.ambassador._forms.select.cpu.label')|trans }}
+        </label>
+        {#        <select name="cpu" id="cpu"#}
+        {#                class="form-control"#}
+        {#                data-error="{{ validator.error('cpu') }}"#}
+        {#        required >#}
+        {#        {% for option in elementCpu %}#}
+        {#            {% if cpu is defined %}#}
+        {#                {% if option.product_name == cpu['nameComponent'] %}#}
+        {#                    <option value="{{ option.id }}" selected>{{ option.company }} {{ option.product_name }} {{ option.cores }} cores {{ option.clock }}</option>#}
+        {#                {% endif %}#}
+        {#            {% endif %}#}
+        {#                <option value="{{ option.id }}">{{ option.company }} {{ option.product_name }} {{ option.cores }} cores {{ option.clock }}</option>#}
+        {#        {% endfor %}#}
+        {#        </select>#}
+        <input type="text" class="form-control" placeholder="Ex : AMD" name="cpu_company" id="cpu_company"
+               value="{% if cpu is defined %}{{ cpu['companyComponent'] }}{% endif %}" required>
+    </div>
+</div>
+<div class="col-xs-12 col">
+    <div class="form-group">
+
+        <label for="cpu">
+            {{ ('page.ambassador._forms.select.cpu.label_2')|trans }}
+        </label>
+        <input type="text" class="form-control" placeholder="Ex : Ryzen 7 3800X" name="cpu" id="cpu"
+               value="{% if cpu is defined %}{{ cpu['nameComponent'] }}{% endif %}" required>
+    </div>
+</div>
+
+<div class="form-group pt-3">
+
+    <div class="register-product-rating">
+        <p>{{ 'page.ambassador._forms.cpu.rating.label'|trans }}</p>
+        <p class="content-label">
+                                <span class="frown-label">
+                                    <i class="far fa-frown"></i> = <i class="icon-star"></i>
+                                </span>
+            <span class="smile-label">
+                                    <i class="far fa-smile"></i> =
+                {% for idx in 0..4 %}<i class="icon-star"></i>{% endfor %}
+                                </span>
+        </p>
+    </div>
+
+    <select class="hidden"
+            data-selected="{% if cpu is defined %}{{ cpu['rating'] }}{% else %}{{ validator.value('cpu_rating') }}{% endif %}"
+            name="cpu_rating" id="cpu_rating">
+        {% for i in [1,2,3,4,5] %}
+            <option value="{{ i }}">{{ i }}/5</option>
+        {% endfor %}
+    </select>
+
+    <ul id="cpu-work-rating">
+        {% for i in 1..5 %}
+            <li class="environmentCpu-rating-stars" data-value="{{ i }}">
+                <i id="environmentCpu-rating-stars-{{ i }}"
+                   class="icon-star{% if cpu is defined %}{% if i > cpu['rating'] %}-empty{% endif %}{% else %}{% if i > validator.value('cpu_rating') %}-empty{% endif %}{% endif %}"></i>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <div class="group-form">
+        <p>{{ 'page.ambassador._forms.cpu.feedback.label'|trans }}</p>
+        <textarea minlength="40" maxlength="300" class="form-control text-field" name="cpu_feedback" id="cpu_feedback"
+                  data-error="{{ validator.error('cpu_feedback') }}"
+                  required>{% if cpu is defined %}{{ cpu['body'] }}{% else %}{{ validator.value('cpu_feedback') }}{% endif %}</textarea>
+    </div>
+</div>

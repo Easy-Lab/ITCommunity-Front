@@ -1,0 +1,172 @@
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="discover-page">
+    <section class="promo-section" style="background-image:url({{ 'global.images_url'|trans ~ asset('images/discover.jpg') }})">
+        <div class="container container-fluid">
+            <h1>
+                <span>{{ 'page.ambassador.discover.jumbotron.text1'|trans }}</span>
+                <span>{{ 'page.ambassador.discover.jumbotron.text2'|trans }}</span>
+            </h1>
+            <a href="{{ path('ambassador_register') }}" class="btn btn-theme" style="display: block;     color: #fff !important;
+    background-color: #1E90FF !important;
+    border-color: #1E90FF !important; border-radius: inherit !important;min-height: 35px !important;height: 40px !important;     padding: 8px 13px !important;
+    width: 14%;    margin-top: 5px;" id="buttonInscri">{{ 'page.ambassador.discover.jumbotron.button'|trans }}<i class="fa fa-angle-right ml-2"></i></a>
+        </div>
+        <a href="#benefits-section" class="bottom-link anchor"><i class="icon-down-open-big"></i></a>
+    </section>
+
+    <section class="benefits-section" id="benefits-section">
+        <div class="container container-fluid" id="beneDiscover">
+            <div class="row">
+                <div class="col-xs-6 col-sm-3">
+                    <div class="benefit">
+                        <div class="image-holder">
+                            <img src="{{'global.images_url'|trans ~ asset('images/benefits-01.png') }}">
+                        </div>
+                        <span>{{ 'page.ambassador.discover.benefits.picto1'|trans }}</span>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-3">
+                    <div class="benefit">
+                        <div class="image-holder">
+                            <img src="{{'global.images_url'|trans ~ asset('images/benefits-07.png') }}">
+                        </div>
+                        <span>{{ 'page.ambassador.discover.benefits.picto2'|trans }}</span>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-3">
+                    <div class="benefit">
+                        <div class="image-holder">
+                            <img src="{{'global.images_url'|trans ~ asset('images/benefits-03.png') }}">
+                        </div>
+                        <span>{{ 'page.ambassador.discover.benefits.picto3'|trans }}</span>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-3">
+                    <div class="benefit">
+                        <div class="image-holder">
+                            <img src="{{ 'global.images_url'|trans ~ asset('images/benefits-10.png') }}">
+                        </div>
+                        <span>{{ 'page.ambassador.discover.benefits.picto4'|trans }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="points-section">
+        <div class="container-fluid">
+            <h2>{{ 'page.ambassador.discover.point.title'|trans }}</h2>
+            <div class="point-box">
+                <h3>{{ 'page.ambassador.discover.point.contact.title'|trans }}</h3>
+                <div class="amount">
+                    <strong>{{ 'page.ambassador.discover.point.contact.nb1'|trans }}<span>{{ 'page.ambassador.discover.point.contact.pt'|trans }}</span></strong>
+                </div>
+                <p>{{ 'page.ambassador.discover.point.contact.description'|trans }}</p>
+            </div>
+            <div class="point-box">
+                <h3>{{ 'page.ambassador.discover.point.evaluation.title'|trans }}</h3>
+                <div class="amount">
+                    <strong>{{ 'page.ambassador.discover.point.evaluation.nb'|trans }} <span>{{ 'page.ambassador.discover.point.evaluation.pt'|trans }}</span></strong>
+                </div>
+                <p>{{ 'page.ambassador.discover.point.evaluation.description'|trans }}</p>
+            </div>
+            <div class="point-box">
+                <h3>{{ 'page.ambassador.discover.point.invitation.title'|trans }}</h3>
+                <div class="amount">
+                    <strong>{{ 'page.ambassador.discover.point.invitation.nb'|trans }} <span>{{ 'page.ambassador.discover.point.invitation.pt'|trans }}</span></strong>
+                </div>
+                <p>{{ 'page.ambassador.discover.point.invitation.description'|trans }}</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="how-it-works">
+        <div class="container-fluid">
+            <h2>{{ 'page.ambassador.discover.sliderbecome.title'|trans }}</h2>
+            <div class="slick-slider">
+                <div>
+                    <div class="inner-slide">
+                        <div class="image-holder">
+                            <img src="{{ 'global.images_url'|trans ~ asset('images/step-01.png') }}">
+                        </div>
+                        <div class="text-box">
+                            <p>{{ 'page.ambassador.discover.sliderbecome.picto1'|trans }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="inner-slide">
+                        <div class="image-holder">
+                            <img src="{{ 'global.images_url'|trans ~ asset('images/benefits-07.png') }}">
+                        </div>
+                        <div class="text-box">
+                            <p>{{ 'page.ambassador.discover.sliderbecome.picto2'|trans }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="inner-slide">
+                        <div class="image-holder">
+                            <img src="{{ 'global.images_url'|trans ~ asset('images/step-03.png') }}">
+                        </div>
+                        <div class="text-box">
+                            <p>
+                                {{ 'page.ambassador.discover.sliderbecome.picto3'|trans }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="inner-slide">
+                        <div class="image-holder">
+                            <img src="{{ 'global.images_url'|trans ~ asset('images/benefits-03.png') }}" class="imgHolderBp">
+                        </div>
+                        <div class="text-box">
+                            <p>
+                                {{ 'page.ambassador.discover.sliderbecome.picto4'|trans }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="inner-slide">
+                        <div class="image-holder">
+                            <img src="{{ 'global.images_url'|trans ~ asset('images/benefits-10.png') }}">
+                        </div>
+                        <div class="text-box">
+                            <p>
+                                {{ 'page.ambassador.discover.sliderbecome.picto5'|trans }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="inner-slide">
+                        <div class="image-holder">
+                            <img src="{{ 'global.images_url'|trans ~ asset('images/step-07.png') }}" style="max-width: 80%;">
+                        </div>
+                        <div class="text-box">
+                            <p>
+                                {{ 'page.ambassador.discover.sliderbecome.picto6'|trans }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="subscribe-section">
+        <div class="container-fluid">
+            <h2>{{ 'page.ambassador.discover.section_register.title1'|trans }}</h2>
+            <div class="button-row">
+                <a href="{{ path('static_page', {'slug': 'faq-ambassador'}) }}" class="link">{{ 'page.ambassador.discover.section_register.faq'|trans }}</a>
+                <a href="{{ path('ambassador_register') }}" class="btn btn-theme" id="buttonInscri2">{{ 'page.ambassador.discover.section_register.button'|trans }}</a>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

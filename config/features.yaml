@@ -1,0 +1,103 @@
+parameters:
+
+  # Translations
+  features.translations.files.format: ".yml"
+  features.translations.custom.folder: "custom/translations/"
+  features.translations.default.folder: "translations/"
+  
+  # Map + search
+  features.home.zipcode.maxlength: 5
+  features.map.clusters.max_zoom: 7
+  features.map.clusters.grid_size: 10
+  features.map.load_on_scroll: true
+  features.map.event_pin: false
+  features.map.search.multiple_levels: false
+  features.map.search.max_result_per_page: 6
+  features.map.search.filter_zip_code: true
+  features.map.geoloc: false
+  # servira à la détection du zip code / département ou nom de la localisation : features.map.search.regex: 
+  # servira à la détection du zip code / département ou nom de la localisation :  - zipcode: ([0-9]{2})
+  features.map.search.order:
+  - picture: desc
+  - distance: asc
+  - u.environment_rating: desc
+  - rand: asc
+  features.map.search:
+    - zipcode
+#    - product
+  features.map.search.zipcode.pattern: null
+
+  # Algo de complétion du profil
+  features.profile.completion:
+    - firstname
+    - lastname
+    - username
+    - address
+    - zipcode
+    - city
+    - phone
+    - pseudo
+    - text/welcome
+    - products
+    - pictures
+    - profile_picture
+
+  features.forms.register.step_0:
+    - full_name
+    - username
+    - password
+    - full_address
+    - phone
+    - terms_of_service
+    - informations_enabled
+
+  features.forms.register.step_2:
+    - gpu
+    - cpu
+
+  features.forms.register.step_3:
+    - pictures
+
+  features.environment.pictures.count: 5
+
+  features.profile.header.columns.count: 3
+  features.profile.header.columns.1:
+    - pseudo
+    - location
+  features.profile.header.columns.2.title: true
+  features.profile.header.columns.2:
+    - gpu
+  features.profile.header.columns.3.title: true
+  features.profile.header.columns.3:
+    - cpu
+  features.profile.content:
+    - text/gpu
+    - text/cpu
+
+    # Flag
+  features.flag.reasons:
+    - fake_profile
+    - bad_behaviour_online
+    - bad_behaviour_real_life
+    - other
+
+    # Account
+  features.account.deletion.reasons:
+    - moved
+    - no_more_products
+    - no_more_satisfaction
+    - do_not_want_visitors_anymore
+    - too_much_requests
+    - too_complicated
+    - bad_rewarding
+    - no_visitors
+    - goal_achieved
+    - other
+
+  features.forms.profile.informations:
+    - full_name
+    - username
+
+  features.forms.profile.products:
+    - gpu
+    - cpu

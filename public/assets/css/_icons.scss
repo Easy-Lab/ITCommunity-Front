@@ -1,0 +1,223 @@
+/* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
+
+/* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
+
+/*
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: 'fontello';
+    src: url('../font/fontello.svg?59211332#fontello') format('svg');
+  }
+}
+*/
+
+[class^="icon-"]:before,
+[class*=" icon-"]:before {
+  font-family: "fontello";
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  margin-right: .2em;
+  text-align: center; /* opacity: .8; */ /* For safety - reset parent styles, that can break glyph codes*/
+  font-variant: normal;
+  text-transform: none; /* fix buttons height, for twitter bootstrap */
+  line-height: 1em; /* Animation center compensation - margins should be symmetric */ /* remove if not needed */
+  margin-left: .2em; /* you can be more comfortable with increased icons size */ /* font-size: 120%; */ /* Font smoothing. That was taken from TWBS */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; /* Uncomment for 3D effect */ /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+}
+
+.icon-down-open-big:before {
+  content: "\e800";
+}
+
+/* 'Ð¾ Ð‚' */
+
+.icon-left-open-big:before {
+  content: "\e801";
+}
+
+/* 'Ð¾ Ðƒ' */
+
+.icon-right-open-big:before {
+  content: "\e802";
+}
+
+/* 'Ð¾ â€š' */
+
+.icon-up-open-big:before {
+  content: "\e803";
+}
+
+/* 'Ð¾ Ñ“' */
+
+.icon-logout:before {
+  content: "\e804";
+}
+
+/* 'Ð¾ â€ž' */
+
+.icon-cancel:before {
+  content: "\e805";
+}
+
+/* 'Ð¾ â€¦' */
+
+.icon-like:before {
+  content: "\e806";
+}
+
+/* 'Ð¾ â€ ' */
+
+.icon-dislike:before {
+  content: "\e807";
+}
+
+/* 'Ð¾ â€¡' */
+
+.icon-star:before {
+  content: "\e808";
+}
+
+/* 'Ð¾ â‚¬' */
+
+.icon-star-empty:before {
+  content: "\e809";
+}
+
+/* 'Ð¾ â€°' */
+
+.icon-ok-circle:before {
+  content: "\e80a";
+}
+
+/* 'Ð¾ Ð‰' */
+
+.icon-camera:before {
+  content: "\e80b";
+}
+
+/* 'Ð¾ â€¹' */
+
+.icon-pencil:before {
+  content: "\e80c";
+}
+
+/* 'Ð¾ ÐŠ' */
+
+.icon-mail:before {
+  content: "\e80d";
+}
+
+/* 'Ð¾ ÐŒ' */
+
+.icon-mobile:before {
+  content: "\e80e";
+}
+
+/* 'Ð¾ Ð‹' */
+
+.icon-sms:before {
+  content: "\e80f";
+}
+
+/* 'Ð¾ Ð' */
+
+.icon-messenger:before {
+  content: "\e810";
+}
+
+/* 'Ð¾ Ñ’' */
+
+.icon-group:before {
+  content: "\e811";
+}
+
+/* 'Ð¾ â€˜' */
+
+.icon-speech-bubble-outline-of-rectangular-shape:before {
+  content: "\e812";
+}
+
+/* 'Ð¾ â€™' */
+
+.icon-help-circled:before {
+  content: "\e813";
+}
+
+/* 'Ð¾ â€œ' */
+
+.icon-voucher:before {
+  content: "\e814";
+}
+
+/* 'Ð¾ â€' */
+
+.icon-add-circular-outlined-button:before {
+  content: "\e815";
+}
+
+/* 'Ð¾ â€¢' */
+
+.icon-minus-symbol:before {
+  content: "\e816";
+}
+
+/* 'Ð¾ â€“' */
+
+.icon-piggy-bank:before {
+  content: "\e817";
+}
+
+/* 'Ð¾ â€”' */
+
+.icon-xlsx-file-format-extension:before {
+  content: "\e818";
+}
+
+/* 'Ð¾ Â˜' */
+
+.icon-calendar:before {
+  content: "\e819";
+}
+
+/* 'Ð¾ â„¢' */
+
+.icon-clock:before {
+  content: "\e81a";
+}
+
+/* 'Ð¾ Ñ™' */
+
+.icon-location:before {
+  content: "\f031";
+}
+
+/* 'Ð¿Ð‚Â±' */
+
+.icon-facebook:before {
+  content: "\f09a";
+}
+
+/* 'Ð¿â€šÑ™' */
+
+.icon-sort:before {
+  content: "\f0dc";
+}
+
+/* 'Ð¿Ñ“Ñš' */
+
+.icon-flag-empty:before {
+  content: "\f11d";
+}
+
+/* 'Ð¿â€žÑœ' */
+
+.icon-facebook-squared:before {
+  content: "\f308";
+}
+
+/* 'Ð¿ÐŠâ‚¬' */

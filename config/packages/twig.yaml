@@ -4,3 +4,4 @@ twig:
     strict_variables: '%kernel.debug%'
     globals:
         assets_url: "%assets_url%"
+        google_maps_frontend_api_key: "%google_maps_frontend_api_key%"

@@ -1,0 +1,13 @@
+<section class="map">
+    <div class="row row-eq-height no-gutters">
+        <div class="col-md-5" id="map_respond1">
+            <div class="home-ambassadors-listing js-home-ambassadors-listing clearfix empty-result">
+            </div>
+        </div>
+        <div class="col-md-7 d-sm-none d-md-block" id="map_respond2">
+            <div class="home-ambassadors-map js-home-ambassadors-map"
+                 data-styles="{{ asset(assets_url ~ 'inc/map-styles.json') }}"
+                 data-endpoint="{{ path('mapping_ambassadors') }}" ></div>
+        </div>
+    </div>
+</section>

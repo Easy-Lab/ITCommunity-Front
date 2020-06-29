@@ -1,0 +1,71 @@
+<div class="col-xs-12 col">
+    <div class="form-group">
+        <label for="gpu_company">
+            {{ ('page.ambassador._forms.select.gpu.label')|trans }}
+        </label>
+        {#        <select name="gpu" id="gpu"#}
+        {#                class="form-control"#}
+        {#                data-error="{{ validator.error('gpu') }}"#}
+        {#        required >#}
+        {#        {% for option in elementGpu %}#}
+        {#            {% if gpu is defined %}#}
+        {#                {% if option.product_name == gpu['nameComponent'] %}#}
+        {#                    <option value="{{ option.id }}" selected>{{ option.company }} {{ option.product_name }} {{ option.gpu_clock }} {{ option.memory_clock }}</option>#}
+        {#                {% endif %}#}
+        {#            {% endif %}#}
+        {#                <option value="{{ option.id }}">{{ option.company }} {{ option.product_name }} {{ option.gpu_clock }} {{ option.memory_clock }}</option>#}
+        {#        {% endfor %}#}
+        {#        </select>#}
+        <input type="text" class="form-control" placeholder="Ex : MSI" name="gpu_company" id="gpu_company"
+               value="{% if gpu is defined %}{{ gpu['companyComponent'] }}{% endif %}" required>
+    </div>
+</div>
+<div class="col-xs-12 col">
+    <div class="form-group">
+        <label for="gpu">
+            {{ ('page.ambassador._forms.select.gpu.label_2')|trans }}
+        </label>
+        <input type="text" class="form-control" placeholder="Ex : GeForce RTX 2080" name="gpu" id="gpu"
+               value="{% if gpu is defined %}{{ gpu['nameComponent'] }}{% endif %}" required>
+    </div>
+</div>
+
+<div class="form-group pt-3">
+
+    <div class="register-product-rating">
+        <p>{{ 'page.ambassador._forms.gpu.rating.label'|trans }}</p>
+        <p class="content-label">
+                                <span class="frown-label">
+                                    <i class="far fa-frown"></i> = <i class="icon-star"></i>
+                                </span>
+            <span class="smile-label">
+                                    <i class="far fa-smile"></i> =
+                {% for idx in 0..4 %}<i class="icon-star"></i>{% endfor %}
+                                </span>
+        </p>
+    </div>
+
+    <select class="hidden"
+            data-selected="{% if gpu is defined %}{{ gpu['rating'] }}{% else %}{{ validator.value('gpu_rating') }}{% endif %}"
+            name="gpu_rating" id="gpu_rating">
+        {% for i in [1,2,3,4,5] %}
+            <option value="{{ i }}">{{ i }}/5</option>
+        {% endfor %}
+    </select>
+
+    <ul id="gpu-work-rating">
+        {% for i in 1..5 %}
+            <li class="environmentGpu-rating-stars" data-value="{{ i }}">
+                <i id="environmentGpu-rating-stars-{{ i }}"
+                   class="icon-star{% if gpu is defined %}{% if i > gpu['rating'] %}-empty{% endif %}{% else %}{% if i > validator.value('gpu_rating') %}-empty{% endif %}{% endif %}"></i>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <div class="group-form">
+        <p>{{ 'page.ambassador._forms.gpu.feedback.label'|trans }}</p>
+        <textarea minlength="40" maxlength="300" class="form-control text-field" name="gpu_feedback" id="gpu_feedback"
+                  data-error="{{ validator.error('gpu_feedback') }}"
+                  required>{% if gpu is defined %}{{ gpu['body'] }}{% else %}{{ validator.value('gpu_feedback') }}{% endif %}</textarea>
+    </div>
+</div>

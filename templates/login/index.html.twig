@@ -1,0 +1,50 @@
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div id="backgroundKrups">
+    <div class="container mt-5 mb-4 auth" id="amba_login">
+
+        <h3>{{ 'page.ambassador.login.title'|trans }}</h3>
+
+        <div class="row">
+            <div class="col-md-5">
+                <header class="title">{{ 'page.ambassador.login.section.login.title'|trans }}</header>
+
+                <p>{{ 'page.ambassador.login.section.login.description'|trans }}</p>
+
+                <form action="" method="post" class="mt-4">
+
+                    <div class="form-group">
+                        <label for="username">{{ 'page.ambassador.login.section.login.form.username.label'|trans }}</label>
+                        <input placeholder="{{ 'page.ambassador.login.section.login.form.username.placeholder'|trans }}" required class="form-control" type="text" id="username" name="username" value="{{ validator.value('username') }}" data-error="{{ validator.error('username') }}" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">{{ 'page.ambassador.login.section.login.form.password.label'|trans }}</label>
+                        <input placeholder="{{ 'page.ambassador.login.section.login.form.password.placeholder'|trans }}" required class="form-control" type="password" id="password" name="password" data-error="{{ validator.error('password') }}" />
+                    </div>
+
+                    <input type="hidden" name="_target_path" value="" />
+                    <button type="submit" class="btn btn-theme mb-2" id="heightButton">{{ 'page.ambassador.login.section.login.form.login_button'|trans }}</button> <br>
+                    <a href="{{ path('user_request_password') }}"><u>{{ 'page.ambassador.login.section.login.form.forgot_password_link'|trans }}</u></a>
+                </form>
+            </div>
+            <div class="col-md-5 offset-1 ambassador-register">
+                <header class="title">{{ 'page.ambassador.login.section.register.title'|trans }}</header>
+
+                <p>{{ 'page.ambassador.login.section.register.description'|trans }}</p>
+
+                <p class="mt-5 mb-5">
+                    <a class="btn btn-theme mb-2" id="heightButton2" href="{{ path('ambassador_register') }}">{{ 'page.ambassador.login.section.register.register_button'|trans }}</a>
+                </p>
+
+                <img src="{{ 'global.images_url'|trans ~ asset('images/login.jpg') }}" alt="login" style="width: 100%;">
+
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

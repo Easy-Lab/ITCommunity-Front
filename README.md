@@ -1,22 +1,44 @@
+# Travis CI
 
-## Installation
+[![Build Status](https://travis-ci.org/Easy-Lab/ITCommunity-Front.svg?branch=develop)](https://travis-ci.org/Easy-Lab/ITCommunity-Front)
 
-Cloner le projet.
+# Installation
 
-Ensuite, naviguer jusqu'au dossier du projet cloné avec la commande `cd`.
+### 1/ Cloning the project :
 
-Puis : 
+SSH: `git clone git@github.com:Easy-Lab/ITCommunity-Front.git`
 
-`composer install` (si erreurs, ajouter l'option `--ignore-platform-reqs`)
+HTTPS: `git clone https://github.com/Easy-Lab/ITCommunity-Front.git` 
+
+### 2/ Moving around the project:
+
+`cd ITCommunity-Front`
+
+### 3/ Create the .env file:
+
+`cp .env.dist .env`
+
+### 4/ Complete him:
+
+```
+LOCALE= #Language of your translation file
+ASSETS_URL= #URL of your assets (css,js,...)
+GOOGLE_MAPS_FRONTEND_API_KEY= #Google Maps API Public Key
+API_URL= #Url of your API
+FRONT_URL= #Url of your Front
+ANALYTICS_KEY= #Tracking ID of your Google Analytics
+```
+
+### 5/ Install all dependencies:
+
+`composer install` (if errors, add the option `--ignore-platform-reqs`)
 
 `npm install`
 
-Si le fichier `.env` n'existe pas : `cp .env.dist .env`
+### 6/ Compile SCSS files:
 
-Modifier le fichier `.env`
+`sh bin/watch`
 
-Puis : 
+### 7/ Run the project:
 
 `sh bin/run`
-
-Maintenir le script `sh bin/watch` en cours dans un onglet du terminal en cas de modifications du scss (local ou pull).

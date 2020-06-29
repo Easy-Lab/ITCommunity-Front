@@ -1,5 +1,621 @@
+validator:
+  message:
+    fail: "Une erreur est survenue"
+    custom:
+      account:
+        deleted: "Votre compte a été supprimé, merci et bonne continuation !"
+        deleted_error: "Une erreur s'est produite lors de votre désinscription"
+      request_password:
+        success: "Un mail vient de vous être envoyé !"
+        unknow: "Email inconnu"
+        failed: "Une erreur est survenue"
+      forgot_password:
+        success: "Votre mot de passe a bien été réinitialisé"
+        failed: "Une erreur est survenue"
+        errorPassword: "Les mots de passe ne sont pas identiques"
+      invitation:
+        send: "Votre invitation a bien été envoyée !"
+        failed: "Une erreur est survenu, cette personne à possiblement déjà reçu une invitation"
+      form:
+        success: "Votre message a bien été envoyé !"
+        errorApi: "Une erreur est survenue durant l'envoie de votre message"
+        error: "Une erreur est survenue dans le formulaire, veuillez le vérifier"
+        spam: "Message envoyé !"
+        html: "Vous ne pouvez pas utiliser de caractères spéciaux"
+        url: "Vous ne pouvez pas envoyer un lien URL par message"
+      login_failed: "Echec de la connexion, veuillez vérifier votre email ou votre mot de passe"
+      login_success: "Bienvenue sur votre Tableau de Bord"
+      error_password: "Les mots de passes ne sont pas identiques"
+      no_session: "Vous n'êtes pas ou plus connecté"
+      update:
+        success: "Mis à jour avec succès !"
+      bug:
+        success_send: "Votre report de bug a bien été envoyé !"
+      contact:
+        mail:
+          success_send: "Message envoyé avec succès"
+      reviews:
+        success_update: "Vos informations ont été mises à jour !"
+
+  error:
+    generic:
+      required: "Ce champ est obligatoire"
+      error_gpu: "Vous n'avez pas choisi de carte graphique"
+      error_cpu: "Vous n'avez pas choisi de processeur"
+      error_gpu_rating: "Vous n'avez pas donné de note à propos de votre carte graphique"
+      error_cpu_rating: "Vous n'avez pas donné de note à propos de votre processeur"
+      no_session: "Vous n'êtes pas ou plus connecté"
+
+global:
+  site_name: "ITCommunity"
+  fb_app_id: ""
+  images_url: 'https://itcommunity.fr/assets'
+  uploads_url: 'https://itcommunity.fr/uploads/'
+
+globals:
+  site_name: "ITCommunity"
+  fb_app_id: ""
+
 page:
+  _forgot_password:
+    title: "Réinitialiser mon mot de passe "
+    new_psw: "Nouveau mot de passe (6 caractères minimum)"
+    new_psw2: "Confirmer le nouveau mot de passe"
+    new_save: "Enregistrer"
+  evaluation:
+    button_avis: "Envoyez votre avis"
+    hello: "Bonjour"
+    exchange: "Vous avez échangé avec"
+    thanks: "Nous espérons que votre échange s’est bien déroulé. Merci de nous faire part de votre avis."
+    stars: "Cliquez sur le nombre d’étoiles correspondant à votre appréciation :"
+  menu:
+    tab: "Tableau de Bord"
+    search: "Trouver un Utilisateur"
+    discover: "Devenir un Utilisateur"
+  _common:
+    404:
+      text: "Cette page n'existe pas"
+      link: "RETOUR À L'ACCUEIL"
+    500:
+      text: "Une erreur s'est produite."
+    meta:
+      title: "Devenir un Utilisateur"
+    button:
+      confirmation: "Confirmation"
+      enregistrer: "Sauvegarder"
+      data: "Etes vous sur d'effectuer cette action ?"
+      annuler: "Annuler"
+      confirmer: "Confirmer"
+      send_button: "Envoyer"
+    global:
+      missing_image_placeholder: "L'Utilisateur va bientôt charger une photo"
+      body_class: "ITCommunity"
+  name_page:
+    button:
+      data: "confirm"
+    cgv: "Conditions de participation"
+    cgu: "Mentions légales"
+    personal_data: "Données personnelles"
+    cookie: "Cookies"
+    sitemap: "Plan du site"
+    contact: "Contact"
   home:
+    faq:
+      expand: "ITCommunity en bref"
+      title1: "Découvrez ITCommunity !"
+      description1: "ITCommunity est un projet de deux étudiants de l'IPSSI. Leur but ? Créer une plateforme communautaire entre passionné d'informatique et les mettre en relation avec des personnes ayant besoin de conseils !"
+      description2: "Si vous êtes un fan de l'informatique, vous allez pouvoir créer votre propre profil et ainsi accéder à un tableau de bord vous permettant de gérer/répondre aux questions d'utilisateurs anonyme, voir vos évaluations, inviter des personnes à rejoindre la plateforme et voir votre classement au sein de celle-ci.  "
+      description3: "Si vous avez besoin d'aide, de conseil sur l'informatique, vous n'avez qu'à consulter les profils présent sur la plateforme, sélectionner celui qui vous correspond le mieux et enfin prenez contact avec lui."
+      description4: "L'idée vous plaît ? Alors n'hésitez pas à partager ITCommunity envers vos proches, vos amis ou via les réseaux sociaux, cela nous ferait grandement plaisir, merci !"
+    map:
+      search:
+        title: "Trouver un Utilisateur qui vous correspond"
+        _properties:
+          zipcode:
+            label: "CP"
+    evaluation:
+      title: 'Qualité des échanges'
+    cpu:
+      title: 'Liste des CPU'
+    gpu:
+      title: 'Liste des GPU'
+    promo:
+      jumb1: "Vous cherchez un conseil, un renseignement en informatique ?"
+      jumb2: "Ils sont la pour vous aider !"
+    jumbotron:
+      button: "Décrouvrir la carte"
+    benefits:
+      picto1: "Trouvez les Utilisateurs près de chez vous"
+      picto2: "Consultez leurs profil ainsi que leurs avis"
+      picto3: "Et posez leurs toutes vos questions …"
     meta:
       title: "ITCommunity"
+      description: "Bienvenu sur la plateforme regroupant les plus grands fans de l'informatique !"
+      image: "https://itcommunity.fr/assets/images/home.jpg"
     h1: "Titre de la Homepage"
+  ambassador:
+    forgot_password:
+      meta:
+        title: "Mot de passe oublié"
+      title: "Mot de passe oublié ?"
+      description: "Veuillez renseigner votre mail ci-dessous, un mail vous sera envoyé avec un lien vers l'interface de modification de votre mot de passe"
+      form:
+        email:
+          label: "Adresse e-mail"
+          placeholder: "Adresse e-mail"
+        send_button: "Envoyer un lien de réinitialisation"
+    pref:
+      meta:
+        title: "Mes préférences"
+      mail:
+        title: 'Choisissez les messages que vous souhaitez recevoir'
+        subtitle: "Pour modifier vos préférences des e-mails, veuillez renseigner les champs suivants :\t "
+        reasontitle2: 'Les e-mails d''information de la plateforme'
+        reason2: 'Ces e-mails ont pour but de vous informer des nouveautés du programme, de vous conseiller et d''avoir des tips. Pour ne plus les recevoir, cliquez sur la case correspondante.'
+    update:
+      meta:
+        title: "Mes informations personnelles"
+      layout:
+        informations:
+          title: "Mes informations personnelles"
+    report:
+      form:
+        already:
+          label: "Avez vous déjâ posé une question sur la plateforme ?"
+          yes: "Oui"
+          no: "Non"
+        message: "Votre message"
+        lastname: "Nom"
+        firstname: "Prénom"
+        email: "Email"
+      consult: "Consultez notre politique de protection des données personnelles"
+      notification_public: "Message public"
+      notification_email: "Message privé"
+      sent: "Envoyer"
+    unsubscribe:
+      meta:
+        title: "Désinscription"
+      form:
+        reason_type:
+          options:
+            moved: Déménagement
+            no_more_products: 'Pas assez de produits'
+            no_more_satisfaction: 'Pas assez de satisfaction'
+            do_not_want_visitors_anymore: 'Je ne veux plus de visiteurs'
+            too_much_requests: 'Trop de requetes'
+            too_complicated: 'Trop compliqué'
+            bad_rewarding: 'Pas assez de récompenses'
+            no_visitors: 'Pas assez de visiteur'
+            goal_achieved: 'Objectif atteint'
+            other: Autres
+        cancel_button: Annuler
+        submit_button: Se désinscrire
+        feedback: "Commentaire :"
+      title: 'Merci de nous faire part des raisons de votre départ'
+    profile:
+      meta:
+        title: "Mon profil"
+      message:
+        placeholder: "Message"
+      contact:
+        introduction: ''
+      header:
+        column:
+          2:
+            title: "Ma note de mon GPU"
+          3:
+            title: "Ma note de mon CPU"
+    dashboard:
+      ranking:
+        meta:
+          title: "Classement général"
+        title: "Classement général (Top 10)"
+      message:
+        profile:
+          title: "Vos questions / mes réponses"
+          wait: "En attente de réponse"
+          no_receive: "Cet Utilisateur n'a pas encore reçu de questions."
+          button_see_more: "Voir plus"
+        meta:
+          title: "Gérer vos questions publiques"
+        title: "Liste de vos questions"
+        form:
+          answer:
+            placeholder: "Rédigez votre réponse"
+          answer_button: "Répondre"
+          edit_button: "Modifier"
+          cancel_button: "Annuler"
+          delete_button_confirm: "Êtes-vous sûr de vouloir supprimer cette question ?"
+        section:
+          unanswered:
+            title: "En attente de réponses"
+            no_questions: "Vous n'avez pas encore reçu de question."
+          answered:
+            title: "Déjà répondues"
+            no_answered_questions: "Vous n'avez répondu à aucune question pour le moment."
+
+      share:
+        section:
+          event:
+            form:
+              description:
+                gpu: "Mon avis sur mon GPU"
+                cpu: "Mon avis sur mon CPU"
+      evaluation:
+        profile:
+          title: "MES EVALUATIONS"
+          view_receive: "avis reçus"
+          summary_view_receive: "synthèse des avis reçus"
+          no_receive_again: "Vous n'avez pas encore reçu d'avis."
+          no_receive: "Aucun avis reçu."
+          button_see_more: "Voir plus"
+        meta:
+          title: "Consulter vos évaluations"
+        section:
+          kpis:
+            nb_evaluations_description: "Avis reçus"
+          evaluation:
+            title: "Synthèse des avis de vos contacts"
+            no_evaluations: "Vous n'avez pas encore d'évaluation."
+            date_label: "Avis reçu le"
+      edit:
+        profile:
+          title_edit_mdp: "Modification du mot de passe"
+          edit_mdp: "Cliquez ci-dessous si vous souhaitez modifier le mot de passe qui vous permet d'accéder à votre compte."
+          button_edit_mdp: "Modifier mon mot de passe"
+          title_edit_subscription: "MODIFICATION DES ABONNEMENTS"
+          edit_subscription: "Pour gérer les e-mails qui vous sont envoyés, cliquez ci-dessous."
+          button_edit_subscription: "Modifier mes abonnements"
+          title_edit_unsubscribe: "DÉSINSCRIPTION"
+          edit_unsubscribe: "Vous pouvez quitter la plateforme quand vous le souhaitez."
+          button_edit_unsubscribe: "Se désinscrire"
+      voucher:
+        meta:
+          title: "Envoyer une invitation"
+        section:
+          voucher:
+            rules: "Une fois l'invitation acceptée et l'inscription terminée, vous recevrez des points de classement."
+            send: "Confirmez l'envoi ?"
+            resend: 'Envoyer de nouveau ?'
+            title: "Invitez vos amis afin de rejoindre la communauté !"
+            form:
+              object:
+                label: "Objet"
+              message:
+                label: "Message"
+              firstname:
+                label: "Prénom"
+              lastname:
+                label: "Nom"
+              email:
+                label: "Adresse E-mail"
+              send_button: "Envoyer"
+          information:
+            description: ""
+            description2: ""
+          table_voucher:
+            title: "Suivez le statut de vos contacts"
+            empty_table: "Aucun bon plan envoyé pour l'instant."
+            header:
+              contact: "Contact"
+              email: "Adresse E-mail"
+              status: "Statut du contact"
+              send: "Envoyer un Bon Plan"
+              date: "Date d'envoi"
+              action: "Gestion"
+            content:
+              status:
+                0: "Non inscrit"
+                1: "Inscrit"
+              send_button: "Envoyer"
+              resend_button: "Renvoyer"
+              delete_button_confirm: "Êtes-vous sûr de vouloir supprimer ce contact ?"
+          table_contact:
+            title: "Vos contacts"
+            empty_table: "Aucun contact"
+            header:
+              contact: "Contact"
+              email: "Adresse E-mail"
+              phone: "Numéro de téléphone"
+              context: "Contexte"
+      layout:
+        section:
+          profile:
+            contact:
+              contact_me_for: "VOUS SOUHAITEZ EN SAVOIR PLUS ?"
+              more: ''
+              options: "MES OPTIONS DE CONTACT"
+              conseil: "Me demander un conseil"
+              demo: "Me demander une démonstration"
+            buttonTab: "Mon tableau de bord"
+            title: "Bonjour %pseudo%,<br>Bienvenue sur votre Tableau de Bord."
+            myPoints: "Vous avez %total_points% points."
+            views_description: "Votre profil a été affiché <span>%views%</span> fois"
+            questions_description: "Vous avez <span>%nb_questions%</span> question(s) en attente"
+            no_profile_picture: "Vous n'avez pas chargé de photo de profil"
+            no_active: "Voici votre profil. Il est nécessaire d'activer votre compte pour que votre profil soit public. Veuillez consulter vos mails."
+            edit_mode: "Vous êtes actuellement en mode édition. Pour modifier une information, cliquez sur le petit crayon situé à proximité"
+            public_mode: "Voir votre profil public"
+            information_missing: "Certaines informations sont manquantes :"
+            profile_complete: "Votre profil est complet à"
+            bar_amazon: "Où en êtes-vous de vos gains cette année ?"
+            signal: "Signalez cet ambassadeur"
+            gender: "Titre"
+            gender_male: "Monsieur"
+            gender_female: "Madame"
+            eval: "Évaluation de mon robot :"
+            model: "Modèle possédé :"
+            view_profil: "Voir le profil"
+            info: "Ces informations seront visibles sur le site"
+            7more: "7 personnes ou plus"
+            person: "personnes"
+            3more: "depuis plus de 3 ans"
+            2more: "depuis plus de 2 ans"
+            1more: "depuis plus de 1 an"
+            0more: "depuis moins d'un an"
+            owner: "Possesseur"
+            tel: "Téléphone"
+            sms: "SMS"
+            email: "Email"
+            messenger: "Messenger"
+            complete: "Votre profil n’est pas complet"
+            nodealer: 'Veuillez sélectionner votre point de vente'
+            confirm: "cliquer ici pour le finaliser"
+            select_img: "Sélectionner une image"
+            enr_img: "Enregistrer l'image"
+            update_img: "Mettre à jour"
+            delete_img: "Supprimer"
+            chargement: "Chargement..."
+            patient: "Veuillez patienter..."
+            invalid_activated: "Pour recevoir à nouveau le mail d'activation,"
+            relance_mail: "cliquez ici"
+            event_description: "Vous avez <span>%nb_participations%</span> participation(s) en attente"
+            answer_at: 'Répondu le '
+            le: 'le'
+            password:
+              title: "Changement de mot de passe"
+              form:
+                current_password:
+                  label: "Mot de passe actuel"
+                new_password:
+                  label: "Nouveau mot de passe"
+                new_password_confirm:
+                  label: "Confirmez votre nouveau mot de passe"
+                update_button: "Mettre à jour mon mot de passe"
+          navigation:
+            voucher: "Invitez vos contacts"
+            share: "Partagez votre contenu"
+            question: "Vos questions/réponses"
+            evaluation: "Consultez vos évaluations"
+            point: "Classement général"
+            profile: "Gérez votre profil"
+
+    register:
+      layout:
+        steps:
+          step_1: "Votre profil"
+          step_2: "Vos composants"
+          step_3: "Vos photos"
+      step_0:
+        meta:
+          title: "Etape 1"
+        cgv: "cgv"
+        lienPersonalData: "personal_data"
+        submit_button: "Suivant"
+        introduction: "Les informations de cette page sont indispensables à votre inscription.<br />Elles ne seront pas visibles sur le site."
+      step_2:
+        meta:
+          title: "Etape 2"
+        submit_button: "Suivant"
+      step_3:
+        meta:
+          title: "Etape 3"
+        submit_button: "Finir l'inscription"
+    _forms:
+        pictures:
+          label: "Vos photos"
+          accept: ''
+          btn_more: "Ajouter des photos complémentaires"
+        environment_pictures:
+          label: "Vos photos (ordinateur, composants, ...)"
+          helper: "Téléchargez les photos de votre ordinateur et de vos composants. Si elles ne sont pas disponibles, vous pourrez les télécharger plus tard."
+        profile_picture:
+          label: Votre photo de profil
+          helper: "Dernière étape pour finaliser votre inscription : téléchargez votre photo de profil. Si vous ne l’avez pas, vous pourrez la télécharger plus tard."
+
+        gpu:
+          rating:
+            label: "Votre note :"
+          feedback:
+            label: "Votre avis :"
+        cpu:
+          rating:
+            label: "Votre note :"
+          feedback:
+            label: "Votre avis :"
+        select:
+          gpu:
+            label: "Marque de votre carte graphique"
+            label_2: "Libellé de votre carte graphique"
+          cpu:
+            label: "Marque de votre processeur"
+            label_2: "Libellé de votre processeur"
+        step2:
+          meta:
+            title: "Etape 2"
+          title: "Vos composants"
+        username:
+          label: Email
+        password:
+          label: Mot de passe
+          helper: (au moins 6 caractères)
+          show: Voir le mot de passe
+        password_confirm:
+          label: Confirmez votre mot de passe
+        terms_of_service:
+          label: "J’ai lu et j’accepte les <a href='%url%' target='_blank'>conditions de participation</a>"
+          et: " et la "
+          politique: "J’ai lu et j’accepte la <a href='%url%' target='_blank'>Politique de données personnelles</a>"
+        informations_enabled:
+          label: "J'accepte de recevoir les notifications et informations du programme"
+        newsletter_enabled:
+          label: "Je souhaite recevoir les informations et les nouveautés"
+        birthdate:
+          popup: "Votre date de naissance ne sera pas affichée, elle permet de garantir que vous avez 18 ans ou plus au moment de l'inscription"
+          label: Date de naissance
+        firstname:
+          label: Prénom
+        lastname:
+          label: Nom de famille
+        full_address:
+          zipcodes_list:
+            label: Ce programme est exclusivement réservé aux habitants des départements
+        address:
+          label: Adresse postale
+          placeholder: Ligne 1
+        address_2:
+          placeholder: Ligne 2 (facultatif)
+        zipcode:
+          label: Code postal
+        city:
+          label: Ville
+        phone:
+          label: Numéro de téléphone portable
+        pseudo:
+          label: Votre pseudo
+          helper: Choisissez votre pseudo
+    discover:
+      jumbotron:
+        text1: "Vous êtes un fan de l'informatique ?"
+        text2: "Alors venez partager vos conseils !"
+        button: "Je m'inscris"
+      benefits:
+        picto1: "Echangez avec les personnes vous contactant"
+        picto2: "Faites leur bénéficier de vos conseils et astuces"
+        picto3: "Recevez des points grâce à vos échanges"
+        picto4: "Afin de progresser dans le classement du meilleur utilisateur !"
+      point:
+        title: "Recevez des points"
+        contact:
+          title: "Des points contact"
+          nb1: "25"
+          pt: "points"
+          description: "Recevez 25 points lorsque vous échangez avec un contact"
+        evaluation:
+          title: "Des points évaluation"
+          nb: "25 à 45"
+          pt: "points"
+          description: "Recevez entre 25 et 45 points selon la note de l'évaluation laissé par le contact à la fin de votre échange"
+        invitation:
+          title: "Des points invitation"
+          nb: "50"
+          pt: "points"
+          description: "Recevez 50 points lorsqu'un contact aura rejoint la communauté grâce à votre invitation"
+      sliderbecome:
+        title: "Comment ça marche ?"
+        picto1: "Inscrivez-vous en créant votre espace personnel"
+        picto2: "Répondez aux questions des internautes"
+        picto3: "Invitez vos amis à découvrir la plateforme"
+        picto4: "Recevez des points contacts (25 points), des points évaluations (de 25 à 45) et des points invitation (50)"
+        picto5: "Augmentez votre rang dans le classement général"
+        picto6: "Quittez la plateforme à tout moment"
+      section_register:
+        title1: "Inscrivez vous maintenant !"
+        faq: "Voir les FAQ"
+        button: "Je m'inscris"
+    login:
+      meta:
+        title: "Se connecter"
+      title: "Bienvenue sur votre espace personnel"
+      section:
+        login:
+          title: "Déjà inscrit ?"
+          description: "Connectez-vous ci-dessous pour échanger avec vos contacts, voir votre profil ainsi que votre classement"
+          form:
+            username:
+              label: "Pseudo"
+              placeholder: "Pseudo"
+            password:
+              label: "Mot de passe"
+              placeholder: "Mot de passe"
+            login_button: "Se connecter"
+            forgot_password_link: "Mot de passe oublié ?"
+        register:
+          title: "Pas encore inscrit ?"
+          description: "Inscrivez-vous dès maintenant pour partager votre expérience, vos conseils"
+          register_button: "S'inscrire"
+  contact_us:
+    meta:
+      title: "Contactez nous"
+    title: "Formulaire de contact"
+    description: "Pour nous contacter, merci de remplir le formulaire ci-dessous."
+    form:
+      firstname:
+        label: "Votre prénom *"
+        placeholder: "Votre prénom"
+      lastname:
+        label: "Votre nom *"
+        placeholder: "Votre nom"
+      phone:
+        label: "Votre numéro de téléphone"
+        placeholder: "Votre numéro de téléphone (optionnel)"
+      email:
+        label: "Votre adresse e-mail *"
+        placeholder: "Votre email"
+      reason:
+        label: "L'objet du message *"
+        placeholder: "L'objet du message *"
+      message:
+        label: "Votre message *"
+      infos: "Les informations précédées d'une astérisque sont obligatoires car nécessaires pour répondre à votre demande. Elles ne seront pas utilisées ni stockées à d'autres fins de traitement."
+  report_bug:
+    title: "Formulaire de signalement"
+    description: "Pour nous signaler un bug sur la plateforme, merci de remplir le formulaire ci-dessous."
+
+mail:
+  common:
+    hello: Bonjour
+    sign: 'L''Equipe ITCommunity.'
+    receive: 'Vous recevez cet E-mail parce que vous êtes membre de ITCommunity.'
+    auto: 'Ceci est un mail automatique, merci de ne pas y répondre'
+    dont_receive: 'Si vous ne souhaitez plus recevoir d''E-mail,'
+    connect: connectez-vous
+    tb: 'sur votre Tableau de bord, onglet'
+    profil: 'Mon profil'
+    modif: 'Modifier vos abonnements'
+  contact:
+    evaluate:
+      subject: 'Laissez un avis à votre Utilisateur'
+      content: 'Vous avez discuté avec'
+      propos: ', laissez-lui un avis !'
+      important: 'Votre avis est très important pour la communauté. Les prochains contacts qui échangeront avec'
+      profiter: 'pourront profiter de votre expérience.'
+      thanks: 'Merci de nous accorder quelques secondes pour nous laisser votre avis.'
+      button: 'Laisser un avis'
+      merci: 'Merci à vous,'
+      bye: 'A bientôt,'
+      pts: "PS : Votre Utilisateur gagnera entre 25 et 45 points de classement si vous l'évaluez."
+    discover:
+      title: 'viens de vous envoyez une invitation afin de rejoindre la plateforme ITCommunity.'
+      content: 'Vous pourrez ainsi :'
+      step1: 'Partagez votre expérience avec votre entourage et les internautes'
+      step3: 'Faites leur bénéficier de vos conseils et astuces'
+      step4: 'Recevez des points grâce à vos échanges'
+      step5: 'Progresser dans le classement du meilleur utilisateur !'
+      button: 'Inscrivez-vous maintenant'
+      question: 'Vous avez des questions sur le programme ? N’hésitez pas à nous contacter par e-mail en utilisant le bouton "Contact" sur le site.'
+  user:
+    message_private:
+      subject: 'Vous avez reçu un nouveau message depuis la plateforme ITCommunity'
+      content: 'Ce message vous a été envoyé par l’un de vos contacts'
+      rep: 'Répondez directement à votre contact en utilisant le bouton répondre de votre messagerie.'
+      thanks: 'A très bientôt,'
+  account:
+    activation:
+      title: 'Bienvenue dans la Communauté.'
+      verif: 'Validez votre compte en cliquant sur le bouton ci-dessous'
+      verification: 'Je valide mon compte'
+      subject: 'Vérification du compte'
+
+
+

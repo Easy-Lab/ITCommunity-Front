@@ -1,0 +1,7 @@
+<div class="rating">
+    {% for i in 1..5 %}
+        <span class="icon-star{{ i > user.environmentRating ? '-empty' }}"></span>
+    {% endfor %}
+    {{ user.environmentRating|round(1) }} / 5
+    {% if editable %}<a href="{{ path('ambassador_profile_products') }}"><i class="icon-pencil"></i></a>{% endif %}
+</div>

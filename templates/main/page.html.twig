@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="static-page">
+        <div class="container">
+            {% include 'main/legals/' ~ slug ~ '.html.twig' %}
+        </div>
+    </div>
+{% endblock %}

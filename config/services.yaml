@@ -5,6 +5,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     assets_url: '%env(ASSETS_URL)%'
+    google_maps_frontend_api_key: '%env(GOOGLE_MAPS_FRONTEND_API_KEY)%'
 
 services:
     # default configuration for services in *this* file
@@ -24,5 +25,16 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
+    session:
+        public: true
+        class: Symfony\Component\HttpFoundation\Session\Session
+        arguments: ['@session.storage', '@session.namespacedattributebag', '@session.flash_bag']
+
+    session.namespacedattributebag:
+        class: Symfony\Component\HttpFoundation\Session\Attribute\NamespacedAttributeBag
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+imports:
+    - { resource: 'features.yaml' }

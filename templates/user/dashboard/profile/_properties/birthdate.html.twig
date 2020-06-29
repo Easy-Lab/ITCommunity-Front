@@ -1,0 +1,4 @@
+{% set age = ((date("now").diff(date(user.birthdate))).days / 365)|round(0, 'floor') %}
+<p>
+    Âge : <strong>{{ age }}</strong>
+</p>

@@ -1,0 +1,19 @@
+{% extends 'ambassador/profile/layout.html.twig' %}
+
+{% block content %}
+    <div class="container mt-2">
+        <h2>{{ 'page.ambassador.profile_environnement.title'|trans }}</h2>
+        <form action="{{ path('ambassador_profile_environment') }}" method="post">
+            {# include 'ambassador/_forms/environment.html.twig' #}
+
+            {% for element in form_properties %}
+                {% include ['ambassador/_forms/_properties/' ~ element.slug ~ '.html.twig', 'ambassador/_forms/_properties/_' ~ element.type ~ '.html.twig'] %}
+            {% endfor %}
+
+            <div class="mt-5 register-button">
+                <a href="{{ path('ambassador_profile') }}" class="btn btn-secondary">{{ ('page._common.button.annuler')|trans }}</a>
+                <button class="btn btn-theme float-right">{{ ('page._common.button.confirmer')|trans }}</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

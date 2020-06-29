@@ -1,0 +1,36 @@
+{% extends 'user/layout.html.twig' %}
+
+{% block content %}
+    <header class="title">{{ 'page.ambassador.dashboard.ranking.title'|trans }}</header>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-hover table-ranking">
+                    <thead>
+                    <tr>
+                        <th scope="col">Position</th>
+                        <th scope="col">Pseudo</th>
+                        <th scope="col">Points</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% set position = 1 %}
+                    {% for row in ranking %}
+                        <tr>
+                            <td>{% if position == 1 %}<i class="fas fa-trophy" style="color: gold;"></i>{% elseif position == 2 %}<i class="fas fa-trophy" style="color: silver;"></i>{% elseif position == 3 %}<i class="fas fa-trophy" style="color: #cd7f32;"></i>{% else %}{{ position }}{% endif %}</td>
+                            <td>{{ row['username'] }}</td>
+                            <td>{{ row['total_points'] }}</td>
+                            <td><a href="{{ path('user_unknow_profile', {'username': row['username']}) }}"><i class="fas fa-user"></i></a></td>
+                        </tr>
+                        {% set position = position + 1 %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container evaluation-by-contact">
+        <div class="row">
+            <div class="col-md-6 col-xs-12">
+
+                <p class="title">{{ 'page.evaluation.hello'|trans }}
+                    <span>{{ message['contact']['firstname'] }} {{ message['contact']['lastname'] }}</span></p>
+                <p>{{ 'page.evaluation.exchange'|trans }} <span
+                            class="font-weight-bold">{{ message['user']['username'] }}</span></p>
+                <p>{{ 'page.evaluation.thanks'|trans }}</p>
+
+                <p class="rating-input-label">{{ 'page.evaluation.stars'|trans }}</p>
+
+                <form action="{{ path('evaluation', {'hash': hash}) }}" method="post">
+                    <div class="form-group">
+                        {% if not validator.value("rating") %}
+                            {% set score = 5 %}
+                        {% else %}
+                            {% set score = validator.value('rating') %}
+                        {% endif %}
+
+                        <select required class="hidden" data-selected="{{ score }}" name="rating" id="rating">
+                            {% for i in [1,2,3,4,5] %}
+                                <option value="{{ i }}">{{ i }}/5</option>
+                            {% endfor %}
+                        </select>
+
+                        {% set ratingLabels = {1: 'Décevant', 2: 'Passable', 3: 'Bien', 4: 'Très bien', 5: 'Parfait'} %}
+
+                        <ul id="voucher-rating">
+                            {% for i in 1..5 %}
+                                <li class="voucher-rating-stars text-center" data-value="{{ i }}">
+                                    <i id="voucher-rating-stars-{{ i }}"
+                                       class="icon-star{% if i > score %}-empty{% endif %}"></i>
+                                    <p class="rating-label">{{ ratingLabels[i] }}</p>
+                                </li>
+                            {% endfor %}
+                        </ul>
+
+                    </div>
+
+                    <textarea required minlength="10" class="form-control text-field" type="text" name="feedback"
+                              placeholder="Entrez votre commentaire"
+                              data-error="{{ validator.error('feedback') }}">{{ validator.value('feedback') }}</textarea>
+
+                    <div class="text-right">
+                        <button type="submit"
+                                class="btn btn-theme ml-2">{{ 'page.evaluation.button_avis'|trans }}</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-md-6 col-xs-12 d-none d-md-block">
+                <div class="image-holder">
+                    <div class="image-frame">
+                        <img style="width: 100%;" src="{{ 'global.images_url'|trans ~ asset(assets_url ~ 'images/evaluation.jpg') }}"/>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,23 @@
+<div class="form-group">
+    <label for="address">{{ 'page.ambassador._forms.address.label'|trans }}</label>
+    <input type="text" placeholder="{{ 'page.ambassador._forms.address.placeholder'|trans }}" class="form-control" name="address" id="address" value="{{ validator.value('address') }}" data-error="{{ validator.error('address') }}">
+    <input type="text" placeholder="{{ 'page.ambassador._forms.address_2.placeholder'|trans }}" class="form-control mt-1" name="address2" id="address2" value="{{ validator.value('address2') }}" data-error="{{ validator.error('address2') }}">
+</div>
+<div class="row">
+    <div class="col-xs-12 col">
+        <div class="form-group">
+            <label class="register_color" for="address">
+                {{ 'page.ambassador._forms.zipcode.label'|trans }}
+            </label>
+            <input maxlength="5" type="text" class="form-control" name="zipcode" id="zipcode" value="{{ validator.value('zipcode') }}" data-error="{{ validator.error('zipcode') }}">
+        </div>
+    </div>
+    <div class="col-xs-12 col">
+        <div class="form-group">
+            <label class="register_color" for="address">
+                {{ 'page.ambassador._forms.city.label'|trans }}
+            </label>
+            <input type="text" class="form-control" name="city" id="city" value="{{ validator.value('city') }}" data-error="{{ validator.error('city') }}" style="text-transform: uppercase;">
+        </div>
+    </div>
+</div>
