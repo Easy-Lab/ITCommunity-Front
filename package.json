@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/Easy-Lab/ITCommunity-Front#readme",
   "devDependencies": {
-    "@symfony/webpack-encore": "^0.28.0",
+    "@symfony/webpack-encore": "^4.1.1",
     "node-sass": "^4.13.0",
     "sass-loader": "^7.0.1",
     "webpack": "^4.41.2",
